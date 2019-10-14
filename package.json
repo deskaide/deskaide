@@ -1,0 +1,95 @@
+{
+  "name": "reactron",
+  "version": "0.2.0",
+  "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "license": "MIT",
+  "url": "https://github.com/sh4hids/reactron",
+  "email": "hello@shahid.pro",
+  "author": "Shahidul Islam Majumder <hello@shahid.pro> (https://shahid.pro/)",
+  "description": "An opinionated starter kit to create desktop app using Electron and React.",
+  "productName": "Reactron",
+  "scripts": {
+    "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+    "start:win": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start:win\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-start": "electron .",
+    "electron-start:win": ".\\node_modules\\electron\\dist\\electron.exe .",
+    "react-start": "react-scripts start",
+    "premake": "npm run build",
+    "premake:all": "npm run build",
+    "make": "build --x64 -c.extraMetadata.main=build/electron.js",
+    "make:all": "build -mwl --x64 -c.extraMetadata.main=build/electron.js"
+  },
+  "build": {
+    "appId": "pro.shahid.reactron",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public/assets"
+    },
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "win": {
+      "icon": "assets/icons/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icons/icon.icns",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.1.0",
+    "i18next": "^17.0.18",
+    "i18next-browser-languagedetector": "^3.1.1",
+    "i18next-xhr-backend": "^3.2.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-i18next": "^10.13.1",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.1.2",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.4.0",
+    "styled-system": "^5.1.2"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "electron": "6.0.11",
+    "electron-builder": "^21.2.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "redux-devtools-extension": "^2.13.8",
+    "wait-on": "^3.3.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
