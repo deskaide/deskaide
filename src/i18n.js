@@ -13,8 +13,10 @@ i18n
   .init({
     fallbackLng,
     debug: false,
+    backend: {
+      loadPath: 'locales/{{lng}}/{{ns}}.json',
+    },
     whitelist: availableLanguages,
-
     interpolation: {
       escapeValue: false,
     },

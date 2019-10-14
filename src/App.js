@@ -5,7 +5,7 @@ import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 
 const App = props => {
-  const { theme = 'dark' } = props;
+  const { theme = 'light' } = props;
 
   return (
     <ThemeProvider theme={theme === 'light' ? light : dark}>

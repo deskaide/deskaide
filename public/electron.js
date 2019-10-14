@@ -20,6 +20,7 @@ function createWindow() {
     height: 700,
     minWidth: 1152,
     minHeight: 700,
+    resizable: true,
     // frame: false,
     icon: path.join(__dirname, './assets/icons/icon.png'),
     webPreferences: {
