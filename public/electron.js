@@ -1,8 +1,14 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, Menu, Tray } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
+const {
+  createMainMenuTemplate,
+  createContextMenuTemplate,
+} = require('./config');
 // const dataPath = app.getPath('userData');
+
+let mainWindow;
 
 const startUrl = isDev
   ? 'http://localhost:3000'
@@ -12,23 +18,26 @@ const startUrl = isDev
       slashes: true,
     });
 
-let mainWindow;
+const mainMenuTemplate = createMainMenuTemplate(app, mainWindow);
+const contextMenuTemplate = createContextMenuTemplate(app, mainWindow);
 
 function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   mainWindow = new BrowserWindow({
-    width: 1152,
-    height: 700,
+    width,
+    height,
     minWidth: 1152,
     minHeight: 700,
-    resizable: true,
-    // frame: false,
     icon: path.join(__dirname, './assets/icons/icon.png'),
     webPreferences: {
       nodeIntegration: true,
     },
   });
+
+  Menu.setApplicationMenu(mainMenu);
   mainWindow.loadURL(startUrl);
-  // Open the DevTools.
+
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
@@ -36,9 +45,30 @@ function createWindow() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+  mainWindow.on('close', function(event) {
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+    return false;
+  });
 }
 
-app.on('ready', createWindow);
+function createContextMenu() {
+  appIcon = new Tray(path.join(__dirname, 'assets/icons/128x128.png'));
+  let contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
+  appIcon.setToolTip('Deskstat');
+  appIcon.setContextMenu(contextMenu);
+  appIcon.on('click', () => {
+    mainWindow.show();
+  });
+}
+
+app.on('ready', () => {
+  createWindow();
+  createContextMenu();
+});
 
 app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
