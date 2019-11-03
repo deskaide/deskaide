@@ -1,3 +1,1 @@
-import HomePage from './HomePage';
-
-export { HomePage };
+export { default as SplashScreen } from './SplashScreen/';

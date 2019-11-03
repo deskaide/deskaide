@@ -1,7 +1,4 @@
-import AppContainer from './AppContainer';
-import AppHeader from './AppHeader';
-import AppLink from './AppLink';
-import Logo from './Logo';
-import Text from './Text';
-
-export { AppContainer, AppHeader, AppLink, Logo, Text };
+export { default as Box } from './Box';
+export { default as Flex } from './Flex';
+export { default as Image } from './Image';
+export { default as Text } from './Text';

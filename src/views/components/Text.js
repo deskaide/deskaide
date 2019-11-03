@@ -1,74 +1,82 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { color, space, textAlign } from 'styled-system';
+import { color, space, typography } from 'styled-system';
 
 const H1 = styled.h1`
   font-size: ${({ theme }) => theme.typography.h1.fontSize};
   line-height: ${({ theme }) => theme.typography.h1.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h1.fontWeight};
+
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 const H2 = styled.h2`
   font-size: ${({ theme }) => theme.typography.h2.fontSize};
   line-height: ${({ theme }) => theme.typography.h2.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h2.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 const H3 = styled.h3`
   font-size: ${({ theme }) => theme.typography.h3.fontSize};
   line-height: ${({ theme }) => theme.typography.h3.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h3.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 const H4 = styled.h4`
   font-size: ${({ theme }) => theme.typography.h4.fontSize};
   line-height: ${({ theme }) => theme.typography.h4.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h4.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 const H5 = styled.h5`
   font-size: ${({ theme }) => theme.typography.h5.fontSize};
   line-height: ${({ theme }) => theme.typography.h5.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h5.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 
 const H6 = styled.h6`
   font-size: ${({ theme }) => theme.typography.h6.fontSize};
   line-height: ${({ theme }) => theme.typography.h6.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h6.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 
 const P = styled.p`
   font-size: ${({ theme }) => theme.typography.body.fontSize};
   line-height: ${({ theme }) => theme.typography.body.lineHeight};
   font-weight: ${({ theme }) => theme.typography.body.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 
 const Caption = styled.p`
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
   line-height: ${({ theme }) => theme.typography.caption.lineHeight};
   font-weight: ${({ theme }) => theme.typography.caption.fontWeight};
+  margin: 1rem 0;
   ${color};
   ${space};
-  ${textAlign};
+  ${typography};
 `;
 
 const RawHTML = styled.div`
