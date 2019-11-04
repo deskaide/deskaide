@@ -29,12 +29,14 @@ const MenuContainer = styled.ul`
       font-size: ${({ theme }) => theme.typography.h5.fontSize};
       font-weight: ${({ theme }) => theme.typography.h5.fontWeight};
       margin-bottom: ${({ theme }) => `${theme.space[4]}px`};
+      outline: none;
 
       span {
         display: inline-block;
         border-bottom: 2px solid ${({ theme }) => theme.colors.text};
         position: relative;
-        top: -8px;
+        top: -9px;
+        margin-left: ${({ theme }) => `${theme.space[3]}px`};
       }
     }
   }
@@ -44,32 +46,38 @@ const SplashScreenMenu = () => (
   <MenuContainer>
     <li>
       <a href="/">
-        <Image src={clockIcon} width={32} /> <span>Pomodoro</span>
+        <Image src={clockIcon} width={32} />
+        <span>Pomodoro</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={noteIcon} width={32} /> <span>Notes</span>
+        <Image src={noteIcon} width={32} />
+        <span>Notes</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={journalIcon} width={32} /> <span>Journal</span>
+        <Image src={journalIcon} width={32} />
+        <span>Journal</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={linkIcon} width={32} /> <span>Links</span>
+        <Image src={linkIcon} width={32} />
+        <span>Links</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={statsIcon} width={32} /> <span>Stats</span>
+        <Image src={statsIcon} width={32} />
+        <span>Stats</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={settingsIcon} width={32} /> <span>Settings</span>
+        <Image src={settingsIcon} width={32} />
+        <span>Settings</span>
       </a>
     </li>
   </MenuContainer>

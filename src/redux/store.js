@@ -1,20 +1,11 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
-import * as reducers from './';
+import * as reducers from '.';
 
 const appReducer = combineReducers(reducers);
 
 const rootReducer = (state, action) => {
-  if (action.type === 'auth/logout') {
-    state = {
-      ...state,
-      auth: {
-        isAuthenticated: false,
-        token: '',
-      },
-    };
-  }
   return appReducer(state, action);
 };
 

@@ -5,10 +5,10 @@ import createStore from './redux/store';
 import './i18n';
 import App from './App';
 import GlobalStyle from './views/styles/GlobalStyle';
-import SettingService from './services/setting';
+import SettingService from './services/SettingService';
 
 const setting = new SettingService().getSetting();
-let initialState = {
+const initialState = {
   setting,
 };
 

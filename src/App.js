@@ -4,11 +4,9 @@ import { ThemeProvider } from 'styled-components';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 
-const App = props => {
-  const { theme = 'light' } = props;
-
+const App = ({ selectedTheme = 'light' }) => {
   return (
-    <ThemeProvider theme={theme === 'light' ? light : dark}>
+    <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>
         <Routes />
       </Suspense>
@@ -18,7 +16,7 @@ const App = props => {
 
 const mapStateToProps = ({ setting }) => {
   return {
-    theme: setting.theme,
+    selectedTheme: setting.selectedTheme,
   };
 };
 
