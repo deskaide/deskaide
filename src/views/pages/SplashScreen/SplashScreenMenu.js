@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Image } from '../../components';
 import clockIcon from '../../../assets/icons/clock.svg';
 import noteIcon from '../../../assets/icons/note.svg';
@@ -45,10 +46,10 @@ const MenuContainer = styled.ul`
 const SplashScreenMenu = () => (
   <MenuContainer>
     <li>
-      <a href="/">
+      <Link to="/pomodoro">
         <Image src={clockIcon} width={32} />
         <span>Pomodoro</span>
-      </a>
+      </Link>
     </li>
     <li>
       <a href="/">
