@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import Image from './Image';
+import Tooltip from './Tooltip';
 
 import logo from '../../assets/images/logo.svg';
 import clockIcon from '../../assets/icons/clock.svg';
@@ -33,11 +35,18 @@ const MainMenu = () => (
         <Image src={logo} width={32} />
       </Link>
     </li>
-    <li>
-      <Link to="/pomodoro">
-        <Image src={clockIcon} width={24} />
-      </Link>
-    </li>
+    <Tooltip
+      message="Pomodoro"
+      bg="text"
+      color="background"
+      borderRightColor="text"
+    >
+      <li>
+        <Link to="/pomodoro">
+          <Image src={clockIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
     <li>
       <Link to="/notes">
         <Image src={noteIcon} width={24} />
