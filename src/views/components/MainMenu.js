@@ -30,48 +30,55 @@ const MenuContainer = styled.ul`
 
 const MainMenu = () => (
   <MenuContainer>
-    <li>
-      <Link to="/">
-        <Image src={logo} width={32} />
-      </Link>
-    </li>
-    <Tooltip
-      message="Pomodoro"
-      bg="text"
-      color="background"
-      borderRightColor="text"
-    >
+    <Tooltip message="Desk Stat" position="right">
+      <li>
+        <Link to="/">
+          <Image src={logo} width={32} />
+        </Link>
+      </li>
+    </Tooltip>
+    <Tooltip message="Pomodoro" position="right">
       <li>
         <Link to="/pomodoro">
           <Image src={clockIcon} width={24} />
         </Link>
       </li>
     </Tooltip>
-    <li>
-      <Link to="/notes">
-        <Image src={noteIcon} width={24} />
-      </Link>
-    </li>
-    <li>
-      <Link to="/journals">
-        <Image src={journalIcon} width={24} />
-      </Link>
-    </li>
-    <li>
-      <Link to="/links">
-        <Image src={linkIcon} width={24} />
-      </Link>
-    </li>
-    <li>
-      <Link to="/stats">
-        <Image src={statsIcon} width={24} />
-      </Link>
-    </li>
-    <li>
-      <Link to="/settings">
-        <Image src={settingsIcon} width={24} />
-      </Link>
-    </li>
+    <Tooltip message="Notes" position="right">
+      <li>
+        <Link to="/notes">
+          <Image src={noteIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
+    <Tooltip message="Journals" position="right">
+      <li>
+        <Link to="/journals">
+          <Image src={journalIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
+    <Tooltip message="Links" position="right">
+      <li>
+        <Link to="/links">
+          <Image src={linkIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
+    <Tooltip message="Stats" position="right">
+      <li>
+        <Link to="/stats">
+          <Image src={statsIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
+    <Tooltip message="Settings" position="right">
+      <li>
+        <Link to="/settings">
+          <Image src={settingsIcon} width={24} />
+        </Link>
+      </li>
+    </Tooltip>
   </MenuContainer>
 );
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { space, position, color, border } from 'styled-system';
+import styled, { css } from 'styled-components';
+import { space, color, border } from 'styled-system';
 
 const TooltipContainer = styled.span`
   display: inline-block;
@@ -10,35 +10,86 @@ const TooltipContainer = styled.span`
   .tooltip-message {
     display: inline-block;
     width: auto;
+    min-width: 80px;
     visibility: hidden;
-    background-color: ${({ theme }) => theme.colors.bg};
-    color: ${({ theme }) => theme.colors.text};
+    background-color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.background};
     text-align: center;
     border-radius: 4px;
     padding: 4px 8px;
-    white-space: nowrap;
-
-    /* Position the tooltip */
     position: absolute;
     z-index: 10;
-    top: 50%;
-    left: 110%;
-    transform: translateY(-50%);
+
+    ${({ position }) => {
+      switch (position) {
+        case 'right':
+          return css`
+            top: 50%;
+            left: 110%;
+            transform: translateY(-50%);
+
+            ::after {
+              top: 50%;
+              right: 100%;
+              margin-top: -5px;
+              border-color: transparent ${({ theme }) => theme.colors.text}
+                transparent transparent;
+            }
+          `;
+        case 'bottom':
+          return css`
+            top: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+
+            ::after {
+              bottom: 100%;
+              left: 50%;
+              margin-left: -5px;
+              border-color: transparent transparent
+                ${({ theme }) => theme.colors.text} transparent;
+            }
+          `;
+        case 'left':
+          return css`
+            top: 50%;
+            right: 110%;
+            transform: translateY(-50%);
+
+            ::after {
+              top: 50%;
+              left: 100%;
+              margin-top: -5px;
+              border-color: transparent transparent transparent
+                ${({ theme }) => theme.colors.text};
+            }
+          `;
+        default:
+          return css`
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+
+            ::after {
+              top: 100%;
+              left: 50%;
+              margin-left: -5px;
+              border-color: ${({ theme }) => theme.colors.text} transparent
+                transparent transparent;
+            }
+          `;
+      }
+    }};
 
     ${color};
     ${space};
-    ${position};
 
     ::after {
       content: ' ';
       position: absolute;
-      top: 50%;
-      right: 100%; /* To the left of the tooltip */
-      margin-top: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent black transparent transparent;
-      ${border}
+      ${border};
     }
   }
 
@@ -49,8 +100,8 @@ const TooltipContainer = styled.span`
   }
 `;
 
-const Tooltip = ({ message, children, ...props }) => (
-  <TooltipContainer {...props}>
+const Tooltip = ({ message, children, position = 'top', ...props }) => (
+  <TooltipContainer position={position} {...props}>
     {children}
     <span className="tooltip-message">{message}</span>
   </TooltipContainer>
