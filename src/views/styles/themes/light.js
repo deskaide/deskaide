@@ -1,8 +1,5 @@
 export default {
-  borders: {
-    primary: '1px solid #FF7275',
-    light: '1px solid #E9EBEC',
-  },
+  name: 'light',
   typography: {
     fontFamily: '"Fira Code", monospace',
     fontSize: '18px',
@@ -68,8 +65,9 @@ export default {
     success: '#78BE20',
     warning: '#FFCA1E',
     placeholder: '#A9AEB1',
-    text: '#FBFFF9',
-    background: '#0F081E',
+    text: '#0F081E',
+    background: '#FBFFF9',
+    border: '#393444',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   breakpoints: {
@@ -78,5 +76,8 @@ export default {
     md: 768,
     lg: 992,
     xl: 1200,
+  },
+  borders: {
+    light: '2px solid #EFF1F3',
   },
 };

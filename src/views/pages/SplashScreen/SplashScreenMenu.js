@@ -1,13 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Image } from '../../components';
-import clockIcon from '../../../assets/icons/clock.svg';
-import noteIcon from '../../../assets/icons/note.svg';
-import journalIcon from '../../../assets/icons/journal.svg';
-import linkIcon from '../../../assets/icons/link.svg';
-import statsIcon from '../../../assets/icons/stats.svg';
-import settingsIcon from '../../../assets/icons/settings.svg';
+
+import clockIconLight from '../../../assets/icons/clock-light.svg';
+import noteIconLight from '../../../assets/icons/note-light.svg';
+import journalIconLight from '../../../assets/icons/journal-light.svg';
+import linkIconLight from '../../../assets/icons/link-light.svg';
+import statsIconLight from '../../../assets/icons/stats-light.svg';
+import settingsIconLight from '../../../assets/icons/settings-light.svg';
+
+import clockIconDark from '../../../assets/icons/clock-dark.svg';
+import noteIconDark from '../../../assets/icons/note-dark.svg';
+import journalIconDark from '../../../assets/icons/journal-dark.svg';
+import linkIconDark from '../../../assets/icons/link-dark.svg';
+import statsIconDark from '../../../assets/icons/stats-dark.svg';
+import settingsIconDark from '../../../assets/icons/settings-dark.svg';
 
 const MenuContainer = styled.ul`
   display: flex;
@@ -43,45 +51,63 @@ const MenuContainer = styled.ul`
   }
 `;
 
-const SplashScreenMenu = () => (
+const SplashScreenMenu = ({ theme }) => (
   <MenuContainer>
     <li>
       <Link to="/pomodoro">
-        <Image src={clockIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? clockIconDark : clockIconLight}
+          width={32}
+        />
         <span>Pomodoro</span>
       </Link>
     </li>
     <li>
       <a href="/">
-        <Image src={noteIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? noteIconDark : noteIconLight}
+          width={32}
+        />
         <span>Notes</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={journalIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? journalIconDark : journalIconLight}
+          width={32}
+        />
         <span>Journal</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={linkIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? linkIconDark : linkIconLight}
+          width={32}
+        />
         <span>Links</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={statsIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? statsIconDark : statsIconLight}
+          width={32}
+        />
         <span>Stats</span>
       </a>
     </li>
     <li>
       <a href="/">
-        <Image src={settingsIcon} width={32} />
+        <Image
+          src={theme.name === 'light' ? settingsIconDark : settingsIconLight}
+          width={32}
+        />
         <span>Settings</span>
       </a>
     </li>
   </MenuContainer>
 );
 
-export default SplashScreenMenu;
+export default withTheme(SplashScreenMenu);

@@ -1,4 +1,10 @@
 export default {
+  name: 'dark',
+  borders: {
+    primary: '1px solid #6237C6',
+    light: '1px solid #EFF1F3',
+    dark: '1px solid #393444',
+  },
   typography: {
     fontFamily: '"Fira Code", monospace',
     fontSize: '18px',
@@ -64,8 +70,9 @@ export default {
     success: '#78BE20',
     warning: '#FFCA1E',
     placeholder: '#A9AEB1',
-    text: '#0F081E',
-    background: '#FBFFF9',
+    text: '#EFF1F3',
+    background: '#0F081E',
+    border: '#393444',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   breakpoints: {
@@ -74,8 +81,5 @@ export default {
     md: 768,
     lg: 992,
     xl: 1200,
-  },
-  borders: {
-    light: '2px solid #EFF1F3',
   },
 };

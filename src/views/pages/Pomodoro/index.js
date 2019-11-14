@@ -1,8 +1,9 @@
 import React from 'react';
 import { MainAppLayout } from '../../layouts';
+import PomodoroSettings from './PomodoroSettings';
 
 const Pomodoro = () => (
-  <MainAppLayout menu={<p>Hi</p>}>
+  <MainAppLayout appMenu={<PomodoroSettings />}>
     <p>Hello</p>
   </MainAppLayout>
 );

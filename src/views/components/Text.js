@@ -7,7 +7,8 @@ const H1 = styled.h1`
   font-size: ${({ theme }) => theme.typography.h1.fontSize};
   line-height: ${({ theme }) => theme.typography.h1.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h1.fontWeight};
-
+  color: ${({ theme }) => theme.colors.text};
+  margin: 1rem 0;
   ${color};
   ${space};
   ${typography};
@@ -16,6 +17,7 @@ const H2 = styled.h2`
   font-size: ${({ theme }) => theme.typography.h2.fontSize};
   line-height: ${({ theme }) => theme.typography.h2.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h2.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -25,6 +27,7 @@ const H3 = styled.h3`
   font-size: ${({ theme }) => theme.typography.h3.fontSize};
   line-height: ${({ theme }) => theme.typography.h3.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h3.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -34,6 +37,7 @@ const H4 = styled.h4`
   font-size: ${({ theme }) => theme.typography.h4.fontSize};
   line-height: ${({ theme }) => theme.typography.h4.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h4.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -43,6 +47,7 @@ const H5 = styled.h5`
   font-size: ${({ theme }) => theme.typography.h5.fontSize};
   line-height: ${({ theme }) => theme.typography.h5.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h5.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -53,6 +58,7 @@ const H6 = styled.h6`
   font-size: ${({ theme }) => theme.typography.h6.fontSize};
   line-height: ${({ theme }) => theme.typography.h6.lineHeight};
   font-weight: ${({ theme }) => theme.typography.h6.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -63,6 +69,7 @@ const P = styled.p`
   font-size: ${({ theme }) => theme.typography.body.fontSize};
   line-height: ${({ theme }) => theme.typography.body.lineHeight};
   font-weight: ${({ theme }) => theme.typography.body.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -73,6 +80,7 @@ const Caption = styled.p`
   font-size: ${({ theme }) => theme.typography.caption.fontSize};
   line-height: ${({ theme }) => theme.typography.caption.lineHeight};
   font-weight: ${({ theme }) => theme.typography.caption.fontWeight};
+  color: ${({ theme }) => theme.colors.text};
   margin: 1rem 0;
   ${color};
   ${space};
@@ -80,6 +88,8 @@ const Caption = styled.p`
 `;
 
 const RawHTML = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+  margin: 1rem 0;
   p {
     line-height: 1.45;
     font-size: 1em;
