@@ -4,6 +4,8 @@ import { useField } from 'formik';
 import Text from './Text';
 
 const InputContainer = styled.div`
+  margin-bottom: ${({ theme }) => `${theme.space[3]}px`};
+
   .label-area {
     width: 100%;
     display: inline-flex;
@@ -12,6 +14,10 @@ const InputContainer = styled.div`
 
     .range-value {
       text-transform: lowercase;
+    }
+
+    p {
+      margin-bottom: 0;
     }
   }
 
@@ -24,7 +30,6 @@ const InputContainer = styled.div`
     padding: 0;
     margin: 0;
 
-    // Range Handle
     &::-webkit-slider-thumb {
       appearance: none;
       width: 16px;
@@ -40,7 +45,8 @@ const InputContainer = styled.div`
 const RangeInput = ({ label, ...props }) => {
   const rangeInput = useRef();
   const [field, meta] = useField({ ...props, type: 'range' });
-  const fill = 100 * ((meta.value - props.min) / (props.max - props.min));
+  const fill =
+    100 * (((meta.value || props.min) - props.min) / (props.max - props.min));
   const bg = `linear-gradient(
     90deg,
     ${props.theme.colors.primary} ${fill}%,
@@ -58,11 +64,16 @@ const RangeInput = ({ label, ...props }) => {
       <div className="label-area">
         <Text>{label}</Text>
         <Text className="range-value">
-          {meta.value}
-          min
+          {meta.value || props.min} {props.unit}
         </Text>
       </div>
-      <input type="range" {...field} {...props} ref={rangeInput} />
+      <input
+        type="range"
+        {...field}
+        {...props}
+        ref={rangeInput}
+        value={meta.value || props.min}
+      />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>
       ) : null}
