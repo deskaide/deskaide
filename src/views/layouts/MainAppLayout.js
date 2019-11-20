@@ -8,14 +8,19 @@ const MainAppLayout = ({ appMenu, children }) => (
     flexDirection="row"
     justifyContent="center"
     alignItem="center"
-    minHeight="100vh"
-    minWidth="100vw"
+    height="100vh"
+    width="100vw"
+    overflow="hidden"
   >
-    <Box width={72} height="100vh">
+    <Box width={72} height="100vh" overflow="hidden">
       <MainMenu />
     </Box>
-    <Box width={1 / 3}>{appMenu}</Box>
-    <Box width={2 / 3}>{children}</Box>
+    <Box width={1 / 3} overflowX="hidden" overflowY="auto">
+      {appMenu}
+    </Box>
+    <Box width={2 / 3} overflowX="hidden" overflowY="auto">
+      {children}
+    </Box>
   </Flex>
 );
 

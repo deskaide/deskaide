@@ -10,7 +10,7 @@ const SettingsContainer = styled(Box)`
   border-right: 2px solid ${({ theme }) => theme.colors.border};
 `;
 
-const AppSettings = ({ appTitle, children }) => (
+const SubmenuContainer = ({ appTitle, children }) => (
   <SettingsContainer>
     <Text variant="h5" textAlign="center" margin={0} lineHeight="70px">
       {appTitle}
@@ -20,4 +20,4 @@ const AppSettings = ({ appTitle, children }) => (
   </SettingsContainer>
 );
 
-export default AppSettings;
+export default SubmenuContainer;

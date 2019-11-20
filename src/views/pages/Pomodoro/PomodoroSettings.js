@@ -1,19 +1,16 @@
 import React from 'react';
-// import styled from 'styled-components';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import {
-  AppSettings,
+  SubmenuContainer,
   Box,
   Button,
   Flex,
-  Text,
   RangeInput,
 } from '../../components';
 
 const PomodoroSettings = () => {
   return (
-    <AppSettings appTitle="Pomodoro Settings">
+    <SubmenuContainer appTitle="Pomodoro Settings">
       <Box pr={4} pl={4} pt={3}>
         <Formik
           initialValues={{
@@ -24,7 +21,7 @@ const PomodoroSettings = () => {
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+              console.log(values);
               setSubmitting(false);
             }, 400);
           }}
@@ -77,7 +74,7 @@ const PomodoroSettings = () => {
           </Form>
         </Formik>
       </Box>
-    </AppSettings>
+    </SubmenuContainer>
   );
 };
 
