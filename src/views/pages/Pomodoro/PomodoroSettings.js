@@ -64,11 +64,11 @@ const PomodoroSettings = () => {
               width="100%"
               mt={4}
             >
-              <Button type="submit" width="46%">
-                Submit
-              </Button>
               <Button type="reset" width="46%">
                 Reset
+              </Button>
+              <Button type="submit" width="46%">
+                Save
               </Button>
             </Flex>
           </Form>

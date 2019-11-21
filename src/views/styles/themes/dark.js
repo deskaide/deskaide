@@ -73,6 +73,8 @@ export default {
     text: '#EFF1F3',
     background: '#0F081E',
     border: '#393444',
+    disabledBG: '#171320',
+    disabledText: '#393444',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
   breakpoints: {

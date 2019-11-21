@@ -11,6 +11,12 @@ const Button = styled.button`
   text-transform: uppercase;
   box-shadow: 0 0 2px ${({ theme }) => theme.colors.dark};
 
+  &:disabled {
+    background: ${({ theme }) => theme.colors.disabledBG};
+    color: ${({ theme }) => theme.colors.disabledText};
+    cursor: not-allowed;
+  }
+
   ${space};
   ${color};
   ${width};
