@@ -15,7 +15,7 @@ const Pomodoro = () => (
       height="100vh"
       width="100%"
     >
-      <Timer time={300000} />
+      <Timer duration={60 * 1000} />
     </Flex>
   </MainAppLayout>
 );
