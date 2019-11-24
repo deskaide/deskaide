@@ -12,7 +12,7 @@ const MainAppLayout = ({ appMenu, children }) => (
     width="100vw"
     overflow="hidden"
   >
-    <Box width={72} height="100vh" overflow="hidden">
+    <Box width={72} height="100vh">
       <MainMenu />
     </Box>
     <Box width={1 / 3} overflowX="hidden" overflowY="auto">
