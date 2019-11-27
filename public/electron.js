@@ -8,6 +8,7 @@ const {
 } = require('./config');
 
 let mainWindow;
+let appIcon;
 
 const startUrl = isDev
   ? 'http://localhost:3000'
@@ -17,12 +18,8 @@ const startUrl = isDev
       slashes: true,
     });
 
-const mainMenuTemplate = createMainMenuTemplate(app, mainWindow);
-const contextMenuTemplate = createContextMenuTemplate(app, mainWindow);
-
 function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   mainWindow = new BrowserWindow({
     width,
     height,
@@ -34,6 +31,8 @@ function createWindow() {
     },
   });
 
+  const mainMenuTemplate = createMainMenuTemplate(app, mainWindow);
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
   mainWindow.loadURL(startUrl);
 
@@ -49,14 +48,18 @@ function createWindow() {
     if (!app.isQuiting) {
       event.preventDefault();
       mainWindow.hide();
+    } else {
+      mainWindow = null;
     }
     return false;
   });
 }
 
 function createContextMenu() {
-  const appIcon = new Tray(path.join(__dirname, 'assets/icons/128x128.png'));
+  const contextMenuTemplate = createContextMenuTemplate(app, mainWindow);
   const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
+
+  appIcon = new Tray(path.join(__dirname, 'assets/icons/icon.png'));
   appIcon.setToolTip('Deskstat');
   appIcon.setContextMenu(contextMenu);
   appIcon.on('click', () => {
@@ -80,3 +83,5 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+app.on('before-quit', () => (app.isQuiting = true));
