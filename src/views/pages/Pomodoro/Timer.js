@@ -4,6 +4,7 @@ import { space, layout, position, color, shadow } from 'styled-system';
 import Countdown from 'react-countdown-now';
 import { Box, Button, Text } from '../../components';
 import scaleBeat from '../../styles/keyframes';
+import logo from '../../../assets/images/logo.png';
 
 const Circle = styled.div`
   height: ${({ width }) => width};
@@ -86,6 +87,10 @@ class Timer extends Component {
   };
 
   stopTimer = () => {
+    new Notification('', {
+      body: `Hey buddy! You've worked for a long time. Take a break!`,
+      icon: logo,
+    });
     this.setState({
       timerOn: false,
     });
