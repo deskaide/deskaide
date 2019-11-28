@@ -68,6 +68,7 @@ function createContextMenu() {
 }
 
 app.on('ready', () => {
+  app.setAppUserModelId('pro.shahid.deskstat');
   createWindow();
   createContextMenu();
 });
