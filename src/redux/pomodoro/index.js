@@ -1,5 +1,5 @@
 import reducer from './reducers';
-import * as settingActions from './actions';
+import * as pomodoroActions from './actions';
 
-export { settingActions };
+export { pomodoroActions };
 export default reducer;

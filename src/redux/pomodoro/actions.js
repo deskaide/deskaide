@@ -1,10 +1,25 @@
 import * as types from './types';
 
-export const initSettings = () => ({
-  type: types.INIT_SETTINGS,
+export const startTimer = () => ({
+  type: types.START_TIMER,
 });
 
-export const changeTheme = theme => ({
-  type: types.CHANGE_THEME,
-  payload: theme,
+export const stopTimer = id => {
+  clearInterval(id);
+  return {
+    type: types.STOP_TIMER,
+  };
+};
+
+export const updateTimer = () => ({
+  type: types.UPDATE_TIMER,
+});
+
+export const resetTimer = () => ({
+  type: types.RESET_TIMER,
+});
+
+export const saveTimerId = id => ({
+  type: types.SAVE_TIMER_ID,
+  payload: id,
 });

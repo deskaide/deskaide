@@ -1,7 +1,7 @@
-export const INIT_SETTINGS = 'settings/init';
-export const INIT_SETTINGS_DONE = 'settings/init_done';
-export const INIT_SETTINGS_FAILED = 'settings/init_failed';
+export const START_TIMER = 'pomodoro/start_timer';
+export const STOP_TIMER = 'pomodoro/stop_timer';
+export const UPDATE_TIMER = 'pomodoro/update_timer';
+export const RESET_TIMER = 'pomodoro/reset_timer';
 
-export const CHANGE_THEME = 'settings/change_theme';
-export const CHANGE_THEME_DONE = 'settings/change_theme_done';
-export const CHANGE_THEME_FAILED = 'settings/change_theme_failed';
+export const SAVE_TIMER_ID = 'pomodoro/save_timer_id';
+export const DELETE_TIMER_ID = 'pomodoro/delete_timer_id';

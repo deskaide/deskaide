@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import styled, { withTheme, css } from 'styled-components';
 import { space, layout, position, color, shadow } from 'styled-system';
 import Countdown from 'react-countdown-now';
+import { connect } from 'react-redux';
 import { Box, Button, Text } from '../../components';
 import scaleBeat from '../../styles/keyframes';
-import logo from '../../../assets/images/logo.png';
+import { pomodoroActions } from '../../../redux/pomodoro';
 
 const Circle = styled.div`
   height: ${({ width }) => width};
@@ -40,74 +41,14 @@ const CustomTimerView = ({ hours, minutes, seconds }) => {
 };
 
 class Timer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      timerOn: false,
-      timerStart: 0,
-      timerTime: 0,
-      position: 100,
-    };
-  }
-
-  componentDidMount() {
-    this.startTimer();
-  }
-
-  componentDidUpdate() {
-    const { duration } = this.props;
-    const { timerTime, timerOn } = this.state;
-
-    if (timerOn && duration - timerTime < 1) {
-      this.stopTimer();
-    }
-  }
-
-  startTimer = () => {
-    const { duration } = this.props;
-    const { timerTime } = this.state;
-
-    this.setState({
-      timerOn: true,
-      timerTime,
-      timerStart: Date.now() - timerTime,
-    });
-
-    this.timer = setInterval(() => {
-      this.setState(state => ({
-        timerTime: Date.now() - state.timerStart,
-        position: state.position - (100 * 10) / (duration * 1000),
-      }));
-
-      if (Math.floor(timerTime / 1000) === duration) {
-        this.stopTimer();
-      }
-    }, 10);
-  };
-
   stopTimer = () => {
-    new Notification('', {
-      body: `Hey buddy! You've worked for a long time. Take a break!`,
-      icon: logo,
-    });
-    this.setState({
-      timerOn: false,
-    });
-    clearInterval(this.timer);
-  };
-
-  resetTimer = () => {
-    this.setState({
-      timerStart: 0,
-      timerTime: 0,
-      position: 100,
-    });
+    const { stopTimer, resetTimer, timerId } = this.props;
+    stopTimer(timerId);
+    resetTimer();
   };
 
   render() {
-    const { timerTime, timerOn } = this.state;
-    const { theme, duration } = this.props;
+    const { theme, focusTime, timerTime, timerOn } = this.props;
 
     return (
       <Box>
@@ -123,7 +64,7 @@ class Timer extends Component {
               boxShadow={`0 0 64px ${theme.colors.dark}`}
             >
               <Countdown
-                date={duration - timerTime}
+                date={focusTime - timerTime}
                 renderer={CustomTimerView}
                 controlled
               />
@@ -131,14 +72,8 @@ class Timer extends Component {
           </Circle>
         </Circle>
         <Box mt={4}>
-          <Button mr={4} onClick={this.startTimer} disabled={timerOn}>
-            Start
-          </Button>
-          <Button mr={4} disabled={!timerOn} onClick={this.stopTimer}>
-            Pause
-          </Button>
-          <Button onClick={this.resetTimer} disabled={timerOn}>
-            Reset
+          <Button onClick={this.stopTimer} disabled={!timerOn}>
+            Skip to break
           </Button>
         </Box>
       </Box>
@@ -146,4 +81,21 @@ class Timer extends Component {
   }
 }
 
-export default withTheme(Timer);
+const mapStateToProps = ({ pomodoro }) => ({
+  timerId: pomodoro.timerId,
+  timerOn: pomodoro.timerOn,
+  timerTime: pomodoro.timerTime,
+  focusTime: pomodoro.settings.focusTime,
+  remindBefore: pomodoro.settings.remindBefore,
+});
+
+const mapActionsToProps = {
+  startTimer: pomodoroActions.startTimer,
+  stopTimer: pomodoroActions.stopTimer,
+  updateTimer: pomodoroActions.updateTimer,
+  resetTimer: pomodoroActions.resetTimer,
+  saveTimerId: pomodoroActions.saveTimerId,
+  deleteTimerId: pomodoroActions.deleteTimerId,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(withTheme(Timer));
