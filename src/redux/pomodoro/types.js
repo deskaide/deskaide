@@ -5,3 +5,6 @@ export const RESET_TIMER = 'pomodoro/reset_timer';
 
 export const SAVE_TIMER_ID = 'pomodoro/save_timer_id';
 export const DELETE_TIMER_ID = 'pomodoro/delete_timer_id';
+
+export const SHOW_NOTIFICATION = 'pomodoro/show_notification';
+export const RESET_NOTIFICATION = 'pomodoro/reset_notification';

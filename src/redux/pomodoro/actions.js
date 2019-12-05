@@ -23,3 +23,17 @@ export const saveTimerId = id => ({
   type: types.SAVE_TIMER_ID,
   payload: id,
 });
+
+export const showNotification = ({ body, icon }) => {
+  new Notification('Deskstat', {
+    body,
+    icon,
+  });
+  return {
+    type: types.SHOW_NOTIFICATION,
+  };
+};
+
+export const resetNotification = () => ({
+  type: types.RESET_NOTIFICATION,
+});

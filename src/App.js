@@ -21,6 +21,9 @@ const App = ({
   resetTimer,
   focusOn,
   breakOn,
+  showNotification,
+  resetNotification,
+  notificationShown,
 }) => {
   useEffect(() => {
     if (!timerId && focusOn) {
@@ -31,14 +34,13 @@ const App = ({
       saveTimerId(newTimerId);
     }
 
-    console.log({ diff: focusTime - timerTime, remindBefore });
-
     if (
       timerOn &&
       focusTime - timerTime >= remindBefore &&
-      focusTime - timerTime <= remindBefore + 50
+      focusTime - timerTime <= remindBefore + 50 &&
+      !notificationShown
     ) {
-      new Notification('', {
+      showNotification({
         body: `Hey buddy! You've worked for a long time. Take a break!`,
         icon: logo,
       });
@@ -46,6 +48,7 @@ const App = ({
     if (timerOn && focusTime - timerTime < 1) {
       stopTimer(timerId);
       resetTimer();
+      resetNotification();
     }
   });
   return (
@@ -67,6 +70,7 @@ const mapStateToProps = ({ setting, pomodoro }) => {
     remindBefore: pomodoro.settings.remindBefore,
     focusOn: pomodoro.focusOn,
     breakOn: pomodoro.breakOn,
+    notificationShown: pomodoro.notificationShown,
   };
 };
 
@@ -77,6 +81,8 @@ const mapActionsToProps = {
   resetTimer: pomodoroActions.resetTimer,
   saveTimerId: pomodoroActions.saveTimerId,
   deleteTimerId: pomodoroActions.deleteTimerId,
+  showNotification: pomodoroActions.showNotification,
+  resetNotification: pomodoroActions.resetNotification,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(App);
