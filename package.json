@@ -8,7 +8,7 @@
   "url": "https://github.com/sh4hids/deskstat",
   "email": "hello@shahid.pro",
   "author": "Shahidul Islam Majumder <hello@shahid.pro> (https://shahid.pro/)",
-  "description": "An open source application to check your desk (PC) usage.",
+  "description": "An open source application to check your desk (Computer) usage.",
   "productName": "Desk Stat",
   "scripts": {
     "start": "concurrently 'BROWSER=none npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",

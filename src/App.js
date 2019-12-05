@@ -9,7 +9,7 @@ import logo from './assets/images/logo.png';
 
 const App = ({
   selectedTheme = 'dark',
-  focusTime,
+  totalDuration,
   timerTime,
   startTimer,
   updateTimer,
@@ -20,13 +20,13 @@ const App = ({
   remindBefore,
   resetTimer,
   focusOn,
-  breakOn,
+  shortBreakOn,
   showNotification,
   resetNotification,
   notificationShown,
 }) => {
   useEffect(() => {
-    if (!timerId && focusOn) {
+    if (!timerId && (focusOn || shortBreakOn)) {
       startTimer();
       const newTimerId = setInterval(() => {
         updateTimer();
@@ -36,16 +36,19 @@ const App = ({
 
     if (
       timerOn &&
-      focusTime - timerTime >= remindBefore &&
-      focusTime - timerTime <= remindBefore + 50 &&
+      focusOn &&
+      totalDuration - timerTime >= remindBefore &&
+      totalDuration - timerTime <= remindBefore + 50 &&
       !notificationShown
     ) {
       showNotification({
-        body: `Hey buddy! You've worked for a long time. Take a break!`,
+        body: `Hey buddy! A short break is going to start within ${Math.floor(
+          remindBefore / 1000
+        )} seconds!`,
         icon: logo,
       });
     }
-    if (timerOn && focusTime - timerTime < 1) {
+    if (timerOn && totalDuration - timerTime < 1) {
       stopTimer(timerId);
       resetTimer();
       resetNotification();
@@ -66,10 +69,10 @@ const mapStateToProps = ({ setting, pomodoro }) => {
     timerId: pomodoro.timerId,
     timerOn: pomodoro.timerOn,
     timerTime: pomodoro.timerTime,
-    focusTime: pomodoro.settings.focusTime,
-    remindBefore: pomodoro.settings.remindBefore,
     focusOn: pomodoro.focusOn,
-    breakOn: pomodoro.breakOn,
+    totalDuration: pomodoro.totalDuration,
+    remindBefore: pomodoro.settings.remindBefore,
+    shortBreakOn: pomodoro.shortBreakOn,
     notificationShown: pomodoro.notificationShown,
   };
 };

@@ -25,7 +25,7 @@ export const saveTimerId = id => ({
 });
 
 export const showNotification = ({ body, icon }) => {
-  new Notification('Deskstat', {
+  new Notification('', {
     body,
     icon,
   });

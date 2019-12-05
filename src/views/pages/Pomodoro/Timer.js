@@ -19,7 +19,7 @@ const Circle = styled.div`
   ${({ animate }) =>
     animate
       ? css`
-          animation: 0.49s ${scaleBeat} alternate infinite ease-in;
+          animation: 0.5s ${scaleBeat} alternate infinite ease-in;
         `
       : ``};
 
@@ -48,11 +48,18 @@ class Timer extends Component {
   };
 
   render() {
-    const { theme, focusTime, timerTime, timerOn } = this.props;
+    const {
+      theme,
+      totalDuration,
+      timerTime,
+      timerOn,
+      focusOn,
+      focusTime,
+    } = this.props;
 
     return (
       <Box>
-        <Circle width="32rem" bg="#2a1754" animate={timerOn}>
+        <Circle width="32rem" bg="#2a1754" animate={timerOn && focusOn}>
           <Circle
             width="24rem"
             bg="#45268b"
@@ -64,7 +71,7 @@ class Timer extends Component {
               boxShadow={`0 0 64px ${theme.colors.dark}`}
             >
               <Countdown
-                date={focusTime - timerTime}
+                date={focusOn ? totalDuration - timerTime : focusTime}
                 renderer={CustomTimerView}
                 controlled
               />
@@ -72,7 +79,7 @@ class Timer extends Component {
           </Circle>
         </Circle>
         <Box mt={4}>
-          <Button onClick={this.stopTimer} disabled={!timerOn}>
+          <Button onClick={this.stopTimer} disabled={!focusOn || !timerOn}>
             Skip to break
           </Button>
         </Box>
@@ -85,17 +92,14 @@ const mapStateToProps = ({ pomodoro }) => ({
   timerId: pomodoro.timerId,
   timerOn: pomodoro.timerOn,
   timerTime: pomodoro.timerTime,
+  focusOn: pomodoro.focusOn,
   focusTime: pomodoro.settings.focusTime,
-  remindBefore: pomodoro.settings.remindBefore,
+  totalDuration: pomodoro.totalDuration,
 });
 
 const mapActionsToProps = {
-  startTimer: pomodoroActions.startTimer,
   stopTimer: pomodoroActions.stopTimer,
-  updateTimer: pomodoroActions.updateTimer,
   resetTimer: pomodoroActions.resetTimer,
-  saveTimerId: pomodoroActions.saveTimerId,
-  deleteTimerId: pomodoroActions.deleteTimerId,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withTheme(Timer));

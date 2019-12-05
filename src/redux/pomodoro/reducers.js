@@ -2,17 +2,18 @@ import * as types from './types';
 
 const initialState = {
   focusOn: true,
-  breakOn: false,
+  shortBreakOn: false,
   timerOn: false,
   timerStart: 0,
   timerTime: 0,
   position: 100,
   timerId: null,
+  totalDuration: 0,
   notificationShown: false,
   settings: {
     focusTime: 25 * 60 * 1000,
-    shortBreak: 5 * 60 * 1000,
-    longBreak: 15 * 60 * 1000,
+    shortBreakTime: 10 * 60 * 1000,
+    longBreakTime: 15 * 60 * 1000,
     remindBefore: 30 * 1000,
   },
 };
@@ -22,6 +23,11 @@ const settingReducers = (state = initialState, { type, payload }) => {
     case types.START_TIMER:
       return {
         ...state,
+        totalDuration: state.focusOn
+          ? state.settings.focusTime
+          : state.shortBreakOn
+          ? state.settings.shortBreakTime
+          : state.settings.longBreakTime,
         timerOn: true,
         timerTime: state.timerTime,
         timerStart: Date.now() - state.timerTime,
@@ -30,14 +36,13 @@ const settingReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         timerTime: Date.now() - state.timerStart,
-        position:
-          state.position - (100 * 10) / (state.settings.focusTime * 1000),
+        position: state.position - (100 * 10) / (state.totalDuration * 1000),
       };
     case types.STOP_TIMER:
       return {
         ...state,
-        focusOn: !!state.breakOn,
-        breakOn: !!state.focusOn,
+        focusOn: !!state.shortBreakOn,
+        shortBreakOn: !!state.focusOn,
         timerOn: false,
         timerId: null,
       };
