@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
 import {
   SubmenuContainer,
   Box,
@@ -8,16 +9,21 @@ import {
   RangeInput,
 } from '../../components';
 
-const PomodoroSettings = () => {
+const PomodoroSettings = ({
+  focusTime,
+  shortBreakTime,
+  longBreakTime,
+  remindBefore,
+}) => {
   return (
     <SubmenuContainer appTitle="Pomodoro Settings">
       <Box pr={4} pl={4} pt={3}>
         <Formik
           initialValues={{
-            focusTime: 25,
-            shortBreakTime: 5,
-            longBreakTime: 20,
-            remindBefore: 30,
+            focusTime,
+            shortBreakTime,
+            longBreakTime,
+            remindBefore,
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -78,4 +84,11 @@ const PomodoroSettings = () => {
   );
 };
 
-export default PomodoroSettings;
+const mapStateToProps = ({ pomodoro }) => ({
+  focusTime: pomodoro.settings.focusTime,
+  shortBreakTime: pomodoro.settings.shortBreakTime,
+  longBreakTime: pomodoro.settings.longBreakTime,
+  remindBefore: pomodoro.settings.remindBefore,
+});
+
+export default connect(mapStateToProps)(PomodoroSettings);

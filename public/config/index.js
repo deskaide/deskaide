@@ -1,4 +1,4 @@
-const createMainMenuTemplate = (app, mainWindow) => [
+const createMainMenuTemplate = app => [
   {
     label: 'Deskstat',
     submenu: [
@@ -33,4 +33,7 @@ const createContextMenuTemplate = (app, mainWindow) => [
   },
 ];
 
-module.exports = { createMainMenuTemplate, createContextMenuTemplate };
+module.exports = {
+  createMainMenuTemplate,
+  createContextMenuTemplate,
+};

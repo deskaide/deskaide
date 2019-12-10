@@ -3,6 +3,7 @@ import styled, { withTheme, css } from 'styled-components';
 import { space, layout, position, color, shadow } from 'styled-system';
 import Countdown from 'react-countdown-now';
 import { connect } from 'react-redux';
+import { A_MINUTE } from '../../../config';
 import { Box, Button, Text } from '../../components';
 import scaleBeat from '../../styles/keyframes';
 import { pomodoroActions } from '../../../redux/pomodoro';
@@ -71,7 +72,9 @@ class Timer extends Component {
               boxShadow={`0 0 64px ${theme.colors.dark}`}
             >
               <Countdown
-                date={focusOn ? totalDuration - timerTime : focusTime}
+                date={
+                  focusOn ? totalDuration - timerTime : focusTime * A_MINUTE
+                }
                 renderer={CustomTimerView}
                 controlled
               />
@@ -102,4 +105,7 @@ const mapActionsToProps = {
   resetTimer: pomodoroActions.resetTimer,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(withTheme(Timer));
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withTheme(Timer));

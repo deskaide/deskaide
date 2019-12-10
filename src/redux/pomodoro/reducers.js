@@ -1,4 +1,5 @@
 import * as types from './types';
+import { A_MINUTE } from '../../config';
 
 const initialState = {
   focusOn: true,
@@ -11,23 +12,27 @@ const initialState = {
   totalDuration: 0,
   notificationShown: false,
   settings: {
-    focusTime: 25 * 60 * 1000,
-    shortBreakTime: 10 * 60 * 1000,
-    longBreakTime: 15 * 60 * 1000,
-    remindBefore: 30 * 1000,
+    focusTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
+    remindBefore: 30,
   },
 };
 
 const settingReducers = (state = initialState, { type, payload }) => {
+  let duration = state.settings.focusTime * A_MINUTE;
+  if (state.focusOn) {
+    duration = state.settings.focusTime * A_MINUTE;
+  } else if (state.shortBreakOn) {
+    duration = state.settings.shortBreakTime * A_MINUTE;
+  } else {
+    duration = state.settings.longBreakTime * A_MINUTE;
+  }
   switch (type) {
     case types.START_TIMER:
       return {
         ...state,
-        totalDuration: state.focusOn
-          ? state.settings.focusTime
-          : state.shortBreakOn
-          ? state.settings.shortBreakTime
-          : state.settings.longBreakTime,
+        totalDuration: duration,
         timerOn: true,
         timerTime: state.timerTime,
         timerStart: Date.now() - state.timerTime,
