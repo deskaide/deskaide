@@ -43,9 +43,7 @@ const App = ({
       !notificationShown
     ) {
       showNotification({
-        body: `Hey buddy! A short break is going to start within ${Math.floor(
-          remindBefore / 1000
-        )} seconds!`,
+        body: `Hey buddy! A short break is going to start within ${remindBefore} seconds!`,
         icon: logo,
       });
     }
@@ -89,7 +87,4 @@ const mapActionsToProps = {
   resetNotification: pomodoroActions.resetNotification,
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(App);
+export default connect(mapStateToProps, mapActionsToProps)(App);
