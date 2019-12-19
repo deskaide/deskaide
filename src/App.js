@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { A_SECOND } from './config';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
-import { pomodoroActions } from './redux/pomodoro';
+import { pomodoroActions } from './state/pomodoro';
 
 import logo from './assets/images/logo.png';
 

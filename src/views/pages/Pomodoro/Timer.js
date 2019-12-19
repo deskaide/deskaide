@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { A_MINUTE } from '../../../config';
 import { Box, Button, Text } from '../../components';
 import scaleBeat from '../../styles/keyframes';
-import { pomodoroActions } from '../../../redux/pomodoro';
+import { pomodoroActions } from '../../../state/pomodoro';
 
 const Circle = styled.div`
   height: ${({ width }) => width};
@@ -105,7 +105,4 @@ const mapActionsToProps = {
   resetTimer: pomodoroActions.resetTimer,
 };
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withTheme(Timer));
+export default connect(mapStateToProps, mapActionsToProps)(withTheme(Timer));

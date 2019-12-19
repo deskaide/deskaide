@@ -1,5 +1,5 @@
 import * as types from './types';
-import { A_MINUTE } from '../../config';
+import { A_MINUTE, POMODORO_INITIAL_SETTINGS } from '../../config';
 
 const initialState = {
   focusOn: true,
@@ -12,10 +12,7 @@ const initialState = {
   totalDuration: 0,
   notificationShown: false,
   settings: {
-    focusTime: 25,
-    shortBreakTime: 5,
-    longBreakTime: 15,
-    remindBefore: 30,
+    ...POMODORO_INITIAL_SETTINGS,
   },
 };
 
@@ -78,6 +75,36 @@ const settingReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         notificationShown: false,
+      };
+    case types.SAVE_SETTINGS:
+      if (state.focusOn) {
+        duration = payload.focusTime * A_MINUTE;
+      } else if (state.shortBreakOn) {
+        duration = payload.shortBreakTime * A_MINUTE;
+      } else {
+        duration = payload.longBreakTime * A_MINUTE;
+      }
+      return {
+        ...state,
+        totalDuration: duration,
+        settings: {
+          ...payload,
+        },
+      };
+    case types.RESET_SETTINGS:
+      if (state.focusOn) {
+        duration = payload.focusTime * A_MINUTE;
+      } else if (state.shortBreakOn) {
+        duration = payload.shortBreakTime * A_MINUTE;
+      } else {
+        duration = payload.longBreakTime * A_MINUTE;
+      }
+      return {
+        ...state,
+        totalDuration: duration,
+        settings: {
+          ...payload,
+        },
       };
     default:
       return state;

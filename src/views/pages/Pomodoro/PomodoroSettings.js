@@ -8,12 +8,16 @@ import {
   Flex,
   RangeInput,
 } from '../../components';
+import { pomodoroActions } from '../../../state/pomodoro';
+import { POMODORO_INITIAL_SETTINGS } from '../../../config';
 
 const PomodoroSettings = ({
   focusTime,
   shortBreakTime,
   longBreakTime,
   remindBefore,
+  saveSettings,
+  resetSettings,
 }) => {
   return (
     <SubmenuContainer appTitle="Pomodoro Settings">
@@ -26,13 +30,10 @@ const PomodoroSettings = ({
             remindBefore,
           }}
           onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              console.log(values);
-              setSubmitting(false);
-            }, 400);
+            saveSettings(values);
           }}
-          onReset={values => {
-            console.log(values);
+          onReset={() => {
+            resetSettings({ ...POMODORO_INITIAL_SETTINGS });
           }}
         >
           <Form>
@@ -91,4 +92,9 @@ const mapStateToProps = ({ pomodoro }) => ({
   remindBefore: pomodoro.settings.remindBefore,
 });
 
-export default connect(mapStateToProps)(PomodoroSettings);
+const mapActionsToProps = {
+  saveSettings: pomodoroActions.saveSettings,
+  resetSettings: pomodoroActions.resetSettings,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(PomodoroSettings);
