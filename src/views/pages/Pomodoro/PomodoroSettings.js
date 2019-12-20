@@ -1,41 +1,38 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
+import React, { useState } from 'react';
+import { withFormik, Form } from 'formik';
 import { connect } from 'react-redux';
 import {
   SubmenuContainer,
   Box,
   Button,
   Flex,
+  Modal,
+  ModalActions,
   RangeInput,
+  Text,
 } from '../../components';
 import { pomodoroActions } from '../../../state/pomodoro';
 import { POMODORO_INITIAL_SETTINGS } from '../../../config';
 
-const PomodoroSettings = ({
+const PomodoroSettingsForm = ({
   focusTime,
   shortBreakTime,
   longBreakTime,
   remindBefore,
   saveSettings,
   resetSettings,
+  resetForm,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleReset = () => {
+    resetSettings({ ...POMODORO_INITIAL_SETTINGS });
+    resetForm(POMODORO_INITIAL_SETTINGS);
+    setIsModalOpen(false);
+  };
   return (
-    <SubmenuContainer appTitle="Pomodoro Settings">
-      <Box pr={4} pl={4} pt={3}>
-        <Formik
-          initialValues={{
-            focusTime,
-            shortBreakTime,
-            longBreakTime,
-            remindBefore,
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            saveSettings(values);
-          }}
-          onReset={() => {
-            resetSettings({ ...POMODORO_INITIAL_SETTINGS });
-          }}
-        >
+    <>
+      <SubmenuContainer appTitle="Pomodoro Settings">
+        <Box pr={4} pl={4} pt={3}>
           <Form>
             <RangeInput
               name="focusTime"
@@ -71,7 +68,11 @@ const PomodoroSettings = ({
               width="100%"
               mt={4}
             >
-              <Button type="reset" width="46%">
+              <Button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                width="46%"
+              >
                 Reset
               </Button>
               <Button type="submit" width="46%">
@@ -79,11 +80,37 @@ const PomodoroSettings = ({
               </Button>
             </Flex>
           </Form>
-        </Formik>
-      </Box>
-    </SubmenuContainer>
+        </Box>
+      </SubmenuContainer>
+      <Modal isOpen={isModalOpen} onClose={setIsModalOpen} p={32}>
+        <Text mt={0} variant="h5">
+          Do you really want to reset settings?
+        </Text>
+        <ModalActions mt={4}>
+          <Button onClick={() => setIsModalOpen(false)} mr={3}>
+            No
+          </Button>
+          <Button onClick={handleReset}>Yes</Button>
+        </ModalActions>
+      </Modal>
+    </>
   );
 };
+
+const PomodoroSettings = withFormik({
+  mapPropsToValues: values => ({
+    focusTime: values.focusTime || POMODORO_INITIAL_SETTINGS.focusTime,
+    shortBreakTime:
+      values.shortBreakTime || POMODORO_INITIAL_SETTINGS.shortBreakTime,
+    longBreakTime:
+      values.longBreakTime || POMODORO_INITIAL_SETTINGS.longBreakTime,
+    remindBefore: values.remindBefore || POMODORO_INITIAL_SETTINGS.remindBefore,
+  }),
+  handleSubmit: (values, { setSubmitting, props }) => {
+    const { saveSettings } = props;
+    saveSettings(values);
+  },
+})(PomodoroSettingsForm);
 
 const mapStateToProps = ({ pomodoro }) => ({
   focusTime: pomodoro.settings.focusTime,
