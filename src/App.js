@@ -8,6 +8,13 @@ import { pomodoroActions } from './state/pomodoro';
 
 import logo from './assets/images/logo.png';
 
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+
+ipcRenderer.on('GO_TO', (event, path) => {
+  window.location.href = `/#/${path}`;
+});
+
 const App = ({
   selectedTheme = 'dark',
   totalDuration,

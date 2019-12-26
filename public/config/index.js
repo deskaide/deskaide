@@ -1,9 +1,37 @@
-const createMainMenuTemplate = app => [
+const createMainMenuTemplate = (app, mainWindow) => [
   {
     label: 'Deskstat',
     submenu: [
-      { label: 'Pomodoro' },
-      { label: 'Settings' },
+      {
+        label: 'Pomodoro',
+        click() {
+          mainWindow && mainWindow.webContents.send('GO_TO', 'pomodoro');
+        },
+      },
+      {
+        label: 'Notes',
+        click() {
+          mainWindow && mainWindow.webContents.send('GO_TO', 'notes');
+        },
+      },
+      {
+        label: 'Journals',
+        click() {
+          mainWindow && mainWindow.webContents.send('GO_TO', 'journals');
+        },
+      },
+      {
+        label: 'Links',
+        click() {
+          mainWindow && mainWindow.webContents.send('GO_TO', 'links');
+        },
+      },
+      {
+        label: 'Stats',
+        click() {
+          mainWindow && mainWindow.webContents.send('GO_TO', 'stats');
+        },
+      },
       {
         label: 'Close',
         accelerator: 'CommandOrControl+Q',
@@ -13,6 +41,12 @@ const createMainMenuTemplate = app => [
         },
       },
     ],
+  },
+  {
+    label: 'Settings',
+  },
+  {
+    label: 'About',
   },
 ];
 

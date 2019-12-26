@@ -63,49 +63,49 @@ const SplashScreenMenu = ({ theme }) => (
       </Link>
     </li>
     <li>
-      <a href="/">
+      <Link to="/notes">
         <Image
           src={theme.name === 'light' ? noteIconDark : noteIconLight}
           width={32}
         />
         <span>Notes</span>
-      </a>
+      </Link>
     </li>
     <li>
-      <a href="/">
+      <Link to="/journals">
         <Image
           src={theme.name === 'light' ? journalIconDark : journalIconLight}
           width={32}
         />
-        <span>Journal</span>
-      </a>
+        <span>Journals</span>
+      </Link>
     </li>
     <li>
-      <a href="/">
+      <Link to="/links">
         <Image
           src={theme.name === 'light' ? linkIconDark : linkIconLight}
           width={32}
         />
         <span>Links</span>
-      </a>
+      </Link>
     </li>
     <li>
-      <a href="/">
+      <Link to="/stats">
         <Image
           src={theme.name === 'light' ? statsIconDark : statsIconLight}
           width={32}
         />
         <span>Stats</span>
-      </a>
+      </Link>
     </li>
     <li>
-      <a href="/">
+      <Link to="/settings">
         <Image
           src={theme.name === 'light' ? settingsIconDark : settingsIconLight}
           width={32}
         />
         <span>Settings</span>
-      </a>
+      </Link>
     </li>
   </MenuContainer>
 );
