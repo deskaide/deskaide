@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import createStore from './state/store';
 import './i18n';
@@ -17,7 +18,9 @@ const store = createStore(initialState);
 ReactDOM.render(
   <Provider store={store}>
     <GlobalStyle />
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = require('electron');
+const { app, BrowserWindow, screen, Menu, Tray } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
@@ -85,4 +85,6 @@ app.on('activate', () => {
   }
 });
 
-app.on('before-quit', () => (app.isQuiting = true));
+app.on('before-quit', () => {
+  app.isQuiting = true;
+});
