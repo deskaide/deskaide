@@ -6,9 +6,14 @@ import { A_SECOND } from './config';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
+import { Model } from './db';
 
 import logo from './assets/images/logo.png';
 
+const MyModel = new Model({ put: async data => data });
+MyModel.create({ name: 'John' }, 'pomodoro_settings', null).then(data => {
+  console.log(data);
+});
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
@@ -31,10 +36,14 @@ const App = ({
   notificationShown,
 }) => {
   const history = useHistory();
+
   useEffect(() => {
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
+  }, [history]);
+
+  useEffect(() => {
     if (!timerId && (focusOn || shortBreakOn)) {
       startTimer();
       const newTimerId = setInterval(() => {
@@ -61,7 +70,7 @@ const App = ({
       resetNotification();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>
