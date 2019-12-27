@@ -1,15 +1,15 @@
 {
-  "name": "Deskstat",
+  "name": "deskaide",
   "version": "1.0.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
   "license": "MIT",
-  "url": "https://github.com/sh4hids/deskstat",
+  "url": "https://github.com/deskaide/deskaide",
   "email": "hello@shahid.pro",
   "author": "Shahidul Islam Majumder <hello@shahid.pro> (https://shahid.pro/)",
   "description": "An open source application to check your desk (Computer) usage.",
-  "productName": "Desk Stat",
+  "productName": "Desk Aide",
   "scripts": {
     "start": "concurrently 'BROWSER=none npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
     "start:win": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start:win\"",
@@ -26,7 +26,7 @@
     "make:all": "build -mwl --x64 -c.extraMetadata.main=build/electron.js"
   },
   "build": {
-    "appId": "pro.shahid.deskstat",
+    "appId": "app.deskaide.www",
     "files": [
       "build/**/*",
       "node_modules/**/*"
@@ -58,6 +58,7 @@
   "dependencies": {
     "electron-is-dev": "^1.1.0",
     "formik": "^2.0.6",
+    "history": "^4.10.1",
     "i18next": "^19.0.1",
     "i18next-browser-languagedetector": "^4.0.1",
     "i18next-xhr-backend": "^3.2.2",

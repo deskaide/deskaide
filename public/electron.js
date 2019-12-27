@@ -85,4 +85,6 @@ app.on('activate', () => {
   }
 });
 
-app.on('before-quit', () => (app.isQuiting = true));
+app.on('before-quit', () => {
+  app.isQuiting = true;
+});

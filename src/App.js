@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { A_SECOND } from './config';
 import { dark, light } from './views/styles/themes';
@@ -7,6 +8,9 @@ import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
 
 import logo from './assets/images/logo.png';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 const App = ({
   selectedTheme = 'dark',
@@ -26,7 +30,11 @@ const App = ({
   resetNotification,
   notificationShown,
 }) => {
+  const history = useHistory();
   useEffect(() => {
+    ipcRenderer.on('GO_TO', (e, path) => {
+      history.push(path);
+    });
     if (!timerId && (focusOn || shortBreakOn)) {
       startTimer();
       const newTimerId = setInterval(() => {
@@ -52,7 +60,8 @@ const App = ({
       resetTimer();
       resetNotification();
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>
