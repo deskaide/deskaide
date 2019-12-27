@@ -14,9 +14,9 @@ const SplashScreen = ({ theme }) => (
         src={theme.name === 'light' ? logoDark : logoLight}
         height="12vmin"
       />
-      <Text variant="h2">Desk Stat</Text>
+      <Text variant="h2">Desk Aide</Text>
       <Text variant="h5" fontWeight="400">
-        Check your desk stat!
+        An aide to your desk life!
       </Text>
     </Box>
     <Box color="text" textAlign="center" margin="0 auto" mt={5}>
