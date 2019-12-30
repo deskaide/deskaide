@@ -12,7 +12,14 @@ import {
   Text,
 } from '../../components';
 import { pomodoroActions } from '../../../state/pomodoro';
-import { POMODORO_INITIAL_SETTINGS } from '../../../config';
+import {
+  POMODORO_INITIAL_SETTINGS,
+  db,
+  pomodoroSettingsId,
+} from '../../../config';
+import DBService from '../../../services/DBService';
+
+const DB = new DBService(db);
 
 const PomodoroSettingsForm = ({
   focusTime,
@@ -20,13 +27,14 @@ const PomodoroSettingsForm = ({
   longBreakTime,
   remindBefore,
   saveSettings,
-  resetSettings,
   resetForm,
+  values,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleReset = () => {
-    resetSettings({ ...POMODORO_INITIAL_SETTINGS });
-    resetForm(POMODORO_INITIAL_SETTINGS);
+  const handleReset = async () => {
+    await DB.upsert({ ...POMODORO_INITIAL_SETTINGS }, pomodoroSettingsId);
+    saveSettings({ ...POMODORO_INITIAL_SETTINGS });
+    resetForm({ ...POMODORO_INITIAL_SETTINGS });
     setIsModalOpen(false);
   };
   return (
@@ -98,16 +106,18 @@ const PomodoroSettingsForm = ({
 };
 
 const PomodoroSettings = withFormik({
-  mapPropsToValues: values => ({
-    focusTime: values.focusTime || POMODORO_INITIAL_SETTINGS.focusTime,
-    shortBreakTime:
-      values.shortBreakTime || POMODORO_INITIAL_SETTINGS.shortBreakTime,
-    longBreakTime:
-      values.longBreakTime || POMODORO_INITIAL_SETTINGS.longBreakTime,
-    remindBefore: values.remindBefore || POMODORO_INITIAL_SETTINGS.remindBefore,
-  }),
-  handleSubmit: (values, { setSubmitting, props }) => {
+  enableReinitialize: true,
+  mapPropsToValues: values => {
+    return {
+      focusTime: values.focusTime,
+      shortBreakTime: values.shortBreakTime,
+      longBreakTime: values.longBreakTime,
+      remindBefore: values.remindBefore,
+    };
+  },
+  handleSubmit: async (values, { setSubmitting, props }) => {
     const { saveSettings } = props;
+    await DB.upsert(values, pomodoroSettingsId);
     saveSettings(values);
   },
 })(PomodoroSettingsForm);
@@ -121,7 +131,6 @@ const mapStateToProps = ({ pomodoro }) => ({
 
 const mapActionsToProps = {
   saveSettings: pomodoroActions.saveSettings,
-  resetSettings: pomodoroActions.resetSettings,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(PomodoroSettings);

@@ -91,21 +91,6 @@ const settingReducers = (state = initialState, { type, payload }) => {
           ...payload,
         },
       };
-    case types.RESET_SETTINGS:
-      if (state.focusOn) {
-        duration = payload.focusTime * A_MINUTE;
-      } else if (state.shortBreakOn) {
-        duration = payload.shortBreakTime * A_MINUTE;
-      } else {
-        duration = payload.longBreakTime * A_MINUTE;
-      }
-      return {
-        ...state,
-        totalDuration: duration,
-        settings: {
-          ...payload,
-        },
-      };
     default:
       return state;
   }

@@ -6,14 +6,22 @@ import createStore from './state/store';
 import './i18n';
 import App from './App';
 import GlobalStyle from './views/styles/GlobalStyle';
-import SettingService from './services/SettingService';
+import DBService from './services/DBService';
+import { db, pomodoroSettingsId, POMODORO_INITIAL_SETTINGS } from './config';
+import { pomodoroActions } from './state/pomodoro';
 
-const setting = new SettingService().getSetting();
-const initialState = {
-  setting,
-};
+const DB = new DBService(db);
+const store = createStore({});
 
-const store = createStore(initialState);
+async function init() {
+  let pomodoroSettings = await DB.getById(pomodoroSettingsId);
+  if (!pomodoroSettings) {
+    pomodoroSettings = POMODORO_INITIAL_SETTINGS;
+  }
+  store.dispatch(pomodoroActions.saveSettings(pomodoroSettings));
+}
+
+init();
 
 ReactDOM.render(
   <Provider store={store}>

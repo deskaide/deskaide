@@ -42,8 +42,3 @@ export const saveSettings = settings => ({
   type: types.SAVE_SETTINGS,
   payload: settings,
 });
-
-export const resetSettings = settings => ({
-  type: types.RESET_SETTINGS,
-  payload: settings,
-});

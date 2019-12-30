@@ -6,14 +6,9 @@ import { A_SECOND } from './config';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
-import { Model } from './db';
 
 import logo from './assets/images/logo.png';
 
-const MyModel = new Model({ put: async data => data });
-MyModel.create({ name: 'John' }, 'pomodoro_settings', null).then(data => {
-  console.log(data);
-});
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 

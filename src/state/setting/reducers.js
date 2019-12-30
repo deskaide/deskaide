@@ -1,7 +1,7 @@
 import * as types from './types';
 
 const initialState = {
-  selectedTheme: 'light',
+  selectedTheme: 'dark',
 };
 
 const settingReducers = (state = initialState, { type, payload }) => {
