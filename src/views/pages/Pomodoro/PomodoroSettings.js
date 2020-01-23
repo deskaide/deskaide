@@ -21,15 +21,7 @@ import DBService from '../../../services/DBService';
 
 const DB = new DBService(db);
 
-const PomodoroSettingsForm = ({
-  focusTime,
-  shortBreakTime,
-  longBreakTime,
-  remindBefore,
-  saveSettings,
-  resetForm,
-  values,
-}) => {
+const PomodoroSettingsForm = ({ saveSettings, resetForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleReset = async () => {
     await DB.upsert({ ...POMODORO_INITIAL_SETTINGS }, pomodoroSettingsId);
@@ -115,7 +107,7 @@ const PomodoroSettings = withFormik({
       remindBefore: values.remindBefore,
     };
   },
-  handleSubmit: async (values, { setSubmitting, props }) => {
+  handleSubmit: async (values, { props }) => {
     const { saveSettings } = props;
     await DB.upsert(values, pomodoroSettingsId);
     saveSettings(values);

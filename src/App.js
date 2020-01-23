@@ -2,10 +2,10 @@ import React, { Suspense, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { A_SECOND } from './config';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
+import { getSeconds } from './utils/Time';
 
 import logo from './assets/images/logo.png';
 
@@ -54,8 +54,7 @@ const App = ({
     if (
       timerOn &&
       focusOn &&
-      totalDuration - timerTime >= remindBefore * A_SECOND &&
-      totalDuration - timerTime <= remindBefore * A_SECOND + 50 &&
+      getSeconds(totalDuration - timerTime) === remindBefore &&
       !notificationShown
     ) {
       showNotification({
