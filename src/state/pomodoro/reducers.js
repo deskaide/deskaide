@@ -29,6 +29,8 @@ const settingReducers = (state = initialState, { type, payload }) => {
     case types.START_TIMER:
       return {
         ...state,
+        focusOn: !payload,
+        shortBreakOn: payload,
         totalDuration: duration,
         timerOn: true,
         timerTime: state.timerTime,
@@ -44,7 +46,6 @@ const settingReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         focusOn: !!state.shortBreakOn,
-        shortBreakOn: !!state.focusOn,
         timerOn: false,
         timerId: null,
       };

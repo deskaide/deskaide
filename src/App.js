@@ -36,11 +36,15 @@ const App = ({
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
-  }, [history]);
+    ipcRenderer.on('START_FOCUS_TIMER', () => {
+      startTimer();
+    });
+  }, [history, startTimer]);
 
   useEffect(() => {
-    if (!timerId && (focusOn || shortBreakOn)) {
-      startTimer();
+    const breakTimerOn = history.location.pathname === '/breaks';
+    if (!timerId && (focusOn || shortBreakOn || breakTimerOn)) {
+      startTimer(breakTimerOn);
       const newTimerId = setInterval(() => {
         updateTimer();
       }, 10);
@@ -63,6 +67,7 @@ const App = ({
       stopTimer(timerId);
       resetTimer();
       resetNotification();
+      ipcRenderer.send(breakTimerOn ? 'HIDE_BREAK_PAGE' : 'SHOW_BREAK_PAGE');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });

@@ -8,6 +8,9 @@ import { Box, Button, Text } from '../../components';
 import scaleBeat from '../../styles/keyframes';
 import { pomodoroActions } from '../../../state/pomodoro';
 
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+
 const Circle = styled.div`
   height: ${({ width }) => width};
   border-radius: 50%;
@@ -46,6 +49,7 @@ class Timer extends Component {
     const { stopTimer, resetTimer, timerId } = this.props;
     stopTimer(timerId);
     resetTimer();
+    ipcRenderer.send('SHOW_BREAK_PAGE');
   };
 
   render() {

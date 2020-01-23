@@ -1,4 +1,12 @@
-const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  screen,
+  Menu,
+  Tray,
+  ipcMain,
+  ipcRenderer,
+} = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
@@ -119,4 +127,13 @@ app.on('before-quit', () => {
 
 ipcMain.on('SHOW_BREAK_PAGE', () => {
   createBreakTimeWindow();
+});
+
+ipcMain.on('HIDE_BREAK_PAGE', () => {
+  mainWindow.webContents.send('START_FOCUS_TIMER');
+  breakTimeWindow.close();
+});
+
+ipcMain.on('START_FOCUS_TIMER', () => {
+  mainWindow.webContents.send('START_FOCUS_TIMER');
 });

@@ -1,7 +1,8 @@
 import * as types from './types';
 
-export const startTimer = () => ({
+export const startTimer = (shortBreakOn = false) => ({
   type: types.START_TIMER,
+  payload: shortBreakOn,
 });
 
 export const stopTimer = id => {
