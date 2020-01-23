@@ -1,7 +1,8 @@
 import * as types from './types';
 
-export const startTimer = () => ({
+export const startTimer = (shortBreakOn = false) => ({
   type: types.START_TIMER,
+  payload: shortBreakOn,
 });
 
 export const stopTimer = id => {
@@ -40,10 +41,5 @@ export const resetNotification = () => ({
 
 export const saveSettings = settings => ({
   type: types.SAVE_SETTINGS,
-  payload: settings,
-});
-
-export const resetSettings = settings => ({
-  type: types.RESET_SETTINGS,
   payload: settings,
 });

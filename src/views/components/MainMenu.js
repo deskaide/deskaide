@@ -39,7 +39,7 @@ const MenuContainer = styled.ul`
 
 const MainMenu = ({ theme }) => (
   <MenuContainer>
-    <Tooltip message="Desk Stat" position="right">
+    <Tooltip message="Desk Aide" position="right">
       <li className="test">
         <Link to="/">
           <Image

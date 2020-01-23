@@ -31,12 +31,20 @@ const App = ({
   notificationShown,
 }) => {
   const history = useHistory();
+
   useEffect(() => {
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
-    if (!timerId && (focusOn || shortBreakOn)) {
+    ipcRenderer.on('START_FOCUS_TIMER', () => {
       startTimer();
+    });
+  }, [history, startTimer]);
+
+  useEffect(() => {
+    const breakTimerOn = history.location.pathname === '/breaks';
+    if (!timerId && (focusOn || shortBreakOn || breakTimerOn)) {
+      startTimer(breakTimerOn);
       const newTimerId = setInterval(() => {
         updateTimer();
       }, 10);
@@ -59,9 +67,10 @@ const App = ({
       stopTimer(timerId);
       resetTimer();
       resetNotification();
+      ipcRenderer.send(breakTimerOn ? 'HIDE_BREAK_PAGE' : 'SHOW_BREAK_PAGE');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>

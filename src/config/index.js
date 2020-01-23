@@ -7,3 +7,16 @@ export const POMODORO_INITIAL_SETTINGS = {
   longBreakTime: 15,
   remindBefore: 30,
 };
+
+export const apps = {
+  pomodoro: 'POMODORO',
+  notes: 'NOTES',
+  journals: 'JOURNALS',
+  links: 'LINKS',
+  stats: 'STATS',
+  settings: 'SETTINGS',
+};
+
+export const pomodoroSettingsId = 'pomodoro/settings';
+
+export { default as db } from './db';

@@ -10,4 +10,3 @@ export const SHOW_NOTIFICATION = 'pomodoro/show_notification';
 export const RESET_NOTIFICATION = 'pomodoro/reset_notification';
 
 export const SAVE_SETTINGS = 'pomodoro/save_settings';
-export const RESET_SETTINGS = 'pomodoro/reset_settings';

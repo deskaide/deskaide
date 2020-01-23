@@ -29,6 +29,8 @@ const settingReducers = (state = initialState, { type, payload }) => {
     case types.START_TIMER:
       return {
         ...state,
+        focusOn: !payload,
+        shortBreakOn: payload,
         totalDuration: duration,
         timerOn: true,
         timerTime: state.timerTime,
@@ -44,7 +46,6 @@ const settingReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         focusOn: !!state.shortBreakOn,
-        shortBreakOn: !!state.focusOn,
         timerOn: false,
         timerId: null,
       };
@@ -77,21 +78,6 @@ const settingReducers = (state = initialState, { type, payload }) => {
         notificationShown: false,
       };
     case types.SAVE_SETTINGS:
-      if (state.focusOn) {
-        duration = payload.focusTime * A_MINUTE;
-      } else if (state.shortBreakOn) {
-        duration = payload.shortBreakTime * A_MINUTE;
-      } else {
-        duration = payload.longBreakTime * A_MINUTE;
-      }
-      return {
-        ...state,
-        totalDuration: duration,
-        settings: {
-          ...payload,
-        },
-      };
-    case types.RESET_SETTINGS:
       if (state.focusOn) {
         duration = payload.focusTime * A_MINUTE;
       } else if (state.shortBreakOn) {
