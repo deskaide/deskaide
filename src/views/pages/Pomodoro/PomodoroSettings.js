@@ -21,19 +21,31 @@ import DBService from '../../../services/DBService';
 
 const DB = new DBService(db);
 
-const PomodoroSettingsForm = ({ saveSettings, resetForm }) => {
+const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const handleReset = async () => {
     await DB.upsert({ ...POMODORO_INITIAL_SETTINGS }, pomodoroSettingsId);
     saveSettings({ ...POMODORO_INITIAL_SETTINGS });
     resetForm({ ...POMODORO_INITIAL_SETTINGS });
     setIsModalOpen(false);
   };
+
+  const handleSave = async e => {
+    e.preventDefault();
+    await DB.upsert(values, pomodoroSettingsId);
+    saveSettings(values);
+    setSuccessModal(true);
+    setTimeout(() => {
+      setSuccessModal(false);
+    }, 1500);
+  };
+
   return (
     <>
       <SubmenuContainer appTitle="Pomodoro Settings">
         <Box pr={4} pl={4} pt={3}>
-          <Form>
+          <Form onSubmit={handleSave}>
             <RangeInput
               name="focusTime"
               label="Focus Time"
@@ -93,6 +105,9 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm }) => {
           <Button onClick={handleReset}>Yes</Button>
         </ModalActions>
       </Modal>
+      <Modal isOpen={successModal} onClose={setSuccessModal} p={32}>
+        <Text variant="h5">Settings saved successfully!</Text>
+      </Modal>
     </>
   );
 };
@@ -106,11 +121,6 @@ const PomodoroSettings = withFormik({
       longBreakTime: values.longBreakTime,
       remindBefore: values.remindBefore,
     };
-  },
-  handleSubmit: async (values, { props }) => {
-    const { saveSettings } = props;
-    await DB.upsert(values, pomodoroSettingsId);
-    saveSettings(values);
   },
 })(PomodoroSettingsForm);
 
