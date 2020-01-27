@@ -1,14 +1,5 @@
-const {
-  app,
-  BrowserWindow,
-  screen,
-  Menu,
-  Tray,
-  ipcMain,
-  ipcRenderer,
-} = require('electron');
+const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = require('electron');
 const path = require('path');
-const url = require('url');
 const isDev = require('electron-is-dev');
 const {
   createMainMenuTemplate,
@@ -86,7 +77,7 @@ function createBreakTimeWindow() {
 
   breakTimeWindow.setMenuBarVisibility(false);
   breakTimeWindow.loadURL(breakPageURL);
-  breakTimeWindow.on('closed', function() {
+  breakTimeWindow.on('closed', () => {
     breakTimeWindow = null;
   });
 }
@@ -103,10 +94,27 @@ function createContextMenu() {
   });
 }
 
+function onSuspendOrLock() {
+  console.log('Window is going to be locked!');
+}
+
+function onResumeOrUnlock() {
+  console.log('Window resumed!');
+}
+
+function startPowerMonitoring() {
+  const electron = require('electron');
+  electron.powerMonitor.on('suspend', onSuspendOrLock);
+  electron.powerMonitor.on('lock-screen', onSuspendOrLock);
+  electron.powerMonitor.on('resume', onResumeOrUnlock);
+  electron.powerMonitor.on('unlock-screen', onResumeOrUnlock);
+}
+
 app.on('ready', () => {
   app.setAppUserModelId('pro.shahid.deskstat');
   createWindow();
   createContextMenu();
+  startPowerMonitoring();
 });
 
 app.on('window-all-closed', () => {
