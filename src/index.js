@@ -6,18 +6,24 @@ import createStore from './state/store';
 import './i18n';
 import App from './App';
 import GlobalStyle from './views/styles/GlobalStyle';
-import DBService from './services/DBService';
-import { db, pomodoroSettingsId, POMODORO_INITIAL_SETTINGS } from './config';
+import { pomodoroSettingsId, POMODORO_INITIAL_SETTINGS } from './config';
 import { pomodoroActions } from './state/pomodoro';
 
-const DB = new DBService(db);
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+
 const store = createStore({});
 
 async function init() {
-  let pomodoroSettings = await DB.getById(pomodoroSettingsId);
-  if (!pomodoroSettings) {
+  let pomodoroSettings = {};
+  const settings = ipcRenderer.sendSync('GET_BY_ID', pomodoroSettingsId);
+
+  if (!settings) {
     pomodoroSettings = POMODORO_INITIAL_SETTINGS;
+  } else {
+    pomodoroSettings = settings;
   }
+
   store.dispatch(pomodoroActions.saveSettings(pomodoroSettings));
 }
 

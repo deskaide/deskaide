@@ -18,13 +18,12 @@ const initialState = {
 
 const settingReducers = (state = initialState, { type, payload }) => {
   let duration = state.settings.focusTime * A_MINUTE;
-  if (state.focusOn) {
+  if (!payload) {
     duration = state.settings.focusTime * A_MINUTE;
-  } else if (state.shortBreakOn) {
-    duration = state.settings.shortBreakTime * A_MINUTE;
   } else {
-    duration = state.settings.longBreakTime * A_MINUTE;
+    duration = state.settings.shortBreakTime * A_MINUTE;
   }
+
   switch (type) {
     case types.START_TIMER:
       return {

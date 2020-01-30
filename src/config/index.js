@@ -18,5 +18,4 @@ export const apps = {
 };
 
 export const pomodoroSettingsId = 'pomodoro/settings';
-
-export { default as db } from './db';
+export const appSettingsId = 'app/settings';

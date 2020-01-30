@@ -1,10 +1,16 @@
-const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = require('electron');
+/* eslint no-param-reassign: ["error", { "props": false }] */
+const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const AutoLaunch = require('auto-launch');
 const {
   createMainMenuTemplate,
   createContextMenuTemplate,
+  DBService,
 } = require('./config');
+
+const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = electron;
+const DB = new DBService();
 
 let mainWindow;
 let breakTimeWindow;
@@ -17,6 +23,11 @@ const startUrl = isDev
 const breakPageURL = isDev
   ? 'http://localhost:3000/#/breaks'
   : `file://${path.join(__dirname, '../build/index.html#/breaks')}`;
+
+async function getSettings() {
+  const settings = await DB.getById('app/settings');
+  return settings;
+}
 
 function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
@@ -94,27 +105,37 @@ function createContextMenu() {
   });
 }
 
-function onSuspendOrLock() {
-  console.log('Window is going to be locked!');
-}
+function onSuspendOrLock() {}
 
-function onResumeOrUnlock() {
-  console.log('Window resumed!');
-}
+function onResumeOrUnlock() {}
 
 function startPowerMonitoring() {
-  const electron = require('electron');
   electron.powerMonitor.on('suspend', onSuspendOrLock);
   electron.powerMonitor.on('lock-screen', onSuspendOrLock);
   electron.powerMonitor.on('resume', onResumeOrUnlock);
   electron.powerMonitor.on('unlock-screen', onResumeOrUnlock);
 }
 
-app.on('ready', () => {
+async function autoLaunchApp(isEnabled = false) {
+  const launcher = new AutoLaunch({ name: app.name || 'Desk Aide' });
+
+  if (isEnabled) {
+    launcher.enable();
+    const launcherEnabled = await launcher.isEnabled();
+
+    if (!launcherEnabled) launcher.enable();
+  } else {
+    launcher.disable();
+  }
+}
+
+app.on('ready', async () => {
+  const settings = await getSettings();
   app.setAppUserModelId('pro.shahid.deskstat');
   createWindow();
   createContextMenu();
   startPowerMonitoring();
+  await autoLaunchApp(settings.isAutoLaunchEnabled);
 });
 
 app.on('window-all-closed', () => {
@@ -144,4 +165,14 @@ ipcMain.on('HIDE_BREAK_PAGE', () => {
 
 ipcMain.on('START_FOCUS_TIMER', () => {
   mainWindow.webContents.send('START_FOCUS_TIMER');
+});
+
+ipcMain.on('GET_BY_ID', async (event, id) => {
+  const data = await DB.getById(id);
+  event.returnValue = data;
+});
+
+ipcMain.on('UPSERT_DATA', async (event, { id, data }) => {
+  const newData = await DB.upsert(data, id);
+  event.returnValue = newData;
 });
