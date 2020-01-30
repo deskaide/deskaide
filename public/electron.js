@@ -117,7 +117,9 @@ function startPowerMonitoring() {
 }
 
 async function autoLaunchApp(isEnabled = false) {
-  const launcher = new AutoLaunch({ name: app.name || 'Desk Aide' });
+  const launcher = new AutoLaunch({
+    name: app.name || 'deskaide',
+  });
 
   if (isEnabled) {
     launcher.enable();
@@ -135,7 +137,7 @@ app.on('ready', async () => {
   createWindow();
   createContextMenu();
   startPowerMonitoring();
-  await autoLaunchApp(settings.isAutoLaunchEnabled);
+  await autoLaunchApp(true);
 });
 
 app.on('window-all-closed', () => {

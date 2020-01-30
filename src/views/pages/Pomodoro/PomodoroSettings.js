@@ -52,7 +52,7 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
               name="focusTime"
               label="Focus Time"
               unit="min"
-              min={1}
+              min={25}
               max={60}
             />
             <RangeInput
