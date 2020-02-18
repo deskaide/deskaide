@@ -117,6 +117,7 @@ function startPowerMonitoring() {
 }
 
 async function autoLaunchApp(isEnabled = false) {
+  if (isDev) return;
   const launcher = new AutoLaunch({
     name: app.name || 'deskaide',
   });
