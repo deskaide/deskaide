@@ -2,6 +2,7 @@ export const START_TIMER = 'pomodoro/start_timer';
 export const STOP_TIMER = 'pomodoro/stop_timer';
 export const UPDATE_TIMER = 'pomodoro/update_timer';
 export const RESET_TIMER = 'pomodoro/reset_timer';
+export const SUSPEND_TIMER = 'pomodoro/suspend_timer';
 
 export const SAVE_TIMER_ID = 'pomodoro/save_timer_id';
 export const DELETE_TIMER_ID = 'pomodoro/delete_timer_id';

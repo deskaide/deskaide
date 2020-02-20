@@ -19,6 +19,7 @@ const App = ({
   startTimer,
   updateTimer,
   stopTimer,
+  suspendTimer,
   saveTimerId,
   timerId,
   timerOn,
@@ -39,7 +40,10 @@ const App = ({
     ipcRenderer.on('START_FOCUS_TIMER', () => {
       startTimer();
     });
-  }, [history, startTimer]);
+    ipcRenderer.on('SUSPEND_FOCUS_TIMER', () => {
+      suspendTimer(timerId);
+    });
+  }, [history, startTimer, suspendTimer, timerId]);
 
   useEffect(() => {
     const breakTimerOn = history.location.pathname === '/breaks';
@@ -66,7 +70,9 @@ const App = ({
       stopTimer(timerId);
       resetTimer();
       resetNotification();
-      ipcRenderer.send(breakTimerOn ? 'HIDE_BREAK_PAGE' : 'SHOW_BREAK_PAGE');
+      if (breakTimerOn) {
+        ipcRenderer.send('SHOW_BREAK_PAGE');
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   });
@@ -96,6 +102,7 @@ const mapStateToProps = ({ setting, pomodoro }) => {
 const mapActionsToProps = {
   startTimer: pomodoroActions.startTimer,
   stopTimer: pomodoroActions.stopTimer,
+  suspendTimer: pomodoroActions.suspendTimer,
   updateTimer: pomodoroActions.updateTimer,
   resetTimer: pomodoroActions.resetTimer,
   saveTimerId: pomodoroActions.saveTimerId,

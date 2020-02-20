@@ -56,6 +56,17 @@ const settingReducers = (state = initialState, { type, payload }) => {
         timerTime: 0,
         position: 100,
       };
+    case types.SUSPEND_TIMER:
+      return {
+        ...state,
+        focusOn: true,
+        shortBreakOn: false,
+        timerOn: false,
+        timerId: null,
+        timerStart: 0,
+        timerTime: 0,
+        position: 100,
+      };
     case types.SAVE_TIMER_ID:
       return {
         ...state,

@@ -105,9 +105,13 @@ function createContextMenu() {
   });
 }
 
-function onSuspendOrLock() {}
+function onSuspendOrLock() {
+  mainWindow.webContents.send('SUSPEND_FOCUS_TIMER');
+}
 
-function onResumeOrUnlock() {}
+function onResumeOrUnlock() {
+  mainWindow.webContents.send('START_FOCUS_TIMER');
+}
 
 function startPowerMonitoring() {
   electron.powerMonitor.on('suspend', onSuspendOrLock);

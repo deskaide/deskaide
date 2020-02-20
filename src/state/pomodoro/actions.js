@@ -20,6 +20,13 @@ export const resetTimer = () => ({
   type: types.RESET_TIMER,
 });
 
+export const suspendTimer = id => {
+  clearInterval(id);
+  return {
+    type: types.SUSPEND_TIMER,
+  };
+};
+
 export const saveTimerId = id => ({
   type: types.SAVE_TIMER_ID,
   payload: id,
