@@ -11,9 +11,11 @@ const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
   .plugin(PouchDBReplication)
   .plugin(PouchDBFind);
 
-const db = new PouchDB('deskaide', { skip_setup: true });
-
 class DBService {
+  constructor(dbPath = '') {
+    this.db = new PouchDB(`${dbPath}`, { skip_setup: true });
+  }
+
   upsert = async (data, id = null) => {
     const now = new Date().toISOString();
     const createdAt = now;
@@ -37,14 +39,14 @@ class DBService {
       };
     }
 
-    const { rev } = await db.put(doc);
+    const { rev } = await this.db.put(doc);
     doc._rev = rev;
     return doc;
   };
 
   getById = async id => {
     try {
-      const doc = await db.get(id);
+      const doc = await this.db.get(id);
       return doc;
     } catch (error) {
       switch (error.name) {
