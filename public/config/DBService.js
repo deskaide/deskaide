@@ -1,8 +1,19 @@
-import shortid from 'shortid';
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id", "_rev"] }] */
+const shortid = require('shortid');
+const PouchDBCore = require('pouchdb-core');
+const PouchDBMapReduce = require('pouchdb-mapreduce');
+const PouchDBAdapterLevelDB = require('pouchdb-adapter-leveldb');
+const PouchDBReplication = require('pouchdb-replication');
+const PouchDBFind = require('pouchdb-find');
+
+const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
+  .plugin(PouchDBMapReduce)
+  .plugin(PouchDBReplication)
+  .plugin(PouchDBFind);
 
 class DBService {
-  constructor(db) {
-    this.db = db;
+  constructor(dbPath = '') {
+    this.db = new PouchDB(`${dbPath}`, { skip_setup: true });
   }
 
   upsert = async (data, id = null) => {
@@ -48,4 +59,4 @@ class DBService {
   };
 }
 
-export default DBService;
+module.exports = DBService;

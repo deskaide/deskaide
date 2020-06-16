@@ -9,7 +9,7 @@ const TooltipContainer = styled.span`
 
   .tooltip-message {
     display: inline-block;
-    width: auto;
+    width: max-content;
     min-width: 80px;
     visibility: hidden;
     background-color: ${({ theme }) => theme.colors.text};

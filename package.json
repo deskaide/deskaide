@@ -9,7 +9,7 @@
   "email": "hello@shahid.pro",
   "author": "Shahidul Islam Majumder <hello@shahid.pro> (https://shahid.pro/)",
   "description": "An open source application to check your desk (Computer) usage.",
-  "productName": "Desk Aide",
+  "productName": "Deskaide",
   "scripts": {
     "start": "concurrently 'BROWSER=none npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
     "start:win": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start:win\"",
@@ -56,6 +56,7 @@
     }
   },
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "electron-is-dev": "^1.1.0",
     "formik": "^2.0.6",
     "history": "^4.10.1",
@@ -64,6 +65,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "pouchdb-adapter-http": "^7.1.1",
     "pouchdb-adapter-idb": "^7.1.1",
+    "pouchdb-adapter-leveldb": "^7.1.1",
     "pouchdb-adapter-memory": "^7.1.1",
     "pouchdb-core": "^7.1.1",
     "pouchdb-find": "^7.1.1",

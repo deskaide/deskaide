@@ -12,20 +12,19 @@ import {
   Text,
 } from '../../components';
 import { pomodoroActions } from '../../../state/pomodoro';
-import {
-  POMODORO_INITIAL_SETTINGS,
-  db,
-  pomodoroSettingsId,
-} from '../../../config';
-import DBService from '../../../services/DBService';
+import { POMODORO_INITIAL_SETTINGS, pomodoroSettingsId } from '../../../config';
 
-const DB = new DBService(db);
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const handleReset = async () => {
-    await DB.upsert({ ...POMODORO_INITIAL_SETTINGS }, pomodoroSettingsId);
+    ipcRenderer.sendSync('UPSERT_DATA', {
+      id: pomodoroSettingsId,
+      data: { ...POMODORO_INITIAL_SETTINGS },
+    });
     saveSettings({ ...POMODORO_INITIAL_SETTINGS });
     resetForm({ ...POMODORO_INITIAL_SETTINGS });
     setIsModalOpen(false);
@@ -33,7 +32,10 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
 
   const handleSave = async e => {
     e.preventDefault();
-    await DB.upsert(values, pomodoroSettingsId);
+    ipcRenderer.sendSync('UPSERT_DATA', {
+      id: pomodoroSettingsId,
+      data: values,
+    });
     saveSettings(values);
     setSuccessModal(true);
     setTimeout(() => {
