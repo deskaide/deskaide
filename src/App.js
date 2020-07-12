@@ -88,25 +88,19 @@ const App = ({
 const mapStateToProps = ({ setting, pomodoro }) => {
   return {
     selectedTheme: setting.selectedTheme,
-    timerId: pomodoro.timerId,
-    timerOn: pomodoro.timerOn,
-    timerTime: pomodoro.timerTime,
-    focusOn: pomodoro.focusOn,
-    totalDuration: pomodoro.totalDuration,
     remindBefore: pomodoro.settings.remindBefore,
-    shortBreakOn: pomodoro.shortBreakOn,
+    isFocusOn: pomodoro.isFocusOn,
+    isShortBreakOn: pomodoro.isShortBreakOn,
+    isLongBreakOn: pomodoro.isLongBreakOn,
     notificationShown: pomodoro.notificationShown,
   };
 };
 
 const mapActionsToProps = {
-  startTimer: pomodoroActions.startTimer,
+  startFocusTimer: pomodoroActions.startFocusTimer,
+  startShortBreakTimer: pomodoroActions.startShortBreakTimer,
+  startLongBreakTimer: pomodoroActions.startLongBreakTimer,
   stopTimer: pomodoroActions.stopTimer,
-  suspendTimer: pomodoroActions.suspendTimer,
-  updateTimer: pomodoroActions.updateTimer,
-  resetTimer: pomodoroActions.resetTimer,
-  saveTimerId: pomodoroActions.saveTimerId,
-  deleteTimerId: pomodoroActions.deleteTimerId,
   showNotification: pomodoroActions.showNotification,
   resetNotification: pomodoroActions.resetNotification,
 };

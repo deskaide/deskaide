@@ -1,35 +1,39 @@
 import * as types from './types';
 
-export const startTimer = (shortBreakOn = false) => ({
-  type: types.START_TIMER,
-  payload: shortBreakOn,
+export const startFocusTimer = () => ({
+  type: types.START_FOCUS_TIMER,
 });
 
-export const stopTimer = id => {
-  clearInterval(id);
-  return {
-    type: types.STOP_TIMER,
-  };
-};
-
-export const updateTimer = () => ({
-  type: types.UPDATE_TIMER,
+export const stopFocusTimer = () => ({
+  type: types.STOP_FOCUS_TIMER,
 });
 
-export const resetTimer = () => ({
-  type: types.RESET_TIMER,
+export const skipFocusTimer = () => ({
+  type: types.SKIP_FOCUS_TIMER,
 });
 
-export const suspendTimer = id => {
-  clearInterval(id);
-  return {
-    type: types.SUSPEND_TIMER,
-  };
-};
+export const startShortBreakTimer = () => ({
+  type: types.START_SHORT_BREAK_TIMER,
+});
 
-export const saveTimerId = id => ({
-  type: types.SAVE_TIMER_ID,
-  payload: id,
+export const stopShortBreakTimer = () => ({
+  type: types.PAUSE_SHORT_BREAK_TIMER,
+});
+
+export const skipShortBreakTimer = () => ({
+  type: types.SKIP_SHORT_BREAK_TIMER,
+});
+
+export const startLongBreakTimer = () => ({
+  type: types.START_LONG_BREAK_TIMER,
+});
+
+export const stopLongBreakTimer = () => ({
+  type: types.PAUSE_LONG_BREAK_TIMER,
+});
+
+export const skipLongBreakTimer = () => ({
+  type: types.SKIP_LONG_BREAK_TIMER,
 });
 
 export const showNotification = ({ body, icon }) => {
@@ -46,7 +50,7 @@ export const resetNotification = () => ({
   type: types.RESET_NOTIFICATION,
 });
 
-export const saveSettings = settings => ({
+export const saveSettings = (settings) => ({
   type: types.SAVE_SETTINGS,
   payload: settings,
 });
