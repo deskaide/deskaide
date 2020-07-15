@@ -5,77 +5,48 @@ import { ThemeProvider } from 'styled-components';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
-import { getSeconds } from './utils/Time';
-
-import logo from './assets/images/logo.png';
+import { useTimer } from './hooks';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 const App = ({
   selectedTheme = 'dark',
-  totalDuration,
-  timerTime,
-  startTimer,
-  updateTimer,
-  stopTimer,
-  suspendTimer,
-  saveTimerId,
-  timerId,
-  timerOn,
-  remindBefore,
-  resetTimer,
-  focusOn,
-  shortBreakOn,
-  showNotification,
-  resetNotification,
-  notificationShown,
+  startFocusTimer,
+  stopFocusTimer,
+  updateTime,
+  isFocusOn,
+  pomodoroSettings,
 }) => {
   const history = useHistory();
+  const { time, start, pause, reset, isRunning } = useTimer({
+    type: 'DECREMENTAL',
+    initialTime: 0.2 * 60,
+  });
 
   useEffect(() => {
+    startFocusTimer();
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
     ipcRenderer.on('START_FOCUS_TIMER', () => {
-      startTimer();
+      startFocusTimer();
     });
     ipcRenderer.on('SUSPEND_FOCUS_TIMER', () => {
-      suspendTimer(timerId);
+      stopFocusTimer();
     });
-  }, [history, startTimer, suspendTimer, timerId]);
+  }, []);
 
   useEffect(() => {
-    const breakTimerOn = history.location.pathname === '/breaks';
-    if (!timerId && (focusOn || shortBreakOn || breakTimerOn)) {
-      startTimer(breakTimerOn);
-      const newTimerId = setInterval(() => {
-        updateTimer();
-      }, 10);
-      saveTimerId(newTimerId);
+    if (isFocusOn) {
+      start(pomodoroSettings.focusTime * 60);
     }
+  }, [isFocusOn]);
 
-    if (
-      timerOn &&
-      focusOn &&
-      getSeconds(totalDuration - timerTime) === remindBefore &&
-      !notificationShown
-    ) {
-      showNotification({
-        body: `Hey buddy! A short break is going to start within ${remindBefore} seconds!`,
-        icon: logo,
-      });
-    }
-    if (timerOn && totalDuration - timerTime < 1) {
-      stopTimer(timerId);
-      resetTimer();
-      resetNotification();
-      if (breakTimerOn) {
-        ipcRenderer.send('SHOW_BREAK_PAGE');
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+  useEffect(() => {
+    updateTime(time);
+  }, [time]);
+
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>
@@ -88,11 +59,10 @@ const App = ({
 const mapStateToProps = ({ setting, pomodoro }) => {
   return {
     selectedTheme: setting.selectedTheme,
-    remindBefore: pomodoro.settings.remindBefore,
     isFocusOn: pomodoro.isFocusOn,
-    isShortBreakOn: pomodoro.isShortBreakOn,
-    isLongBreakOn: pomodoro.isLongBreakOn,
+    remindBefore: pomodoro.settings.remindBefore,
     notificationShown: pomodoro.notificationShown,
+    pomodoroSettings: pomodoro.settings,
   };
 };
 
@@ -100,7 +70,8 @@ const mapActionsToProps = {
   startFocusTimer: pomodoroActions.startFocusTimer,
   startShortBreakTimer: pomodoroActions.startShortBreakTimer,
   startLongBreakTimer: pomodoroActions.startLongBreakTimer,
-  stopTimer: pomodoroActions.stopTimer,
+  stopFocusTimer: pomodoroActions.stopFocusTimer,
+  updateTime: pomodoroActions.updateTime,
   showNotification: pomodoroActions.showNotification,
   resetNotification: pomodoroActions.resetNotification,
 };

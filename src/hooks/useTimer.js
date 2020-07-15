@@ -6,7 +6,7 @@ const useTimer = (config = {}) => {
     interval = 1000,
     step = 1,
     type = 'INCREMENTAL',
-    endTime,
+    endTime = 0,
     onTimeOver,
   } = config;
   const [time, setTime] = useState(initialTime);
@@ -19,13 +19,18 @@ const useTimer = (config = {}) => {
     setTime(initialTime);
   }, [initialTime]);
 
-  const start = useCallback(() => {
-    if (isTimeOver) {
-      reset();
-    }
-
-    setIsRunning(true);
-  }, [reset, isTimeOver]);
+  const start = useCallback(
+    (startingTime = 0) => {
+      if (isTimeOver) {
+        reset();
+      }
+      if (startingTime) {
+        setTime(startingTime);
+      }
+      setIsRunning(true);
+    },
+    [reset, isTimeOver]
+  );
 
   const pause = useCallback(() => {
     setIsRunning(false);

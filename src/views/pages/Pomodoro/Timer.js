@@ -45,26 +45,15 @@ const CustomTimerView = ({ hours, minutes, seconds }) => {
 
 class Timer extends Component {
   stopTimer = () => {
-    const { stopTimer, resetTimer, timerId } = this.props;
-    stopTimer(timerId);
-    resetTimer();
     ipcRenderer.send('SHOW_BREAK_PAGE');
   };
 
   render() {
-    const {
-      theme,
-      totalDuration,
-      timerTime,
-      timerOn,
-      focusOn,
-      focusTime,
-      newTime,
-    } = this.props;
+    const { theme, time, isFocusOn } = this.props;
 
     return (
       <Box>
-        <Circle width="32rem" bg="#2a1754" animate={timerOn && focusOn}>
+        <Circle width="32rem" bg="#2a1754" animate={isFocusOn}>
           <Circle
             width="24rem"
             bg="#45268b"
@@ -76,7 +65,7 @@ class Timer extends Component {
               boxShadow={`0 0 64px ${theme.colors.dark}`}
             >
               <Countdown
-                date={newTime * 1000}
+                date={time * 1000}
                 renderer={CustomTimerView}
                 controlled
               />
@@ -84,7 +73,7 @@ class Timer extends Component {
           </Circle>
         </Circle>
         <Box mt={4}>
-          <Button onClick={this.stopTimer} disabled={!focusOn || !timerOn}>
+          <Button onClick={this.stopTimer} disabled={!isFocusOn}>
             Skip to break
           </Button>
         </Box>
@@ -94,12 +83,8 @@ class Timer extends Component {
 }
 
 const mapStateToProps = ({ pomodoro }) => ({
-  timerId: pomodoro.timerId,
-  timerOn: pomodoro.timerOn,
-  timerTime: pomodoro.timerTime,
-  focusOn: pomodoro.focusOn,
-  focusTime: pomodoro.settings.focusTime,
-  totalDuration: pomodoro.totalDuration,
+  time: pomodoro.time,
+  isFocusOn: pomodoro.isFocusOn,
 });
 
 const mapActionsToProps = {

@@ -17,7 +17,7 @@ export const startShortBreakTimer = () => ({
 });
 
 export const stopShortBreakTimer = () => ({
-  type: types.PAUSE_SHORT_BREAK_TIMER,
+  type: types.STOP_SHORT_BREAK_TIMER,
 });
 
 export const skipShortBreakTimer = () => ({
@@ -29,11 +29,16 @@ export const startLongBreakTimer = () => ({
 });
 
 export const stopLongBreakTimer = () => ({
-  type: types.PAUSE_LONG_BREAK_TIMER,
+  type: types.STOP_LONG_BREAK_TIMER,
 });
 
 export const skipLongBreakTimer = () => ({
   type: types.SKIP_LONG_BREAK_TIMER,
+});
+
+export const updateTime = (time = 0) => ({
+  type: types.UPDATE_TIME,
+  payload: time,
 });
 
 export const showNotification = ({ body, icon }) => {

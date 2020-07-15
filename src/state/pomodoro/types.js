@@ -10,6 +10,7 @@ export const START_LONG_BREAK_TIMER = 'pomodoro/start_long_break_timer';
 export const STOP_LONG_BREAK_TIMER = 'pomodoro/stop_long_break_timer';
 export const SKIP_LONG_BREAK_TIMER = 'pomodoro/skip_long_break_timer';
 
+export const UPDATE_TIME = 'pomodoro/update_time';
 export const PAUSE_TIMER = 'pomodoro/pause_timer';
 export const RESUME_TIMER = 'pomodoro/resume_timer';
 

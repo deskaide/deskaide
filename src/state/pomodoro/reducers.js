@@ -7,6 +7,7 @@ const initialState = {
   isShortBreakOn: false,
   isLongBreakOn: false,
   hasNotificationShown: false,
+  time: 0,
   settings: {
     ...POMODORO_INITIAL_SETTINGS,
   },
@@ -48,6 +49,11 @@ const pomodoroReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         hasNotificationShown: false,
+      };
+    case types.UPDATE_TIME:
+      return {
+        ...state,
+        time: payload,
       };
     case types.SAVE_SETTINGS:
       return {
