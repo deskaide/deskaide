@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { withTheme, css } from 'styled-components';
 import { space, layout, position, color, shadow } from 'styled-system';
 import Countdown from 'react-countdown-now';
@@ -43,44 +43,41 @@ const CustomTimerView = ({ hours, minutes, seconds }) => {
   );
 };
 
-class Timer extends Component {
-  stopTimer = () => {
+const Timer = ({ theme, skipFocusTimer, time, isFocusOn }) => {
+  const stopTimer = () => {
+    skipFocusTimer();
     ipcRenderer.send('SHOW_BREAK_PAGE');
   };
 
-  render() {
-    const { theme, time, isFocusOn } = this.props;
-
-    return (
-      <Box>
-        <Circle width="32rem" bg="#2a1754" animate={isFocusOn}>
+  return (
+    <Box>
+      <Circle width="32rem" bg="#2a1754" animate={isFocusOn}>
+        <Circle
+          width="24rem"
+          bg="#45268b"
+          boxShadow={`0 0 64px ${theme.colors.dark}`}
+        >
           <Circle
-            width="24rem"
-            bg="#45268b"
+            width="16rem"
+            bg="#532ea7"
             boxShadow={`0 0 64px ${theme.colors.dark}`}
           >
-            <Circle
-              width="16rem"
-              bg="#532ea7"
-              boxShadow={`0 0 64px ${theme.colors.dark}`}
-            >
-              <Countdown
-                date={time * 1000}
-                renderer={CustomTimerView}
-                controlled
-              />
-            </Circle>
+            <Countdown
+              date={isFocusOn ? time * 1000 : 0}
+              renderer={CustomTimerView}
+              controlled
+            />
           </Circle>
         </Circle>
-        <Box mt={4}>
-          <Button onClick={this.stopTimer} disabled={!isFocusOn}>
-            Skip to break
-          </Button>
-        </Box>
+      </Circle>
+      <Box mt={4}>
+        <Button onClick={stopTimer} disabled={!isFocusOn}>
+          Skip to break
+        </Button>
       </Box>
-    );
-  }
-}
+    </Box>
+  );
+};
 
 const mapStateToProps = ({ pomodoro }) => ({
   time: pomodoro.time,
@@ -88,8 +85,7 @@ const mapStateToProps = ({ pomodoro }) => ({
 });
 
 const mapActionsToProps = {
-  stopTimer: pomodoroActions.stopTimer,
-  resetTimer: pomodoroActions.resetTimer,
+  skipFocusTimer: pomodoroActions.skipFocusTimer,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withTheme(Timer));

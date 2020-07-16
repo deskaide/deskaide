@@ -28,6 +28,12 @@ const pomodoroReducers = (state = initialState, { type, payload }) => {
         ...state,
         isFocusOn: false,
       };
+    case types.SKIP_FOCUS_TIMER:
+      return {
+        ...state,
+        isFocusOn: false,
+        isShortBreakOn: true,
+      };
     case types.START_SHORT_BREAK_TIMER:
       return {
         ...state,
@@ -39,6 +45,12 @@ const pomodoroReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isShortBreakOn: false,
+      };
+    case types.SKIP_SHORT_BREAK_TIMER:
+      return {
+        ...state,
+        isShortBreakOn: false,
+        isFocusOn: true,
       };
     case types.SHOW_NOTIFICATION:
       return {

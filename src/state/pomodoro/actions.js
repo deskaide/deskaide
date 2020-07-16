@@ -41,11 +41,11 @@ export const updateTime = (time = 0) => ({
   payload: time,
 });
 
-export const showNotification = ({ body, icon }) => {
-  new Notification('', {
-    body,
-    icon,
-  });
+export const showNotification = () => {
+  // new Notification('', {
+  //   body,
+  //   icon,
+  // });
   return {
     type: types.SHOW_NOTIFICATION,
   };

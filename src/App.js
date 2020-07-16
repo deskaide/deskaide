@@ -13,19 +13,26 @@ const { ipcRenderer } = electron;
 const App = ({
   selectedTheme = 'dark',
   startFocusTimer,
+  startShortBreakTimer,
   stopFocusTimer,
   updateTime,
   isFocusOn,
+  isShortBreakOn,
   pomodoroSettings,
 }) => {
   const history = useHistory();
-  const { time, start, pause, reset, isRunning } = useTimer({
+  const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
-    initialTime: 0.2 * 60,
+    initialTime: 0,
   });
 
   useEffect(() => {
-    startFocusTimer();
+    const isBreakWindow = history.location.pathname === '/breaks';
+    if (isBreakWindow) {
+      startShortBreakTimer();
+    } else {
+      startFocusTimer();
+    }
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
@@ -38,10 +45,16 @@ const App = ({
   }, []);
 
   useEffect(() => {
+    reset();
+
     if (isFocusOn) {
       start(pomodoroSettings.focusTime * 60);
     }
-  }, [isFocusOn]);
+
+    if (isShortBreakOn) {
+      start(pomodoroSettings.shortBreakTime * 60);
+    }
+  }, [isFocusOn, isShortBreakOn]);
 
   useEffect(() => {
     updateTime(time);
@@ -60,6 +73,7 @@ const mapStateToProps = ({ setting, pomodoro }) => {
   return {
     selectedTheme: setting.selectedTheme,
     isFocusOn: pomodoro.isFocusOn,
+    isShortBreakOn: pomodoro.isShortBreakOn,
     remindBefore: pomodoro.settings.remindBefore,
     notificationShown: pomodoro.notificationShown,
     pomodoroSettings: pomodoro.settings,
