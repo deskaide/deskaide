@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -18,13 +18,31 @@ const App = ({
   updateTime,
   isFocusOn,
   isShortBreakOn,
-  pomodoroSettings,
+  pomodoroSettings: { focusTime, shortBreakTime },
 }) => {
   const history = useHistory();
   const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
     initialTime: 0,
   });
+
+  const startTimer = useCallback(
+    (duration = 0) => {
+      start(duration);
+    },
+    [start]
+  );
+
+  const resetTimer = useCallback(() => {
+    reset();
+  }, [reset]);
+
+  const updateCounterTime = useCallback(
+    (currentTime = 0) => {
+      updateTime(currentTime);
+    },
+    [updateTime]
+  );
 
   useEffect(() => {
     const isBreakWindow = history.location.pathname === '/breaks';
@@ -42,23 +60,30 @@ const App = ({
     ipcRenderer.on('SUSPEND_FOCUS_TIMER', () => {
       stopFocusTimer();
     });
-  }, []);
+  }, [history, startFocusTimer, stopFocusTimer, startShortBreakTimer]);
 
   useEffect(() => {
-    reset();
+    resetTimer();
 
     if (isFocusOn) {
-      start(pomodoroSettings.focusTime * 60);
+      startTimer(focusTime * 60);
     }
 
     if (isShortBreakOn) {
-      start(pomodoroSettings.shortBreakTime * 60);
+      startTimer(shortBreakTime * 60);
     }
-  }, [isFocusOn, isShortBreakOn]);
+  }, [
+    isFocusOn,
+    isShortBreakOn,
+    startTimer,
+    resetTimer,
+    focusTime,
+    shortBreakTime,
+  ]);
 
   useEffect(() => {
-    updateTime(time);
-  }, [time]);
+    updateCounterTime(time);
+  }, [time, updateCounterTime]);
 
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
