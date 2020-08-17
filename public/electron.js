@@ -86,6 +86,10 @@ function createBreakTimeWindow() {
     },
   });
 
+  if (isDev) {
+    breakTimeWindow.webContents.openDevTools();
+  }
+
   breakTimeWindow.setMenuBarVisibility(false);
   breakTimeWindow.loadURL(breakPageURL);
   breakTimeWindow.on('closed', () => {

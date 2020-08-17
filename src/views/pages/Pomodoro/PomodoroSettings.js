@@ -30,7 +30,7 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
     setIsModalOpen(false);
   };
 
-  const handleSave = async e => {
+  const handleSave = async (e) => {
     e.preventDefault();
     ipcRenderer.sendSync('UPSERT_DATA', {
       id: pomodoroSettingsId,
@@ -52,14 +52,14 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
               name="focusTime"
               label="Focus Time"
               unit="min"
-              min={25}
+              min={1}
               max={60}
             />
             <RangeInput
               name="shortBreakTime"
               label="Short Break Time"
               unit="min"
-              min={5}
+              min={1}
               max={10}
             />
             <RangeInput
@@ -116,7 +116,7 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
 
 const PomodoroSettings = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: values => {
+  mapPropsToValues: (values) => {
     return {
       focusTime: values.focusTime,
       shortBreakTime: values.shortBreakTime,

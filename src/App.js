@@ -13,17 +13,30 @@ const { ipcRenderer } = electron;
 const App = ({
   selectedTheme = 'dark',
   startFocusTimer,
-  startShortBreakTimer,
-  stopFocusTimer,
-  updateTime,
+  skipFocusTimer,
   isFocusOn,
   isShortBreakOn,
+  startShortBreakTimer,
+  skipShortBreakTimer,
+  updateTime,
   pomodoroSettings: { focusTime, shortBreakTime },
 }) => {
   const history = useHistory();
+  const toggleTimer = () => {
+    if (isFocusOn) {
+      skipFocusTimer();
+      ipcRenderer.send('SHOW_BREAK_PAGE');
+    }
+
+    if (isShortBreakOn) {
+      skipShortBreakTimer();
+      ipcRenderer.send('HIDE_BREAK_PAGE');
+    }
+  };
   const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
     initialTime: 0,
+    onTimeOver: toggleTimer,
   });
 
   const startTimer = useCallback(
@@ -51,16 +64,11 @@ const App = ({
     } else {
       startFocusTimer();
     }
+
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
-    ipcRenderer.on('START_FOCUS_TIMER', () => {
-      startFocusTimer();
-    });
-    ipcRenderer.on('SUSPEND_FOCUS_TIMER', () => {
-      stopFocusTimer();
-    });
-  }, [history, startFocusTimer, stopFocusTimer, startShortBreakTimer]);
+  }, [history, startFocusTimer, startShortBreakTimer]);
 
   useEffect(() => {
     resetTimer();
@@ -107,9 +115,9 @@ const mapStateToProps = ({ setting, pomodoro }) => {
 
 const mapActionsToProps = {
   startFocusTimer: pomodoroActions.startFocusTimer,
+  skipFocusTimer: pomodoroActions.skipFocusTimer,
   startShortBreakTimer: pomodoroActions.startShortBreakTimer,
-  startLongBreakTimer: pomodoroActions.startLongBreakTimer,
-  stopFocusTimer: pomodoroActions.stopFocusTimer,
+  skipShortBreakTimer: pomodoroActions.skipShortBreakTimer,
   updateTime: pomodoroActions.updateTime,
   showNotification: pomodoroActions.showNotification,
   resetNotification: pomodoroActions.resetNotification,

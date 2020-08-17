@@ -20,8 +20,6 @@ const Timer = ({ time, skipShortBreakTimer }) => {
     ipcRenderer.send('HIDE_BREAK_PAGE');
   };
 
-  console.log(time);
-
   return (
     <Box>
       <Countdown date={time * 1000} renderer={CustomTimerView} controlled />
