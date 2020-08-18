@@ -1,4 +1,5 @@
 import * as types from './types';
+import notify from '../../utils/notify';
 
 export const startFocusTimer = () => ({
   type: types.START_FOCUS_TIMER,
@@ -41,11 +42,8 @@ export const updateTime = (time = 0) => ({
   payload: time,
 });
 
-export const showNotification = () => {
-  // new Notification('', {
-  //   body,
-  //   icon,
-  // });
+export const showNotification = (title = '', message = {}) => {
+  notify(title, message);
   return {
     type: types.SHOW_NOTIFICATION,
   };

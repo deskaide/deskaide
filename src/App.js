@@ -6,6 +6,7 @@ import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
 import { useTimer } from './hooks';
+import logo from './assets/images/logo.png';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
@@ -19,7 +20,10 @@ const App = ({
   startShortBreakTimer,
   skipShortBreakTimer,
   updateTime,
-  pomodoroSettings: { focusTime, shortBreakTime },
+  showNotification,
+  resetNotification,
+  hasNotificationShown,
+  pomodoroSettings: { focusTime, shortBreakTime, remindBefore },
 }) => {
   const history = useHistory();
   const [duration, setDuration] = useState(focusTime * 60);
@@ -89,12 +93,20 @@ const App = ({
 
     if (isFocusOn) {
       startTimer(duration);
+      resetNotification();
     }
 
     if (isShortBreakOn) {
       startTimer(duration);
     }
-  }, [isFocusOn, isShortBreakOn, startTimer, resetTimer, duration]);
+  }, [
+    isFocusOn,
+    isShortBreakOn,
+    startTimer,
+    resetTimer,
+    duration,
+    resetNotification,
+  ]);
 
   useEffect(() => {
     if (isFocusOn) {
@@ -102,8 +114,24 @@ const App = ({
         setDuration(time - (focusDuration - focusTime) * 60);
         setFocusDuration(focusTime);
       }
+      if (!hasNotificationShown && time === remindBefore) {
+        showNotification('Break Reminder !!!', {
+          body: `Hey buddy! A short break is going to start within ${remindBefore} seconds!`,
+          icon: logo,
+        });
+      }
     }
-  }, [isFocusOn, focusTime, focusDuration, time, setFocusDuration, startTimer]);
+  }, [
+    isFocusOn,
+    focusTime,
+    focusDuration,
+    time,
+    setFocusDuration,
+    startTimer,
+    hasNotificationShown,
+    showNotification,
+    remindBefore,
+  ]);
 
   useEffect(() => {
     updateCounterTime(time);
@@ -124,7 +152,7 @@ const mapStateToProps = ({ setting, pomodoro }) => {
     isFocusOn: pomodoro.isFocusOn,
     isShortBreakOn: pomodoro.isShortBreakOn,
     remindBefore: pomodoro.settings.remindBefore,
-    notificationShown: pomodoro.notificationShown,
+    hasNotificationShown: pomodoro.hasNotificationShown,
     pomodoroSettings: pomodoro.settings,
   };
 };
