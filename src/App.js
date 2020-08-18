@@ -68,6 +68,10 @@ const App = ({
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
+
+    ipcRenderer.on('START_FOCUS_TIMER', () => {
+      startFocusTimer();
+    });
   }, [history, startFocusTimer, startShortBreakTimer]);
 
   useEffect(() => {
