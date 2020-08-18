@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useCallback } from 'react';
+import React, { Suspense, useEffect, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -22,6 +22,9 @@ const App = ({
   pomodoroSettings: { focusTime, shortBreakTime },
 }) => {
   const history = useHistory();
+  const [duration, setDuration] = useState(focusTime * 60);
+  const [focusDuration, setFocusDuration] = useState(focusTime);
+  const [breakDuration, setBreakDuration] = useState(shortBreakTime);
   const toggleTimer = () => {
     if (isFocusOn) {
       skipFocusTimer();
@@ -40,8 +43,8 @@ const App = ({
   });
 
   const startTimer = useCallback(
-    (duration = 0) => {
-      start(duration);
+    (interval = 0) => {
+      start(interval);
     },
     [start]
   );
@@ -78,19 +81,43 @@ const App = ({
     resetTimer();
 
     if (isFocusOn) {
-      startTimer(focusTime * 60);
+      startTimer(duration);
     }
 
     if (isShortBreakOn) {
-      startTimer(shortBreakTime * 60);
+      startTimer(duration);
+    }
+  }, [isFocusOn, isShortBreakOn, startTimer, resetTimer, duration]);
+
+  useEffect(() => {
+    if (isFocusOn) {
+      if (focusTime !== focusDuration) {
+        setDuration(time - (focusDuration - focusTime) * 60);
+        setFocusDuration(focusTime);
+      } else {
+        setDuration(focusTime * 60);
+      }
+    }
+
+    if (isShortBreakOn) {
+      if (shortBreakTime !== breakDuration) {
+        setDuration(time - (breakDuration - shortBreakTime) * 60);
+        setBreakDuration(shortBreakTime);
+      } else {
+        setDuration(shortBreakTime * 60);
+      }
     }
   }, [
     isFocusOn,
     isShortBreakOn,
-    startTimer,
-    resetTimer,
     focusTime,
     shortBreakTime,
+    focusDuration,
+    breakDuration,
+    time,
+    setFocusDuration,
+    setBreakDuration,
+    startTimer,
   ]);
 
   useEffect(() => {
