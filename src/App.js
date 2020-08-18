@@ -24,7 +24,6 @@ const App = ({
   const history = useHistory();
   const [duration, setDuration] = useState(focusTime * 60);
   const [focusDuration, setFocusDuration] = useState(focusTime);
-  const [breakDuration, setBreakDuration] = useState(shortBreakTime);
   const toggleTimer = () => {
     if (isFocusOn) {
       skipFocusTimer();
@@ -63,6 +62,7 @@ const App = ({
   useEffect(() => {
     const isBreakWindow = history.location.pathname === '/breaks';
     if (isBreakWindow) {
+      setDuration(shortBreakTime * 60);
       startShortBreakTimer();
     } else {
       startFocusTimer();
@@ -73,9 +73,16 @@ const App = ({
     });
 
     ipcRenderer.on('START_FOCUS_TIMER', () => {
+      setDuration(focusTime * 60);
       startFocusTimer();
     });
-  }, [history, startFocusTimer, startShortBreakTimer]);
+  }, [
+    history,
+    startFocusTimer,
+    startShortBreakTimer,
+    shortBreakTime,
+    focusTime,
+  ]);
 
   useEffect(() => {
     resetTimer();
@@ -94,31 +101,9 @@ const App = ({
       if (focusTime !== focusDuration) {
         setDuration(time - (focusDuration - focusTime) * 60);
         setFocusDuration(focusTime);
-      } else {
-        setDuration(focusTime * 60);
       }
     }
-
-    if (isShortBreakOn) {
-      if (shortBreakTime !== breakDuration) {
-        setDuration(time - (breakDuration - shortBreakTime) * 60);
-        setBreakDuration(shortBreakTime);
-      } else {
-        setDuration(shortBreakTime * 60);
-      }
-    }
-  }, [
-    isFocusOn,
-    isShortBreakOn,
-    focusTime,
-    shortBreakTime,
-    focusDuration,
-    breakDuration,
-    time,
-    setFocusDuration,
-    setBreakDuration,
-    startTimer,
-  ]);
+  }, [isFocusOn, focusTime, focusDuration, time, setFocusDuration, startTimer]);
 
   useEffect(() => {
     updateCounterTime(time);
