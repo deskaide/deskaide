@@ -52,23 +52,23 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
               name="focusTime"
               label="Focus Time"
               unit="min"
-              min={1}
+              min={20}
               max={60}
             />
             <RangeInput
               name="shortBreakTime"
               label="Short Break Time"
               unit="min"
-              min={1}
+              min={5}
               max={10}
             />
-            <RangeInput
+            {/* <RangeInput
               name="longBreakTime"
               label="Long Break Time"
               unit="min"
               min={15}
               max={30}
-            />
+            /> */}
             <RangeInput
               name="remindBefore"
               label="Remind before"
