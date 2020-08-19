@@ -1,92 +1,75 @@
 import * as types from './types';
-import { A_MINUTE, POMODORO_INITIAL_SETTINGS } from '../../config';
+import { POMODORO_INITIAL_SETTINGS } from '../../config';
 
 const initialState = {
-  focusOn: true,
-  shortBreakOn: false,
-  timerOn: false,
-  timerStart: 0,
-  timerTime: 0,
-  position: 100,
-  timerId: null,
-  totalDuration: 0,
-  notificationShown: false,
+  focusStreak: 0,
+  isFocusOn: false,
+  isShortBreakOn: false,
+  isLongBreakOn: false,
+  hasNotificationShown: false,
+  time: 0,
   settings: {
     ...POMODORO_INITIAL_SETTINGS,
   },
 };
 
-const settingReducers = (state = initialState, { type, payload }) => {
-  let duration = state.settings.focusTime * A_MINUTE;
-  if (!payload) {
-    duration = state.settings.focusTime * A_MINUTE;
-  } else {
-    duration = state.settings.shortBreakTime * A_MINUTE;
-  }
-
+const pomodoroReducers = (state = initialState, { type, payload }) => {
   switch (type) {
-    case types.START_TIMER:
+    case types.START_FOCUS_TIMER:
       return {
         ...state,
-        focusOn: !payload,
-        shortBreakOn: payload,
-        totalDuration: duration,
-        timerOn: true,
-        timerTime: state.timerTime,
-        timerStart: Date.now() - state.timerTime,
+        isFocusOn: true,
+        focusStreak: state.focusStreak + 1,
+        isShortBreakOn: false,
+        isLongBreakOn: false,
       };
-    case types.UPDATE_TIMER:
+    case types.STOP_FOCUS_TIMER:
       return {
         ...state,
-        timerTime: Date.now() - state.timerStart,
-        position: state.position - (100 * 10) / (state.totalDuration * 1000),
+        isFocusOn: false,
       };
-    case types.STOP_TIMER:
+    case types.SKIP_FOCUS_TIMER:
       return {
         ...state,
-        focusOn: !!state.shortBreakOn,
-        timerOn: false,
-        timerId: null,
+        isFocusOn: false,
+        isShortBreakOn: true,
       };
-    case types.RESET_TIMER:
+    case types.START_SHORT_BREAK_TIMER:
       return {
         ...state,
-        timerOn: false,
-        timerStart: 0,
-        timerTime: 0,
-        position: 100,
+        isFocusOn: false,
+        isShortBreakOn: true,
+        isLongBreakOn: false,
       };
-    case types.SAVE_TIMER_ID:
+    case types.STOP_SHORT_BREAK_TIMER:
       return {
         ...state,
-        timerId: payload,
+        isShortBreakOn: false,
       };
-    case types.DELETE_TIMER_ID:
+    case types.SKIP_SHORT_BREAK_TIMER:
       return {
         ...state,
-        timerId: null,
+        isShortBreakOn: false,
+        isFocusOn: true,
       };
     case types.SHOW_NOTIFICATION:
       return {
         ...state,
-        notificationShown: true,
+        hasNotificationShown: true,
       };
     case types.RESET_NOTIFICATION:
       return {
         ...state,
-        notificationShown: false,
+        hasNotificationShown: false,
       };
-    case types.SAVE_SETTINGS:
-      if (state.focusOn) {
-        duration = payload.focusTime * A_MINUTE;
-      } else if (state.shortBreakOn) {
-        duration = payload.shortBreakTime * A_MINUTE;
-      } else {
-        duration = payload.longBreakTime * A_MINUTE;
-      }
+    case types.UPDATE_TIME:
       return {
         ...state,
-        totalDuration: duration,
+        time: payload,
+      };
+    case types.SAVE_SETTINGS:
+      return {
+        ...state,
         settings: {
           ...payload,
         },
@@ -96,4 +79,4 @@ const settingReducers = (state = initialState, { type, payload }) => {
   }
 };
 
-export default settingReducers;
+export default pomodoroReducers;

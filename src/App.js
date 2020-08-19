@@ -1,12 +1,11 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
-import { getSeconds } from './utils/Time';
-
+import { useTimer } from './hooks';
 import logo from './assets/images/logo.png';
 
 const electron = window.require('electron');
@@ -14,62 +13,130 @@ const { ipcRenderer } = electron;
 
 const App = ({
   selectedTheme = 'dark',
-  totalDuration,
-  timerTime,
-  startTimer,
-  updateTimer,
-  stopTimer,
-  saveTimerId,
-  timerId,
-  timerOn,
-  remindBefore,
-  resetTimer,
-  focusOn,
-  shortBreakOn,
+  startFocusTimer,
+  skipFocusTimer,
+  isFocusOn,
+  isShortBreakOn,
+  startShortBreakTimer,
+  skipShortBreakTimer,
+  updateTime,
   showNotification,
   resetNotification,
-  notificationShown,
+  hasNotificationShown,
+  pomodoroSettings: { focusTime, shortBreakTime, remindBefore },
 }) => {
   const history = useHistory();
+  const [duration, setDuration] = useState(focusTime * 60);
+  const [focusDuration, setFocusDuration] = useState(focusTime);
+  const toggleTimer = () => {
+    if (isFocusOn) {
+      skipFocusTimer();
+      ipcRenderer.send('SHOW_BREAK_PAGE');
+    }
+
+    if (isShortBreakOn) {
+      skipShortBreakTimer();
+      ipcRenderer.send('HIDE_BREAK_PAGE');
+    }
+  };
+  const { time, start, reset } = useTimer({
+    type: 'DECREMENTAL',
+    initialTime: 0,
+    onTimeOver: toggleTimer,
+  });
+
+  const startTimer = useCallback(
+    (interval = 0) => {
+      start(interval);
+    },
+    [start]
+  );
+
+  const resetTimer = useCallback(() => {
+    reset();
+  }, [reset]);
+
+  const updateCounterTime = useCallback(
+    (currentTime = 0) => {
+      updateTime(currentTime);
+    },
+    [updateTime]
+  );
 
   useEffect(() => {
+    const isBreakWindow = history.location.pathname === '/breaks';
+    if (isBreakWindow) {
+      setDuration(shortBreakTime * 60);
+      startShortBreakTimer();
+    } else {
+      startFocusTimer();
+    }
+
     ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
+
     ipcRenderer.on('START_FOCUS_TIMER', () => {
-      startTimer();
+      setDuration(focusTime * 60);
+      startFocusTimer();
     });
-  }, [history, startTimer]);
+  }, [
+    history,
+    startFocusTimer,
+    startShortBreakTimer,
+    shortBreakTime,
+    focusTime,
+  ]);
 
   useEffect(() => {
-    const breakTimerOn = history.location.pathname === '/breaks';
-    if (!timerId && (focusOn || shortBreakOn || breakTimerOn)) {
-      startTimer(breakTimerOn);
-      const newTimerId = setInterval(() => {
-        updateTimer();
-      }, 10);
-      saveTimerId(newTimerId);
+    resetTimer();
+
+    if (isFocusOn) {
+      startTimer(duration);
+      resetNotification();
     }
 
-    if (
-      timerOn &&
-      focusOn &&
-      getSeconds(totalDuration - timerTime) === remindBefore &&
-      !notificationShown
-    ) {
-      showNotification({
-        body: `Hey buddy! A short break is going to start within ${remindBefore} seconds!`,
-        icon: logo,
-      });
+    if (isShortBreakOn) {
+      startTimer(duration);
     }
-    if (timerOn && totalDuration - timerTime < 1) {
-      stopTimer(timerId);
-      resetTimer();
-      resetNotification();
-      ipcRenderer.send(breakTimerOn ? 'HIDE_BREAK_PAGE' : 'SHOW_BREAK_PAGE');
+  }, [
+    isFocusOn,
+    isShortBreakOn,
+    startTimer,
+    resetTimer,
+    duration,
+    resetNotification,
+  ]);
+
+  useEffect(() => {
+    if (isFocusOn) {
+      if (focusTime !== focusDuration) {
+        setDuration(time - (focusDuration - focusTime) * 60);
+        setFocusDuration(focusTime);
+      }
+      if (!hasNotificationShown && time === remindBefore) {
+        showNotification('Break Reminder !!!', {
+          body: `Hey buddy! A short break is going to start within ${remindBefore} seconds!`,
+          icon: logo,
+        });
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+  }, [
+    isFocusOn,
+    focusTime,
+    focusDuration,
+    time,
+    setFocusDuration,
+    startTimer,
+    hasNotificationShown,
+    showNotification,
+    remindBefore,
+  ]);
+
+  useEffect(() => {
+    updateCounterTime(time);
+  }, [time, updateCounterTime]);
+
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
       <Suspense fallback={<div>Loading</div>}>
@@ -82,24 +149,20 @@ const App = ({
 const mapStateToProps = ({ setting, pomodoro }) => {
   return {
     selectedTheme: setting.selectedTheme,
-    timerId: pomodoro.timerId,
-    timerOn: pomodoro.timerOn,
-    timerTime: pomodoro.timerTime,
-    focusOn: pomodoro.focusOn,
-    totalDuration: pomodoro.totalDuration,
+    isFocusOn: pomodoro.isFocusOn,
+    isShortBreakOn: pomodoro.isShortBreakOn,
     remindBefore: pomodoro.settings.remindBefore,
-    shortBreakOn: pomodoro.shortBreakOn,
-    notificationShown: pomodoro.notificationShown,
+    hasNotificationShown: pomodoro.hasNotificationShown,
+    pomodoroSettings: pomodoro.settings,
   };
 };
 
 const mapActionsToProps = {
-  startTimer: pomodoroActions.startTimer,
-  stopTimer: pomodoroActions.stopTimer,
-  updateTimer: pomodoroActions.updateTimer,
-  resetTimer: pomodoroActions.resetTimer,
-  saveTimerId: pomodoroActions.saveTimerId,
-  deleteTimerId: pomodoroActions.deleteTimerId,
+  startFocusTimer: pomodoroActions.startFocusTimer,
+  skipFocusTimer: pomodoroActions.skipFocusTimer,
+  startShortBreakTimer: pomodoroActions.startShortBreakTimer,
+  skipShortBreakTimer: pomodoroActions.skipShortBreakTimer,
+  updateTime: pomodoroActions.updateTime,
   showNotification: pomodoroActions.showNotification,
   resetNotification: pomodoroActions.resetNotification,
 };

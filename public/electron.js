@@ -64,7 +64,7 @@ function createWindow() {
     mainWindow = null;
   });
 
-  mainWindow.on('close', event => {
+  mainWindow.on('close', (event) => {
     if (!app.isQuiting) {
       event.preventDefault();
       mainWindow.hide();
@@ -114,9 +114,13 @@ function createContextMenu() {
   });
 }
 
-function onSuspendOrLock() {}
+function onSuspendOrLock() {
+  mainWindow.webContents.send('SUSPEND_FOCUS_TIMER');
+}
 
-function onResumeOrUnlock() {}
+function onResumeOrUnlock() {
+  mainWindow.webContents.send('START_FOCUS_TIMER');
+}
 
 function startPowerMonitoring() {
   electron.powerMonitor.on('suspend', onSuspendOrLock);
