@@ -1,2 +1,2 @@
-export { default as setting } from './setting';
+export { default as settings } from './settings';
 export { default as pomodoro } from './pomodoro';

@@ -1,10 +1,11 @@
 import * as types from './types';
+import { DEFAULT_SETTINGS } from '../../config';
 
 const initialState = {
-  selectedTheme: 'dark',
+  ...DEFAULT_SETTINGS,
 };
 
-const settingReducers = (state = initialState, { type, payload }) => {
+const settingsReducers = (state = initialState, { type, payload }) => {
   switch (type) {
     case types.INIT_SETTINGS_DONE:
       return {
@@ -16,9 +17,14 @@ const settingReducers = (state = initialState, { type, payload }) => {
         ...state,
         selectedTheme: payload,
       };
+    case types.SAVE_SETTINGS:
+      return {
+        ...state,
+        ...payload,
+      };
     default:
       return state;
   }
 };
 
-export default settingReducers;
+export default settingsReducers;

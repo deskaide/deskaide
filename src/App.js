@@ -146,9 +146,9 @@ const App = ({
   );
 };
 
-const mapStateToProps = ({ setting, pomodoro }) => {
+const mapStateToProps = ({ settings, pomodoro }) => {
   return {
-    selectedTheme: setting.selectedTheme,
+    selectedTheme: settings.selectedTheme,
     isFocusOn: pomodoro.isFocusOn,
     isShortBreakOn: pomodoro.isShortBreakOn,
     remindBefore: pomodoro.settings.remindBefore,

@@ -151,7 +151,7 @@ app.on('ready', async () => {
   createWindow();
   createContextMenu();
   startPowerMonitoring();
-  await autoLaunchApp(true);
+  await autoLaunchApp(settings.autoStart === 'Y');
 });
 
 app.on('window-all-closed', () => {
