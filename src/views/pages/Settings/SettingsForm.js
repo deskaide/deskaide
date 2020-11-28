@@ -54,6 +54,14 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
               { name: 'No', value: 'N' },
             ]}
           />
+          <RadioInput
+            name="selectedTheme"
+            label="In which theme do you want to see the app?"
+            options={[
+              { name: 'Dark', value: 'dark' },
+              { name: 'Light', value: 'light' },
+            ]}
+          />
 
           <Flex
             display="inline-flex"
@@ -98,12 +106,14 @@ const SettingsForm = withFormik({
   mapPropsToValues: (values) => {
     return {
       autoStart: values.autoStart,
+      selectedTheme: values.selectedTheme,
     };
   },
 })(AppSettingsForm);
 
 const mapStateToProps = ({ settings }) => ({
   autoStart: settings.autoStart,
+  selectedTheme: settings.selectedTheme,
 });
 
 const mapActionsToProps = {
