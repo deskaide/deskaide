@@ -1,5 +1,3 @@
-const DBService = require('./DBService');
-
 const createMainMenuTemplate = (app, mainWindow) => [
   {
     label: 'Deskstat',
@@ -72,5 +70,4 @@ const createContextMenuTemplate = (app, mainWindow) => [
 module.exports = {
   createMainMenuTemplate,
   createContextMenuTemplate,
-  DBService,
 };

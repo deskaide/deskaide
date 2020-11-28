@@ -5,6 +5,7 @@ const PouchDBMapReduce = require('pouchdb-mapreduce');
 const PouchDBAdapterLevelDB = require('pouchdb-adapter-leveldb');
 const PouchDBReplication = require('pouchdb-replication');
 const PouchDBFind = require('pouchdb-find');
+const prefixes = require('./prefixes');
 
 const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
   .plugin(PouchDBMapReduce)
@@ -20,7 +21,7 @@ class DBService {
     const now = new Date().toISOString();
     const createdAt = now;
     const updatedAt = now;
-    const _id = id || shortid.generate();
+    const _id = id || `${prefixes[data.type]}${shortid.generate()}`;
 
     let doc = await this.getById(id);
 
@@ -44,7 +45,7 @@ class DBService {
     return doc;
   };
 
-  getById = async id => {
+  getById = async (id) => {
     try {
       const doc = await this.db.get(id);
       return doc;
