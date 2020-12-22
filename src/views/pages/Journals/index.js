@@ -22,6 +22,7 @@ const Journals = () => (
         tempore voluptatibus?
       </Text>
       <button
+        type="button"
         onClick={() => {
           ipcRenderer.send('SHOW_BREAK_PAGE');
         }}

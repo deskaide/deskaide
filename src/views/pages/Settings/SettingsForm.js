@@ -103,12 +103,10 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
 
 const SettingsForm = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: (values) => {
-    return {
-      autoStart: values.autoStart,
-      selectedTheme: values.selectedTheme,
-    };
-  },
+  mapPropsToValues: (values) => ({
+    autoStart: values.autoStart,
+    selectedTheme: values.selectedTheme,
+  }),
 })(AppSettingsForm);
 
 const mapStateToProps = ({ settings }) => ({

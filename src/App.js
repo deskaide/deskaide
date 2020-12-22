@@ -146,16 +146,14 @@ const App = ({
   );
 };
 
-const mapStateToProps = ({ settings, pomodoro }) => {
-  return {
-    selectedTheme: settings.selectedTheme,
-    isFocusOn: pomodoro.isFocusOn,
-    isShortBreakOn: pomodoro.isShortBreakOn,
-    remindBefore: pomodoro.settings.remindBefore,
-    hasNotificationShown: pomodoro.hasNotificationShown,
-    pomodoroSettings: pomodoro.settings,
-  };
-};
+const mapStateToProps = ({ settings, pomodoro }) => ({
+  selectedTheme: settings.selectedTheme,
+  isFocusOn: pomodoro.isFocusOn,
+  isShortBreakOn: pomodoro.isShortBreakOn,
+  remindBefore: pomodoro.settings.remindBefore,
+  hasNotificationShown: pomodoro.hasNotificationShown,
+  pomodoroSettings: pomodoro.settings,
+});
 
 const mapActionsToProps = {
   startFocusTimer: pomodoroActions.startFocusTimer,
