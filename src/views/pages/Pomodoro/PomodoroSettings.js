@@ -116,14 +116,12 @@ const PomodoroSettingsForm = ({ saveSettings, resetForm, values }) => {
 
 const PomodoroSettings = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: (values) => {
-    return {
-      focusTime: values.focusTime,
-      shortBreakTime: values.shortBreakTime,
-      longBreakTime: values.longBreakTime,
-      remindBefore: values.remindBefore,
-    };
-  },
+  mapPropsToValues: (values) => ({
+    focusTime: values.focusTime,
+    shortBreakTime: values.shortBreakTime,
+    longBreakTime: values.longBreakTime,
+    remindBefore: values.remindBefore,
+  }),
 })(PomodoroSettingsForm);
 
 const mapStateToProps = ({ pomodoro }) => ({

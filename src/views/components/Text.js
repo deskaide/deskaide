@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { color, space, typography } from 'styled-system';
 
 const H1 = styled.h1`
@@ -183,11 +182,6 @@ const Text = ({ variant, theme, children, html, ...props }) => {
         </P>
       );
   }
-};
-
-Text.propTypes = {
-  color: PropTypes.string,
-  variant: PropTypes.string,
 };
 
 export default Text;

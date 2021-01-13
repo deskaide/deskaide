@@ -5,9 +5,7 @@ import * as reducers from '.';
 
 const appReducer = combineReducers(reducers);
 
-const rootReducer = (state, action) => {
-  return appReducer(state, action);
-};
+const rootReducer = (state, action) => appReducer(state, action);
 
 export default function configureStore(preloadedState) {
   const middlewares = [thunk];

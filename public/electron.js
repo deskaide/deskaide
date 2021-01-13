@@ -3,23 +3,14 @@ const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const AutoLaunch = require('auto-launch');
+const DB = require('../src/config/db');
 
 const {
   createMainMenuTemplate,
   createContextMenuTemplate,
-  DBService,
 } = require('./config');
 
 const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = electron;
-
-const appDir = app.getPath('appData');
-let dbFilePath = `${appDir}/data/`;
-
-if (isDev) {
-  dbFilePath = './data/';
-}
-
-const DB = new DBService(dbFilePath);
 
 let mainWindow;
 let breakTimeWindow;
@@ -151,7 +142,7 @@ app.on('ready', async () => {
   createWindow();
   createContextMenu();
   startPowerMonitoring();
-  await autoLaunchApp(true);
+  await autoLaunchApp(settings.autoStart === 'Y');
 });
 
 app.on('window-all-closed', () => {

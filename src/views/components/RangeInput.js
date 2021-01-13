@@ -64,7 +64,8 @@ const RangeInput = ({ label, ...props }) => {
       <div className="label-area">
         <Text>{label}</Text>
         <Text className="range-value">
-          {meta.value || props.min} {props.unit}
+          {meta.value || props.min}
+          {props.unit}
         </Text>
       </div>
       <input
