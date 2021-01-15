@@ -44,6 +44,9 @@ const createMainMenuTemplate = (app, mainWindow) => [
   },
   {
     label: 'Settings',
+    click() {
+      return mainWindow && mainWindow.webContents.send('GO_TO', 'settings');
+    },
   },
   {
     label: 'About',
