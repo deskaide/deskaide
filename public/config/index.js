@@ -5,31 +5,31 @@ const createMainMenuTemplate = (app, mainWindow) => [
       {
         label: 'Pomodoro',
         click() {
-          mainWindow && mainWindow.webContents.send('GO_TO', 'pomodoro');
+          return mainWindow && mainWindow.webContents.send('GO_TO', 'pomodoro');
         },
       },
       {
         label: 'Notes',
         click() {
-          mainWindow && mainWindow.webContents.send('GO_TO', 'notes');
+          return mainWindow && mainWindow.webContents.send('GO_TO', 'notes');
         },
       },
       {
         label: 'Journals',
         click() {
-          mainWindow && mainWindow.webContents.send('GO_TO', 'journals');
+          return mainWindow && mainWindow.webContents.send('GO_TO', 'journals');
         },
       },
       {
         label: 'Links',
         click() {
-          mainWindow && mainWindow.webContents.send('GO_TO', 'links');
+          return mainWindow && mainWindow.webContents.send('GO_TO', 'links');
         },
       },
       {
         label: 'Stats',
         click() {
-          mainWindow && mainWindow.webContents.send('GO_TO', 'stats');
+          return mainWindow && mainWindow.webContents.send('GO_TO', 'stats');
         },
       },
       {
@@ -44,6 +44,9 @@ const createMainMenuTemplate = (app, mainWindow) => [
   },
   {
     label: 'Settings',
+    click() {
+      return mainWindow && mainWindow.webContents.send('GO_TO', 'settings');
+    },
   },
   {
     label: 'About',

@@ -3,7 +3,7 @@ const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const AutoLaunch = require('auto-launch');
-const DB = require('../src/config/db');
+const DB = require('./config/db');
 
 const {
   createMainMenuTemplate,
