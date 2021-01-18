@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
+import { Link } from 'react-router-dom';
 import { SplashScreenLayout } from '../../layouts';
 import { Box, Divider, Image, Text } from '../../components';
 
@@ -25,7 +26,7 @@ const About = ({ theme }) => (
           track his/her desktop life easily.
         </Text>
         <Text>
-          <a href="/">{'> Back to app <'}</a>
+          <Link to="/#/">{'> Back to app <'}</Link>
         </Text>
       </Box>
     </Box>
