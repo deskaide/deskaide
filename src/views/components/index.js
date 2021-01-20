@@ -10,3 +10,4 @@ export { default as RadioInput } from './RadioInput';
 export { default as RangeInput } from './RangeInput';
 export { default as SubmenuContainer } from './SubmenuContainer';
 export { default as Text } from './Text';
+export { default as TextInput } from './TextInput';

@@ -1,18 +1,13 @@
 import React from 'react';
 import { MainAppLayout } from '../../layouts';
 import { Box, Text } from '../../components';
+import LinkOptions from './LinkOptions';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;
 
 const Links = () => (
-  <MainAppLayout
-    appMenu={
-      <Text variant="h5" textAlign="center">
-        Links
-      </Text>
-    }
-  >
+  <MainAppLayout appMenu={<LinkOptions />}>
     <Box p={4}>
       <Text variant="h1">This is link window</Text>
       <Text>
