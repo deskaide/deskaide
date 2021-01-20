@@ -4,9 +4,11 @@ import {
   About,
   Breaks,
   Journals,
+  Links,
   Notes,
   Pomodoro,
   SplashScreen,
+  Stats,
   Settings,
 } from '../views/pages';
 
@@ -18,7 +20,10 @@ const Routes = () => (
     <Route exact path="/breaks" component={Breaks} />
     <Route exact path="/notes" component={Notes} />
     <Route exact path="/journals" component={Journals} />
+    <Route exact path="/links" component={Links} />
+    <Route exact path="/stats" component={Stats} />
     <Route exact path="/settings" component={Settings} />
+    <Route component={SplashScreen} />
   </Switch>
 );
 
