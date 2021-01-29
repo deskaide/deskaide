@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './views/styles/GlobalStyle';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
@@ -139,6 +140,7 @@ const App = ({
 
   return (
     <ThemeProvider theme={selectedTheme === 'light' ? light : dark}>
+      <GlobalStyle />
       <Suspense fallback={<div>Loading</div>}>
         <Routes />
       </Suspense>

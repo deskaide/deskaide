@@ -48,6 +48,11 @@ const GlobalStyle = createGlobalStyle`
       	background-color: #6237C6;
       }
   }
+
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.primary}
+  }
 `;
 
 export default GlobalStyle;

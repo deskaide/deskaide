@@ -50,6 +50,9 @@ const createMainMenuTemplate = (app, mainWindow) => [
   },
   {
     label: 'About',
+    click() {
+      return mainWindow && mainWindow.webContents.send('GO_TO', 'about');
+    },
   },
 ];
 

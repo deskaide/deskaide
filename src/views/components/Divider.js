@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color, height, width } from 'styled-system';
+import { color, height, width, space } from 'styled-system';
 
 const Divider = styled.div`
   width: 100%;
@@ -9,6 +9,7 @@ const Divider = styled.div`
   ${color};
   ${height};
   ${width};
+  ${space};
 `;
 
 export default Divider;

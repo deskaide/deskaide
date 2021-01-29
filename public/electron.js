@@ -1,4 +1,5 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+
 const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -25,7 +26,7 @@ const breakPageURL = isDev
   : `file://${path.join(__dirname, '../build/index.html#/breaks')}`;
 
 async function getSettings() {
-  const settings = await DB.getById('app/settings');
+  const settings = (await DB.getById('app/settings')) || {};
   return settings;
 }
 
