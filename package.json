@@ -23,7 +23,7 @@
     "premake": "npm run build",
     "premake:all": "npm run build",
     "make": "electron-builder --x64 -c.extraMetadata.main=build/electron.js",
-    "make:all": "build -mwl --x64 -c.extraMetadata.main=build/electron.js"
+    "make:all": "electron-builder -mwl --x64 -c.extraMetadata.main=build/electron.js"
   },
   "build": {
     "appId": "app.deskaide.www",
