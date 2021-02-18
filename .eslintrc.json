@@ -7,10 +7,8 @@
   "plugins": ["prettier"],
   "parser": "babel-eslint",
   "rules": {
-    "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/prop-types": 0,
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-props-no-spreading": "off",
     "react/jsx-wrap-multilines": 0,
     "import/no-extraneous-dependencies": 0,

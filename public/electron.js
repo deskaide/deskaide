@@ -11,7 +11,16 @@ const {
   createContextMenuTemplate,
 } = require('./config');
 
-const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = electron;
+const {
+  app,
+  BrowserWindow,
+  screen,
+  Menu,
+  Tray,
+  ipcMain,
+  globalShortcut,
+  clipboard,
+} = electron;
 
 let mainWindow;
 let breakTimeWindow;
@@ -144,6 +153,10 @@ app.on('ready', async () => {
   createContextMenu();
   startPowerMonitoring();
   await autoLaunchApp(settings.autoStart === 'Y');
+  globalShortcut.register('CommandOrControl+L', () => {
+    const text = clipboard.readText();
+    mainWindow.webContents.send('CLIPBOARD_TEXT', text);
+  });
 });
 
 app.on('window-all-closed', () => {
@@ -156,6 +169,10 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on('before-quit', () => {
