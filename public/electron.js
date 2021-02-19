@@ -4,6 +4,8 @@ const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const AutoLaunch = require('auto-launch');
+const urlMetadata = require('url-metadata');
+
 const DB = require('./config/db');
 
 const {
@@ -198,7 +200,17 @@ ipcMain.on('GET_BY_ID', async (event, id) => {
 });
 
 ipcMain.on('UPSERT_DATA', async (event, { id, data }) => {
+  if (data.url) {
+    const { title = '', image = '', description = '' } = await urlMetadata(
+      data.url
+    );
+    data.title = title;
+    data.image = image;
+    data.description = description;
+  }
+
   console.log(data);
+
   const newData = await DB.upsert(data, id);
   event.returnValue = newData;
 });

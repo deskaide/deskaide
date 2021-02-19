@@ -9,7 +9,7 @@ const SaveLink = () => (
   <Box pr={4} pl={4} pt={3}>
     <Formik
       initialValues={{ url: '' }}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         ipcRenderer.sendSync('UPSERT_DATA', {
           data: { ...values, type: 'LINKS_DOC_PREFIX' },
         });
