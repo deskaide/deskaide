@@ -198,6 +198,12 @@ ipcMain.on('GET_BY_ID', async (event, id) => {
 });
 
 ipcMain.on('UPSERT_DATA', async (event, { id, data }) => {
+  console.log(data);
   const newData = await DB.upsert(data, id);
   event.returnValue = newData;
+});
+
+ipcMain.on('FETCH_ALL', async (event, query = {}) => {
+  const { rows } = await DB.fetchAll(query);
+  event.returnValue = { data: rows };
 });

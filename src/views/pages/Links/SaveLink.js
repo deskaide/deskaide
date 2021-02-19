@@ -10,11 +10,12 @@ const SaveLink = () => (
     <Formik
       initialValues={{ url: '' }}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          console.log(values);
-          actions.resetForm({ url: '' });
-          actions.setSubmitting(false);
-        }, 1000);
+        ipcRenderer.sendSync('UPSERT_DATA', {
+          data: { ...values, type: 'LINKS_DOC_PREFIX' },
+        });
+
+        actions.resetForm({ url: '' });
+        actions.setSubmitting(false);
       }}
       enableReinitialize
     >
