@@ -4,6 +4,8 @@ const electron = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const AutoLaunch = require('auto-launch');
+const urlMetadata = require('url-metadata');
+
 const DB = require('./config/db');
 
 const {
@@ -11,7 +13,16 @@ const {
   createContextMenuTemplate,
 } = require('./config');
 
-const { app, BrowserWindow, screen, Menu, Tray, ipcMain } = electron;
+const {
+  app,
+  BrowserWindow,
+  screen,
+  Menu,
+  Tray,
+  ipcMain,
+  globalShortcut,
+  clipboard,
+} = electron;
 
 let mainWindow;
 let breakTimeWindow;
@@ -144,6 +155,10 @@ app.on('ready', async () => {
   createContextMenu();
   startPowerMonitoring();
   await autoLaunchApp(settings.autoStart === 'Y');
+  globalShortcut.register('CommandOrControl+L', () => {
+    const text = clipboard.readText();
+    mainWindow.webContents.send('CLIPBOARD_TEXT', text);
+  });
 });
 
 app.on('window-all-closed', () => {
@@ -156,6 +171,10 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on('before-quit', () => {
@@ -181,6 +200,22 @@ ipcMain.on('GET_BY_ID', async (event, id) => {
 });
 
 ipcMain.on('UPSERT_DATA', async (event, { id, data }) => {
+  if (data.url) {
+    const { title = '', image = '', description = '' } = await urlMetadata(
+      data.url
+    );
+    data.title = title;
+    data.image = image;
+    data.description = description;
+  }
+
+  console.log(data);
+
   const newData = await DB.upsert(data, id);
   event.returnValue = newData;
+});
+
+ipcMain.on('FETCH_ALL', async (event, query = {}) => {
+  const { rows } = await DB.fetchAll(query);
+  event.returnValue = { data: rows };
 });

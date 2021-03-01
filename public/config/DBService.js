@@ -17,13 +17,13 @@ class DBService {
     this.db = new PouchDB(`${dbPath}`, { skip_setup: true });
   }
 
-  upsert = async (data, id = null) => {
+  upsert = async (data, id) => {
     const now = new Date().toISOString();
     const createdAt = now;
     const updatedAt = now;
     const _id = id || `${prefixes[data.type]}${shortid.generate()}`;
 
-    let doc = await this.getById(id);
+    let doc = await this.getById(_id);
 
     if (doc) {
       doc = {
@@ -50,6 +50,25 @@ class DBService {
       const doc = await this.db.get(id);
       return doc;
     } catch (error) {
+      console.log(error);
+      switch (error.name) {
+        case 'not_found':
+          return null;
+        default:
+          throw error;
+      }
+    }
+  };
+
+  fetchAll = async ({ type }) => {
+    try {
+      const data = await this.db.allDocs({ include_docs: true });
+      if (type) {
+        data.rows = data.rows.filter((d) => d.id.includes(type));
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
       switch (error.name) {
         case 'not_found':
           return null;
