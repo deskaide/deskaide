@@ -1,17 +1,57 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
+import { HashRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import createStore from './state/store';
+import './i18n';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import {
+  pomodoroSettingsId,
+  appSettingsId,
+  DEFAULT_SETTINGS,
+  POMODORO_INITIAL_SETTINGS,
+} from './config';
+import { pomodoroActions } from './state/pomodoro';
+import { settingsActions } from './state/settings';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
+
+const store = createStore({});
+
+async function init() {
+  let pomodoroSettings = {};
+  let appSettings = {};
+  const savedPomodoroSettings = ipcRenderer.sendSync(
+    'GET_BY_ID',
+    pomodoroSettingsId
+  );
+  const savedAppSettings = ipcRenderer.sendSync('GET_BY_ID', appSettingsId);
+
+  if (!savedPomodoroSettings) {
+    pomodoroSettings = POMODORO_INITIAL_SETTINGS;
+  } else {
+    pomodoroSettings = savedPomodoroSettings;
+  }
+
+  if (!savedAppSettings) {
+    appSettings = DEFAULT_SETTINGS;
+  } else {
+    appSettings = savedAppSettings;
+  }
+
+  store.dispatch(pomodoroActions.saveSettings(pomodoroSettings));
+  store.dispatch(settingsActions.save(appSettings));
+}
+
+init();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

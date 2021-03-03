@@ -1,21 +1,35 @@
 {
-  "name": "deskaid-server",
+  "name": "deskaide-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "wait-on http://localhost:3000 && electron ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "electron",
+    "deskaide"
+  ],
+  "author": "Shahidul Islam Majumder <hello@shahid.pro>",
   "license": "MIT",
   "devDependencies": {
     "electron": "^12.0.0",
+    "electron-builder": "^22.10.5",
     "wait-on": "^5.2.1"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
     "electron-is-dev": "^2.0.0",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "pouchdb-adapter-http": "^7.2.2",
+    "pouchdb-adapter-idb": "^7.2.2",
+    "pouchdb-adapter-leveldb": "^7.2.2",
+    "pouchdb-adapter-memory": "^7.2.2",
+    "pouchdb-core": "^7.2.2",
+    "pouchdb-find": "^7.2.2",
+    "pouchdb-mapreduce": "^7.2.2",
+    "pouchdb-replication": "^7.2.2",
+    "shortid": "^2.2.16",
+    "url-metadata": "^2.5.0"
   }
 }

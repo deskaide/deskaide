@@ -1,11 +1,10 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["_id", "_rev"] }] */
 const shortid = require('shortid');
 const PouchDBCore = require('pouchdb-core');
 const PouchDBMapReduce = require('pouchdb-mapreduce');
 const PouchDBAdapterLevelDB = require('pouchdb-adapter-leveldb');
 const PouchDBReplication = require('pouchdb-replication');
 const PouchDBFind = require('pouchdb-find');
-const prefixes = require('./prefixes');
+const prefixes = require('../config/prefixes');
 
 const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
   .plugin(PouchDBMapReduce)

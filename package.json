@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "deskaide",
   "private": true,
   "scripts": {
     "start": "lerna exec --parallel --stream npm start"
