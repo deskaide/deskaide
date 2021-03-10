@@ -1,6 +1,6 @@
-import React from 'react';
-import { SubmenuContainer } from '../../components';
-import SaveLink from './SaveLink';
+import React from "react";
+import { SubmenuContainer } from "../../components";
+import SaveLink from "./SaveLink";
 
 const LinkOptions = () => (
   <SubmenuContainer appTitle="Link Options">

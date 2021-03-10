@@ -204,8 +204,6 @@ ipcMain.on("UPSERT_DATA", async (event, { id, data }) => {
     data.description = description;
   }
 
-  console.log(data);
-
   const newData = await DB.upsert(data, id);
   event.returnValue = newData;
 });
