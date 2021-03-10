@@ -1,0 +1,3 @@
+{
+  "extends": ["@deskaide/eslint-node"]
+}

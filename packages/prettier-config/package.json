@@ -1,0 +1,12 @@
+{
+  "name": "@deskaide/prettier-config",
+  "version": "1.0.0",
+  "description": "Prettier config for deskaide project",
+  "author": "Shahidul Islam Majumder <dev@shahid.pro>",
+  "homepage": "https://github.com/deskaide/deskaide#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  }
+}

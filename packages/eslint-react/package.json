@@ -1,0 +1,20 @@
+{
+  "name": "@deskaide/eslint-react",
+  "version": "1.0.0",
+  "description": "ESLint config for deskaide client app",
+  "author": "Shahidul Islam Majumder <dev@shahid.pro>",
+  "homepage": "https://github.com/deskaide/deskaide#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^2.2.1"
+  }
+}
