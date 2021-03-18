@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback } from "react";
-import { Formik, Form } from "formik";
-import { Box, Button, Flex, Input } from "../../components";
-import { useIpcRenderer } from "../../../hooks";
+import React, { useEffect, useCallback } from 'react';
+import { Formik, Form } from 'formik';
+import { Box, Button, Flex, Input } from '../../components';
+import { useIpcRenderer } from '../../../hooks';
 
-const SaveLinkForm = ({ setFieldValue, values }) => {
+const SaveLinkForm = ({ setFieldValue }) => {
   const { listenForEvent } = useIpcRenderer();
 
   const listen = useCallback(
@@ -15,22 +15,22 @@ const SaveLinkForm = ({ setFieldValue, values }) => {
 
   const handleLinkPaste = useCallback(
     (e, data) => {
-      setFieldValue("url", data);
+      setFieldValue('url', data);
     },
     [setFieldValue]
   );
 
   useEffect(() => {
-    listen("CLIPBOARD_TEXT", handleLinkPaste);
+    listen('CLIPBOARD_TEXT', handleLinkPaste);
   }, [handleLinkPaste, listen]);
 
   return (
     <Form>
       <Input
         fieldOptions={{
-          name: "url",
-          type: "text",
-          placeholder: "Enter your link..."
+          name: 'url',
+          type: 'text',
+          placeholder: 'Enter your link...',
         }}
       />
       <Flex display="inline-flex" justifyContent="flex-end" width="100%">
@@ -48,18 +48,18 @@ const SaveLink = () => {
   return (
     <Box pr={4} pl={4} pt={3}>
       <Formik
-        initialValues={{ url: "" }}
+        initialValues={{ url: '' }}
         onSubmit={async (values, actions) => {
-          sendEvent("UPSERT_DATA", {
-            data: { ...values, type: "LINKS_DOC_PREFIX" }
+          sendEvent('UPSERT_DATA', {
+            data: { ...values, type: 'LINKS_DOC_PREFIX' },
           });
 
-          actions.resetForm({ url: "" });
+          actions.resetForm({ url: '' });
           actions.setSubmitting(false);
         }}
         enableReinitialize
       >
-        {props => <SaveLinkForm {...props} />}
+        {(props) => <SaveLinkForm {...props} />}
       </Formik>
     </Box>
   );

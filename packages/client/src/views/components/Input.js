@@ -1,11 +1,11 @@
-import { Field, ErrorMessage } from "formik";
-import styled from "styled-components";
-import Text from "./Text";
+import { Field, ErrorMessage } from 'formik';
+import styled from 'styled-components';
+import Text from './Text';
 
 const InputContainer = styled.div`
   margin-bottom: 16px;
 
-  input[type="text"] {
+  input[type='text'] {
     border: none;
     background: none;
     outline: none;
@@ -29,7 +29,7 @@ function Input({ fieldOptions = {}, errorOptions = {} }) {
       <Field {...fieldOptions} />
       <ErrorMessage
         name={fieldOptions.name}
-        component={errorOptions.component || "div"}
+        component={errorOptions.component || 'div'}
       />
     </InputContainer>
   );

@@ -2,6 +2,7 @@
   "name": "deskaide",
   "private": true,
   "scripts": {
+    "up": "lerna bootstrap",
     "start": "lerna exec --parallel --stream npm start"
   },
   "devDependencies": {
