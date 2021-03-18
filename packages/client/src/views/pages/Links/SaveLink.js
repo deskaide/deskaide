@@ -1,18 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import { Formik, Form } from 'formik';
 import { Box, Button, Flex, Input } from '../../components';
-import { useIpcRenderer } from '../../../hooks';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 const SaveLinkForm = ({ setFieldValue }) => {
-  const { listenForEvent } = useIpcRenderer();
-
-  const listen = useCallback(
-    (event, callback) => {
-      listenForEvent(event, callback);
-    },
-    [listenForEvent]
-  );
-
   const handleLinkPaste = useCallback(
     (e, data) => {
       setFieldValue('url', data);
@@ -21,8 +14,8 @@ const SaveLinkForm = ({ setFieldValue }) => {
   );
 
   useEffect(() => {
-    listen('CLIPBOARD_TEXT', handleLinkPaste);
-  }, [handleLinkPaste, listen]);
+    ipcRenderer.on('CLIPBOARD_TEXT', handleLinkPaste);
+  }, [handleLinkPaste]);
 
   return (
     <Form>
@@ -42,27 +35,23 @@ const SaveLinkForm = ({ setFieldValue }) => {
   );
 };
 
-const SaveLink = () => {
-  const { sendEvent } = useIpcRenderer();
+const SaveLink = () => (
+  <Box pr={4} pl={4} pt={3}>
+    <Formik
+      initialValues={{ url: '' }}
+      onSubmit={async (values, actions) => {
+        ipcRenderer.send('UPSERT_DATA', {
+          data: { ...values, type: 'LINKS_DOC_PREFIX' },
+        });
 
-  return (
-    <Box pr={4} pl={4} pt={3}>
-      <Formik
-        initialValues={{ url: '' }}
-        onSubmit={async (values, actions) => {
-          sendEvent('UPSERT_DATA', {
-            data: { ...values, type: 'LINKS_DOC_PREFIX' },
-          });
-
-          actions.resetForm({ url: '' });
-          actions.setSubmitting(false);
-        }}
-        enableReinitialize
-      >
-        {(props) => <SaveLinkForm {...props} />}
-      </Formik>
-    </Box>
-  );
-};
+        actions.resetForm({ url: '' });
+        actions.setSubmitting(false);
+      }}
+      enableReinitialize
+    >
+      {(props) => <SaveLinkForm {...props} />}
+    </Formik>
+  </Box>
+);
 
 export default SaveLink;
