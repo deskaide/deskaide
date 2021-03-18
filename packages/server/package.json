@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "wait-on http://localhost:3000 && electron ."
+    "start": "wait-on http://localhost:3000 && electron .",
+    "prebuild": "rm -rf node_modules",
+    "build": "npm i --production",
+    "prepack": "npm run build",
+    "prepack:all": "npm run build",
+    "pack": "electron-builder --x64 -c.extraMetadata.main=index.js",
+    "pack:all": "electron-builder -mwl --x64 -c.extraMetadata.main=index.js"
   },
   "keywords": [
     "electron",
