@@ -1,64 +1,64 @@
 function createMainMenuTemplate(app, mainWindow) {
   return [
     {
-      label: "Deskstat",
+      label: 'Deskstat',
       submenu: [
         {
-          label: "Pomodoro",
+          label: 'Pomodoro',
           click() {
             return (
-              mainWindow && mainWindow.webContents.send("GO_TO", "pomodoro")
+              mainWindow && mainWindow.webContents.send('GO_TO', 'pomodoro')
             );
-          }
+          },
         },
         {
-          label: "Notes",
+          label: 'Notes',
           click() {
-            return mainWindow && mainWindow.webContents.send("GO_TO", "notes");
-          }
+            return mainWindow && mainWindow.webContents.send('GO_TO', 'notes');
+          },
         },
         {
-          label: "Journals",
+          label: 'Journals',
           click() {
             return (
-              mainWindow && mainWindow.webContents.send("GO_TO", "journals")
+              mainWindow && mainWindow.webContents.send('GO_TO', 'journals')
             );
-          }
+          },
         },
         {
-          label: "Links",
+          label: 'Links',
           click() {
-            return mainWindow && mainWindow.webContents.send("GO_TO", "links");
-          }
+            return mainWindow && mainWindow.webContents.send('GO_TO', 'links');
+          },
         },
         {
-          label: "Stats",
+          label: 'Stats',
           click() {
-            return mainWindow && mainWindow.webContents.send("GO_TO", "stats");
-          }
+            return mainWindow && mainWindow.webContents.send('GO_TO', 'stats');
+          },
         },
         {
-          label: "Close",
-          accelerator: "CommandOrControl+Q",
+          label: 'Close',
+          accelerator: 'CommandOrControl+Q',
           click() {
             app.isQuiting = true;
             app.quit();
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
     {
-      label: "Settings",
+      label: 'Settings',
       click() {
-        return mainWindow && mainWindow.webContents.send("GO_TO", "settings");
-      }
+        return mainWindow && mainWindow.webContents.send('GO_TO', 'settings');
+      },
     },
     {
-      label: "About",
+      label: 'About',
       click() {
-        return mainWindow && mainWindow.webContents.send("GO_TO", "about");
-      }
-    }
+        return mainWindow && mainWindow.webContents.send('GO_TO', 'about');
+      },
+    },
   ];
 }
 

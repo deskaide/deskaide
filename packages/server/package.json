@@ -13,6 +13,7 @@
   "author": "Shahidul Islam Majumder <hello@shahid.pro>",
   "license": "MIT",
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^2.0.1",
     "electron": "^12.0.0",
     "electron-builder": "^22.10.5",
     "eslint": "^7.22.0",

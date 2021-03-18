@@ -1,15 +1,16 @@
-const { app } = require("electron");
-const isDev = require("electron-is-dev");
-const path = require("path");
-const DBService = require("../services/dbService");
+import { app } from 'electron';
+import isDev from 'electron-is-dev';
+import path from 'path';
 
-const appDir = app.getPath("appData");
+import DBService from '../services/dbService';
+
+const appDir = app.getPath('appData');
 let dbFilePath = `${appDir}/data/`;
 
 if (isDev) {
-  dbFilePath = path.join(__dirname, "../../data/");
+  dbFilePath = path.join(__dirname, '../../data/');
 }
 
 const DB = new DBService(dbFilePath);
 
-module.exports = DB;
+export default DB;

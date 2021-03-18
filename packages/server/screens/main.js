@@ -1,7 +1,7 @@
-import electron from 'electron';
-import path from 'path';
-import isDev from 'electron-is-dev';
 import AutoLaunch from 'auto-launch';
+import electron from 'electron';
+import isDev from 'electron-is-dev';
+import path from 'path';
 import urlMetadata from 'url-metadata';
 
 import DB from '../config/db';

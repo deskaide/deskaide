@@ -1,10 +1,11 @@
-const shortid = require('shortid');
-const PouchDBCore = require('pouchdb-core');
-const PouchDBMapReduce = require('pouchdb-mapreduce');
-const PouchDBAdapterLevelDB = require('pouchdb-adapter-leveldb');
-const PouchDBReplication = require('pouchdb-replication');
-const PouchDBFind = require('pouchdb-find');
-const prefixes = require('../config/prefixes');
+import PouchDBAdapterLevelDB from 'pouchdb-adapter-leveldb';
+import PouchDBCore from 'pouchdb-core';
+import PouchDBFind from 'pouchdb-find';
+import PouchDBMapReduce from 'pouchdb-mapreduce';
+import PouchDBReplication from 'pouchdb-replication';
+import shortid from 'shortid';
+
+import prefixes from '../config/prefixes';
 
 const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
   .plugin(PouchDBMapReduce)
@@ -78,4 +79,4 @@ class DBService {
   };
 }
 
-module.exports = DBService;
+export default DBService;

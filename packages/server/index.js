@@ -1,2 +1,2 @@
-require = require("esm")(module);
-require("./screens/main.js");
+require = require('esm')(module);
+require('./screens/main.js');
