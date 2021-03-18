@@ -6,8 +6,11 @@ import GlobalStyle from './views/styles/GlobalStyle';
 import { dark, light } from './views/styles/themes';
 import Routes from './routes';
 import { pomodoroActions } from './state/pomodoro';
-import { useIpcRenderer, useTimer } from './hooks';
+import { useTimer } from './hooks';
 import logo from './assets/images/logo.png';
+
+const electron = window.require('electron');
+const { ipcRenderer } = electron;
 
 const App = ({
   selectedTheme = 'dark',
@@ -26,17 +29,16 @@ const App = ({
   const history = useHistory();
   const [duration, setDuration] = useState(focusTime * 60);
   const [focusDuration, setFocusDuration] = useState(focusTime);
-  const { sendEvent, listenForEvent } = useIpcRenderer();
 
   const toggleTimer = () => {
     if (isFocusOn) {
       skipFocusTimer();
-      sendEvent('SHOW_BREAK_PAGE');
+      ipcRenderer.send('SHOW_BREAK_PAGE');
     }
 
     if (isShortBreakOn) {
       skipShortBreakTimer();
-      sendEvent('HIDE_BREAK_PAGE');
+      ipcRenderer.send('HIDE_BREAK_PAGE');
     }
   };
   const { time, start, reset } = useTimer({
@@ -63,13 +65,6 @@ const App = ({
     [updateTime]
   );
 
-  const listen = useCallback(
-    (event, data) => {
-      listenForEvent(event, data);
-    },
-    [listenForEvent]
-  );
-
   useEffect(() => {
     const isBreakWindow = history.location.pathname === '/breaks';
     if (isBreakWindow) {
@@ -79,11 +74,11 @@ const App = ({
       startFocusTimer();
     }
 
-    listen('GO_TO', (e, path) => {
+    ipcRenderer.on('GO_TO', (e, path) => {
       history.push(path);
     });
 
-    listen('START_FOCUS_TIMER', () => {
+    ipcRenderer.on('START_FOCUS_TIMER', () => {
       setDuration(focusTime * 60);
       startFocusTimer();
     });
@@ -93,7 +88,6 @@ const App = ({
     startShortBreakTimer,
     shortBreakTime,
     focusTime,
-    listen,
   ]);
 
   useEffect(() => {
