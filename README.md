@@ -6,7 +6,7 @@
 
 ## Features
 
--
+- Pomodoro (with custom duration, break time and push notification)
 
 ## Development
 
@@ -27,4 +27,4 @@ After cloning the repo and installing the dependencies, run `yarn build`. The pa
 
 ## Contribution
 
-Suggestions and contributions are always welcome! Please first discuss changes via issue before submitting a pull request and follow our [Contribution Guide]('./CONTRIBUTING.md').
+Suggestions and contributions are always welcome! Please first discuss changes via issue before submitting a pull request and follow our [Contribution Guide]('CONTRIBUTING.md').
