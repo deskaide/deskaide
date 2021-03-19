@@ -23,8 +23,8 @@ You have to have `node.js` and `lerna` installed.
 
 ### To build the app
 
-After cloning the repo and installing the dependencies, run `yarn build`. The packaged app can be found in the `packages/server/dist` folder.
+After cloning the repo and installing the dependencies, run `npm run pack`. The packaged app can be found in the `packages/server/dist` folder.
 
 ## Contribution
 
-Suggestions and contributions are always welcome! Please first discuss changes via issue before submitting a pull request and follow our [Contribution Guide]('CONTRIBUTING.md').
+Suggestions and contributions are always welcome! Please first discuss changes via issue before submitting a pull request and follow our [Contribution Guide](CONTRIBUTING.md).
