@@ -4,11 +4,12 @@ import path from 'path';
 
 import DBService from '../services/dbService';
 
-const appDir = app.getPath('appData');
-let dbFilePath = `${appDir}/data/`;
+const userDataPath = app.getPath('userData');
+
+let dbFilePath = `${userDataPath}/data/`;
 
 if (isDev) {
-  dbFilePath = path.join(__dirname, '../../data/');
+  dbFilePath = path.join(__dirname, '../data/');
 }
 
 const DB = new DBService(dbFilePath);

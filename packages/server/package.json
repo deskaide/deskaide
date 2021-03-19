@@ -1,12 +1,12 @@
 {
   "name": "deskaide-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server app for deskaide",
   "main": "index.js",
   "scripts": {
     "start": "wait-on http://localhost:3000 && electron .",
-    "prebuild": "rm -rf node_modules",
-    "build": "npm i --production",
+    "prebuild": "npx @atao60/fse-cli remove ./dist && npx @atao60/fse-cli remove build",
+    "build": "npx @atao60/fse-cli copy --all --keepExisting --errorOnExist --dereference --preserveTimestamps ../client/build ./build",
     "prepack": "npm run build",
     "prepack:all": "npm run build",
     "pack": "electron-builder --x64 -c.extraMetadata.main=index.js",
@@ -16,6 +16,48 @@
     "electron",
     "deskaide"
   ],
+  "build": {
+    "extraMetadata": {
+      "name": "deskaide",
+      "productName": "Deskaide",
+      "homepage": "https://www.deskaide.app",
+      "description": "An open source application to help managing your desk (Computer) usage."
+    },
+    "appId": "app.deskaide.www",
+    "files": [
+      "**/*",
+      "assets/icons",
+      "!.eslintrc.js",
+      "!.prettierrc.js",
+      "!package-lock.json",
+      "!data",
+      "!.gitignore"
+    ],
+    "extends": null,
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "win": {
+      "icon": "assets/icons/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icons/icon.icns",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
   "author": "Shahidul Islam Majumder <hello@shahid.pro>",
   "license": "MIT",
   "devDependencies": {

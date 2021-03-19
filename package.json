@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "up": "lerna bootstrap",
-    "start": "lerna exec --parallel --stream npm start"
+    "start": "lerna exec --parallel --stream npm start",
+    "prepack": "lerna exec --scope deskaide-client npm run build",
+    "pack": "lerna exec --scope deskaide-server npm run pack"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

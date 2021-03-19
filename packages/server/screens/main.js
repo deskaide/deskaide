@@ -7,7 +7,7 @@ let mainWindow;
 
 const startUrl = isDev
   ? 'http://localhost:3000'
-  : `file://${path.join(__dirname, '../../client/build/index.html')}`;
+  : `file://${path.join(__dirname, '../build/index.html')}`;
 
 function createMainWindow({ app, BrowserWindow, screen, Menu }) {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
