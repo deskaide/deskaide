@@ -7,7 +7,7 @@ const { ipcRenderer } = electron;
 
 const SaveLinkForm = ({ setFieldValue }) => {
   const handleLinkPaste = useCallback(
-    (e, data) => {
+    (_, data) => {
       setFieldValue('url', data);
     },
     [setFieldValue]
@@ -40,7 +40,7 @@ const SaveLink = () => (
     <Formik
       initialValues={{ url: '' }}
       onSubmit={async (values, actions) => {
-        ipcRenderer.send('UPSERT_DATA', {
+        ipcRenderer.send('SAVE_LINK_DATA', {
           data: { ...values, type: 'LINKS_DOC_PREFIX' },
         });
 

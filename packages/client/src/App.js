@@ -74,7 +74,7 @@ const App = ({
       startFocusTimer();
     }
 
-    ipcRenderer.on('GO_TO', (e, path) => {
+    ipcRenderer.on('GO_TO', (_, path) => {
       history.push(path);
     });
 

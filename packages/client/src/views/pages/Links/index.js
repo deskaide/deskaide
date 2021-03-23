@@ -15,6 +15,12 @@ const Links = () => {
     setLinks(formatLinkData(result.data));
   }, []);
 
+  useEffect(() => {
+    ipcRenderer.on('LINK_LIST_UPDATED', (_, result) => {
+      setLinks(formatLinkData(result.data));
+    });
+  }, []);
+
   return (
     <MainAppLayout appMenu={<LinkOptions />}>
       <Box p={4}>
@@ -28,7 +34,16 @@ const Links = () => {
         <ul>
           {links.map((link) => (
             <li key={link.createdAt}>
-              <Text>{link.url}</Text>
+              <Text>
+                <a href={link.url}>{link.title}</a>
+              </Text>
+              {link.image && (
+                <img
+                  src={link.image}
+                  alt={link.title}
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              )}
             </li>
           ))}
         </ul>

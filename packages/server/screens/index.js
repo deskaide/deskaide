@@ -1,5 +1,5 @@
 import AutoLaunch from 'auto-launch';
-import electron from 'electron';
+import electron, { ipcRenderer } from 'electron';
 import isDev from 'electron-is-dev';
 import path from 'path';
 import urlMetadata from 'url-metadata';
@@ -139,5 +139,28 @@ ipcMain.on('UPSERT_DATA', async (event, { id, data }) => {
 
 ipcMain.on('FETCH_ALL', async (event, query = {}) => {
   const { rows } = await DB.fetchAll(query);
-  event.returnValue = { data: rows };
+  const sortedData = rows.sort((a, b) =>
+    b.doc.createdAt.localeCompare(a.doc.createdAt)
+  );
+  event.returnValue = { data: sortedData };
+});
+
+ipcMain.on('SAVE_LINK_DATA', async (e, { id, data }) => {
+  const urlData = { ...data };
+  const { title = '', image = '', description = '' } = await urlMetadata(
+    data.url
+  );
+
+  urlData.title = title;
+  urlData.image = image;
+  urlData.description = description;
+
+  await DB.upsert(urlData, id);
+
+  const { rows } = await DB.fetchAll({ type: 'links' });
+  const sortedData = rows.sort((a, b) =>
+    a.doc.createdAt.localeCompare(b.doc.createdAt)
+  );
+
+  mainWindow.webContents.send('LINK_LIST_UPDATED', { data: sortedData });
 });
