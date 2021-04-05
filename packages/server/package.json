@@ -1,0 +1,92 @@
+{
+  "name": "deskaide-server",
+  "version": "1.0.0",
+  "description": "Server app for deskaide",
+  "main": "index.js",
+  "scripts": {
+    "start": "wait-on http://localhost:3000 && electron .",
+    "prebuild": "npx @atao60/fse-cli remove ./dist && npx @atao60/fse-cli remove build",
+    "build": "npx @atao60/fse-cli copy --all --keepExisting --errorOnExist --dereference --preserveTimestamps ../client/build ./build",
+    "prepack": "npm run build",
+    "prepack:all": "npm run build",
+    "pack": "electron-builder --x64 -c.extraMetadata.main=index.js",
+    "pack:all": "electron-builder -mwl --x64 -c.extraMetadata.main=index.js"
+  },
+  "keywords": [
+    "electron",
+    "deskaide"
+  ],
+  "build": {
+    "extraMetadata": {
+      "name": "deskaide",
+      "productName": "Deskaide",
+      "homepage": "https://www.deskaide.app",
+      "description": "An open source application to help managing your desk (Computer) usage."
+    },
+    "appId": "app.deskaide.www",
+    "files": [
+      "**/*",
+      "assets/icons",
+      "!.eslintrc.js",
+      "!.prettierrc.js",
+      "!package-lock.json",
+      "!data",
+      "!.gitignore"
+    ],
+    "extends": null,
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "win": {
+      "icon": "assets/icons/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icons/icon.icns",
+      "target": [
+        "dmg"
+      ]
+    }
+  },
+  "author": "Shahidul Islam Majumder <hello@shahid.pro>",
+  "license": "MIT",
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^2.0.1",
+    "electron": "^12.0.0",
+    "electron-builder": "^22.10.5",
+    "electron-reloader": "^1.2.0",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "wait-on": "^5.2.1"
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "electron-debug": "^3.2.0",
+    "electron-is-dev": "^2.0.0",
+    "esm": "^3.2.25",
+    "pouchdb-adapter-http": "^7.2.2",
+    "pouchdb-adapter-idb": "^7.2.2",
+    "pouchdb-adapter-leveldb": "^7.2.2",
+    "pouchdb-adapter-memory": "^7.2.2",
+    "pouchdb-core": "^7.2.2",
+    "pouchdb-find": "^7.2.2",
+    "pouchdb-mapreduce": "^7.2.2",
+    "pouchdb-replication": "^7.2.2",
+    "shortid": "^2.2.16",
+    "url-metadata": "^2.5.0"
+  }
+}
