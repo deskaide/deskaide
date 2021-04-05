@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  *:focus {
+    outline: none;
+  }
+
   body {
     font-size: 16px;
     font-family: 'Fira Code', monospace;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MainAppLayout } from '../../layouts';
-import { Box, Text } from '../../components';
+import { Box, Text, LinkCard } from '../../components';
 import LinkOptions from './LinkOptions';
 import formatLinkData from '../../../utils/formatter';
 
@@ -25,28 +25,13 @@ const Links = () => {
     <MainAppLayout appMenu={<LinkOptions />}>
       <Box p={4}>
         <Text variant="h1">{`Total links: ${links.length}`}</Text>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam nam,
-          aperiam fugit ea consequuntur unde, iste aliquid expedita aut eligendi
-          laboriosam, et obcaecati, distinctio. Mollitia unde, amet voluptatum
-          tempore voluptatibus?
-        </Text>
-        <ul>
-          {links.map((link) => (
-            <li key={link.createdAt}>
-              <Text>
-                <a href={link.url}>{link.title}</a>
-              </Text>
-              {link.image && (
-                <img
-                  src={link.image}
-                  alt={link.title}
-                  style={{ width: '100%', height: 'auto' }}
-                />
-              )}
-            </li>
+        <Box display="flex" flexWrap="wrap" mx={[0, -2]}>
+          {links.map((link, i) => (
+            <Box width={[1 / 2]} p={3} key={i}>
+              <LinkCard {...link} />
+            </Box>
           ))}
-        </ul>
+        </Box>
       </Box>
     </MainAppLayout>
   );

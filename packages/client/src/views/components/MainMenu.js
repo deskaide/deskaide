@@ -45,6 +45,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? logoDark : logoLight}
             width={32}
+            height="100%"
           />
         </Link>
       </li>
@@ -55,6 +56,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? clockIconDark : clockIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>
@@ -65,6 +67,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? noteIconDark : noteIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>
@@ -75,6 +78,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? journalIconDark : journalIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>
@@ -85,6 +89,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? linkIconDark : linkIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>
@@ -95,6 +100,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? statsIconDark : statsIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>
@@ -105,6 +111,7 @@ const MainMenu = ({ theme }) => (
           <Image
             src={theme.name === 'light' ? settingsIconDark : settingsIconLight}
             width={24}
+            height="100%"
           />
         </Link>
       </li>

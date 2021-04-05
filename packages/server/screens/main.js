@@ -28,10 +28,6 @@ function createMainWindow({ app, BrowserWindow, screen, Menu }) {
   Menu.setApplicationMenu(mainMenu);
   mainWindow.loadURL(startUrl);
 
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
-
   mainWindow.on('closed', () => {
     mainWindow = null;
   });

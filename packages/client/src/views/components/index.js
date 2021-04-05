@@ -4,6 +4,7 @@ export { default as Divider } from './Divider';
 export { default as Flex } from './Flex';
 export { default as Image } from './Image';
 export { default as Input } from './Input';
+export { default as LinkCard } from './LinkCard';
 export { default as MainMenu } from './MainMenu';
 export { default as Modal } from './Modal';
 export { default as ModalActions } from './ModalActions';

@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['warn'],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'prefer-destructuring': ['error', { object: true, array: false }],
   },
 };

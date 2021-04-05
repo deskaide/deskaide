@@ -1,3 +1,10 @@
+const breakpoints = ['576px', '768px', '992px', '1200px'];
+
+breakpoints.sm = breakpoints[0];
+breakpoints.md = breakpoints[1];
+breakpoints.lg = breakpoints[2];
+breakpoints.xl = breakpoints[3];
+
 const lightTheme = {
   name: 'light',
   typography: {
@@ -72,13 +79,7 @@ const lightTheme = {
     disabledText: '#393444',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
-  breakpoints: {
-    xs: 0,
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200,
-  },
+  breakpoints,
   borders: {
     light: '2px solid #EFF1F3',
   },

@@ -1,5 +1,6 @@
 import AutoLaunch from 'auto-launch';
 import electron, { ipcRenderer } from 'electron';
+import debug from 'electron-debug';
 import isDev from 'electron-is-dev';
 import path from 'path';
 import urlMetadata from 'url-metadata';
@@ -8,6 +9,19 @@ import DB from '../config/db';
 import { createContextMenuTemplate } from '../menus';
 import createBreakTimeWindow from './break';
 import createMainWindow from './main';
+
+debug({
+  isEnabled: true,
+  showDevTools: false,
+});
+
+try {
+  require('electron-reloader')(module, {
+    watchRenderer: false,
+  });
+} catch (error) {
+  console.log(error);
+}
 
 const {
   app,
