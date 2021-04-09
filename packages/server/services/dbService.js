@@ -21,7 +21,11 @@ class DBService {
     const now = new Date().toISOString();
     const createdAt = now;
     const updatedAt = now;
-    const _id = id || `${prefixes[data.type]}_${now}`;
+    const _id =
+      id ||
+      `${prefixes[data.type]}_${
+        data.type === 'TAGS_DOC_PREFIX' ? data.tagName : now
+      }`;
     const type = `${prefixes[data.type]}`;
 
     let doc = await this.getById(_id);

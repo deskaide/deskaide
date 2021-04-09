@@ -196,3 +196,23 @@ ipcMain.on('DELETE_BY_ID', async (event, id) => {
 
   mainWindow.webContents.send('LINK_LIST_UPDATED', { data: sortedData });
 });
+
+ipcMain.on('ADD_TAG', async (event, data) => {
+  const item = await DB.getById(data.itemId);
+
+  if (item) {
+    const tag = await DB.upsert({
+      type: 'TAGS_DOC_PREFIX',
+      tagName: data.tag,
+    });
+
+    await DB.upsert({ tag: tag._id }, data.itemId);
+  }
+
+  const { rows } = await DB.fetchAll({ type: 'links' });
+  const sortedData = rows.sort((a, b) =>
+    b.doc.createdAt.localeCompare(a.doc.createdAt)
+  );
+
+  mainWindow.webContents.send('LINK_LIST_UPDATED', { data: sortedData });
+});

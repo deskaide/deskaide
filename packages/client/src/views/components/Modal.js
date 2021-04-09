@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { space } from 'styled-system';
+import { space, layout } from 'styled-system';
 import { useOnClickOutside } from '../../hooks';
 
 const ModalBackdrop = styled.div`
@@ -30,6 +30,7 @@ const ModalContainer = styled.div`
   z-index: 1000;
   box-shadow: 0 -2px 16px rgba(0, 0, 0, 1);
   ${space};
+  ${layout};
 `;
 
 const Modal = ({ isOpen, onClose, children, ...props }) => {
