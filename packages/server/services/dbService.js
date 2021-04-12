@@ -21,7 +21,12 @@ class DBService {
     const now = new Date().toISOString();
     const createdAt = now;
     const updatedAt = now;
-    const _id = id || `${prefixes[data.type]}${shortid.generate()}`;
+    const _id =
+      id ||
+      `${prefixes[data.type]}_${
+        data.type === 'TAGS_DOC_PREFIX' ? data.tagName : now
+      }`;
+    const type = `${prefixes[data.type]}`;
 
     let doc = await this.getById(_id);
 
@@ -35,6 +40,7 @@ class DBService {
       doc = {
         ...data,
         _id,
+        type,
         createdAt,
         updatedAt,
       };
@@ -69,6 +75,52 @@ class DBService {
       return data;
     } catch (error) {
       console.log(error);
+      switch (error.name) {
+        case 'not_found':
+          return null;
+        default:
+          throw error;
+      }
+    }
+  };
+
+  deleteById = async (id) => {
+    try {
+      let doc = await this.getById(id);
+
+      if (doc) {
+        const deleted = await this.db.remove(doc._id, doc._rev);
+      }
+      return null;
+    } catch (e) {
+      switch (error.name) {
+        case 'not_found':
+          return null;
+        default:
+          throw error;
+      }
+    }
+  };
+
+  deleteAll = async ({ type }) => {
+    try {
+      const data = await this.db.allDocs();
+      if (type) {
+        for (let i = 0; i < data.rows.length; i++) {
+          let row = data.rows[i];
+
+          if (row.id.includes(type)) {
+            await this.db.remove(row.id, row.value.rev);
+          }
+        }
+      } else {
+        for (let i = 0; i < data.rows.length; i++) {
+          let row = data.rows[i];
+          await this.db.remove(row.id, row.value.rev);
+        }
+      }
+      return data;
+    } catch (error) {
       switch (error.name) {
         case 'not_found':
           return null;
