@@ -1,120 +1,13 @@
 {
   "name": "deskaide",
-  "version": "1.0.0",
   "private": true,
-  "main": "public/electron.js",
-  "homepage": "./",
-  "license": "MIT",
-  "url": "https://github.com/deskaide/deskaide",
-  "email": "hello@shahid.pro",
-  "author": "Shahidul Islam Majumder <hello@shahid.pro> (https://shahid.pro/)",
-  "description": "An open source application to check your desk (Computer) usage.",
-  "productName": "Deskaide",
   "scripts": {
-    "start": "concurrently 'BROWSER=none npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
-    "start:win": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start:win\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "electron": "electron .",
-    "electron-start": "electron --disable-gpu .",
-    "electron-start:win": ".\\node_modules\\electron\\dist\\electron.exe .",
-    "react-start": "react-scripts start",
-    "premake": "npm run build",
-    "premake:all": "npm run build",
-    "make": "electron-builder --x64 -c.extraMetadata.main=build/electron.js",
-    "make:all": "build -mwl --x64 -c.extraMetadata.main=build/electron.js"
-  },
-  "build": {
-    "appId": "app.deskaide.www",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "public/assets"
-    },
-    "linux": {
-      "category": "Utility",
-      "target": [
-        "deb",
-        "AppImage"
-      ]
-    },
-    "win": {
-      "icon": "assets/icons/icon.ico",
-      "target": [
-        "nsis"
-      ]
-    },
-    "mac": {
-      "category": "public.app-category.utilities",
-      "icon": "assets/icons/icon.icns",
-      "target": [
-        "dmg"
-      ]
-    }
-  },
-  "dependencies": {
-    "auto-launch": "^5.0.5",
-    "electron-is-dev": "^1.2.0",
-    "formik": "^2.1.5",
-    "history": "^5.0.0",
-    "i18next": "^19.6.0",
-    "i18next-browser-languagedetector": "^5.0.0",
-    "i18next-xhr-backend": "^3.2.2",
-    "pouchdb-adapter-http": "^7.2.1",
-    "pouchdb-adapter-idb": "^7.2.1",
-    "pouchdb-adapter-leveldb": "^7.2.1",
-    "pouchdb-adapter-memory": "^7.2.1",
-    "pouchdb-core": "^7.2.1",
-    "pouchdb-find": "^7.2.1",
-    "pouchdb-mapreduce": "^7.2.1",
-    "pouchdb-replication": "^7.2.1",
-    "react": "^16.13.1",
-    "react-countdown-now": "^2.1.2",
-    "react-dom": "^16.13.1",
-    "react-i18next": "^11.7.0",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "shortid": "^2.2.15",
-    "styled-components": "^5.1.1",
-    "styled-system": "^5.1.5",
-    "yup": "^0.29.1"
+    "up": "lerna bootstrap",
+    "start": "lerna exec --parallel --stream npm start",
+    "prepack": "lerna exec --scope deskaide-client npm run build",
+    "pack": "lerna exec --scope deskaide-server npm run pack"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "concurrently": "^5.2.0",
-    "electron": "9.1.0",
-    "electron-builder": "^22.7.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-node": "^4.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.8",
-    "prettier": "^2.0.5",
-    "redux-devtools-extension": "^2.13.8",
-    "wait-on": "^5.1.0"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "lerna": "^4.0.0"
   }
 }
