@@ -2,12 +2,15 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 
+import getTitleCase from '../../utils/getTitleCase';
 import Box from './Box';
 import Button from './Button';
 import Text from './Text';
 import Modal from './Modal';
 import ModalActions from './ModalActions';
 import Input from './Input';
+
+import { ReactComponent as HashIcon } from '../../assets/icons/hash.svg';
 
 const electron = window.require('electron');
 const { shell, ipcRenderer } = electron;
@@ -57,11 +60,17 @@ const Wrapper = styled(Box)`
       width: 100%;
       border-top: 1px solid ${({ theme }) => theme.colors.lightDark};
       border-right: 1px solid ${({ theme }) => theme.colors.lightDark};
-      color: ${({ theme }) => theme.colors.light};
+      color: ${({ theme }) => theme.colors.text};
       cursor: pointer;
 
       &:last-child {
         border-right: none;
+      }
+
+      svg {
+        position: relative;
+        top: 2px;
+        margin-right: 8px;
       }
     }
   }
@@ -122,7 +131,8 @@ const LinkCard = ({
 
         <ul className="link-actions">
           <li onClick={handleAddTag}>
-            {tag ? tag.split('tags_')[1] : 'Add Tag'}
+            <HashIcon width={16} height={16} />
+            {tag ? getTitleCase(tag.split('tags_')[1]) : 'Add Tag'}
           </li>
           <li onClick={handleConfirmation}>Delete</li>
         </ul>

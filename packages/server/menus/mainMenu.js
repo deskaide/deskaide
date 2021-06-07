@@ -1,7 +1,7 @@
 function createMainMenuTemplate(app, mainWindow) {
   return [
     {
-      label: 'Deskstat',
+      label: 'Menu',
       submenu: [
         {
           label: 'Pomodoro',

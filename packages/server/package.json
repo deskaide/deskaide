@@ -1,5 +1,5 @@
 {
-  "name": "deskaide-server",
+  "name": "Deskaide",
   "version": "1.0.0",
   "description": "Server app for deskaide",
   "main": "index.js",
