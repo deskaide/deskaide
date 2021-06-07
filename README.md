@@ -7,6 +7,7 @@
 ## Features
 
 - Pomodoro (with custom duration, break time and push notification)
+- Save Links (with preview and group by tags)
 
 ## Development
 
