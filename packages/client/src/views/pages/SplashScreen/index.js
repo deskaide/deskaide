@@ -14,7 +14,7 @@ const SplashScreen = ({ theme }) => (
         src={theme.name === 'light' ? logoDark : logoLight}
         height="12vmin"
       />
-      <Text variant="h2">Desk Aide</Text>
+      <Text variant="h2">Deskaide</Text>
       <Text variant="h5" fontWeight="400">
         An aide to your desk life!
       </Text>
