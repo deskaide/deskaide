@@ -16,9 +16,11 @@ debug({
 });
 
 try {
-  require('electron-reloader')(module, {
-    watchRenderer: false,
-  });
+  if (isDev) {
+    require('electron-reloader')(module, {
+      watchRenderer: false,
+    });
+  }
 } catch (error) {
   console.log(error);
 }

@@ -1,15 +1,21 @@
 {
-  "name": "Deskaide",
+  "name": "deskaide-server",
   "version": "1.0.0",
   "description": "Server app for deskaide",
   "main": "index.js",
   "scripts": {
     "start": "wait-on http://localhost:3000 && electron .",
-    "prebuild": "npx @atao60/fse-cli remove ./dist && npx @atao60/fse-cli remove build",
-    "build": "npx @atao60/fse-cli copy --all --keepExisting --errorOnExist --dereference --preserveTimestamps ../client/build ./build",
+    "prebuild": "echo y | npx @atao60/fse-cli remove ../../dist && npx @atao60/fse-cli remove build",
+    "build": "echo Yes | npx @atao60/fse-cli copy --all --keepExisting --errorOnExist --dereference --preserveTimestamps ../client/build ./build",
     "prepack": "npm run build",
+    "prepack:mac": "npm run build",
+    "prepack:windows": "npm run build",
+    "prepack:linux": "npm run build",
     "prepack:all": "npm run build",
     "pack": "electron-builder --x64 -c.extraMetadata.main=index.js",
+    "pack:mac": "electron-builder -m --x64 -c.extraMetadata.main=index.js",
+    "pack:windows": "electron-builder -w --x64 -c.extraMetadata.main=index.js",
+    "pack:linux": "electron-builder -l --x64 -c.extraMetadata.main=index.js",
     "pack:all": "electron-builder -mwl --x64 -c.extraMetadata.main=index.js"
   },
   "keywords": [
@@ -35,7 +41,8 @@
     ],
     "extends": null,
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "assets",
+      "output": "../../dist"
     },
     "linux": {
       "category": "Utility",
