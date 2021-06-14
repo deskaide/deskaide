@@ -1,4 +1,5 @@
 import isDev from 'electron-is-dev';
+import ioHook from 'iohook';
 import path from 'path';
 
 import { createMainMenuTemplate } from '../menus';

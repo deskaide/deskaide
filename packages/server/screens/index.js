@@ -7,6 +7,7 @@ import path from 'path';
 import DB from '../config/db';
 import { createContextMenuTemplate } from '../menus';
 import metadata from '../utils/metadata';
+import track from '../utils/tracker';
 import createBreakTimeWindow from './break';
 import createMainWindow from './main';
 
@@ -99,6 +100,7 @@ app.on('ready', async () => {
     const text = clipboard.readText();
     mainWindow.webContents.send('CLIPBOARD_TEXT', text);
   });
+  track(true);
 });
 
 app.on('window-all-closed', () => {
