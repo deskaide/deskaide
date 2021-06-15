@@ -1,15 +1,13 @@
+import PouchDB from 'pouchdb';
 import PouchDBAdapterLevelDB from 'pouchdb-adapter-leveldb';
-import PouchDBCore from 'pouchdb-core';
 import PouchDBFind from 'pouchdb-find';
 import PouchDBMapReduce from 'pouchdb-mapreduce';
-import PouchDBReplication from 'pouchdb-replication';
 import shortid from 'shortid';
 
 import prefixes from '../config/prefixes';
 
-const PouchDB = PouchDBCore.plugin(PouchDBAdapterLevelDB)
+PouchDB.plugin(PouchDBAdapterLevelDB)
   .plugin(PouchDBMapReduce)
-  .plugin(PouchDBReplication)
   .plugin(PouchDBFind);
 
 class DBService {
@@ -127,6 +125,28 @@ class DBService {
         default:
           throw error;
       }
+    }
+  };
+
+  sync = (remoteDB) => {
+    if (remoteDB) {
+      this.db
+        .sync(remoteDB, {
+          live: true,
+          retry: true,
+        })
+        .on('change', function (change) {
+          // yo, something changed!
+        })
+        .on('paused', function (info) {
+          // replication was paused, usually because of a lost connection
+        })
+        .on('active', function (info) {
+          // replication was resumed
+        })
+        .on('error', function (err) {
+          // totally unhandled error (shouldn't happen)
+        });
     }
   };
 }

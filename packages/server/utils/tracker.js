@@ -12,7 +12,7 @@ export default function track(isTrackingOn = false) {
     ioHook.on('mouseclick', (event) => {
       (async () => {
         const now = new Date().toISOString();
-        const windowInfo = await activeWindow();
+        const windowInfo = (await activeWindow()) || {};
 
         if (!appInfo.title) {
           appInfo.title = windowInfo.title;
