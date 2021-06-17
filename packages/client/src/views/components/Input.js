@@ -3,9 +3,17 @@ import styled from 'styled-components';
 import Text from './Text';
 
 const InputContainer = styled.div`
-  margin-bottom: 16px;
+  margin: 16px 0;
 
-  input[type='text'] {
+  .label-area {
+    p {
+      margin-top: 32px;
+      margin-bottom: 0;
+    }
+  }
+
+  input[type='text'],
+  input[type='password'] {
     border: none;
     background: none;
     outline: none;
@@ -22,7 +30,7 @@ function Input({ fieldOptions = {}, errorOptions = {} }) {
     <InputContainer>
       {fieldOptions.label && (
         <div className="label-area">
-          <Text>{fieldOptions.label}</Text>
+          <Text>{fieldOptions.label.toUpperCase()}</Text>
         </div>
       )}
 

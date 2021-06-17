@@ -9,6 +9,7 @@ import {
   ModalActions,
   RadioInput,
   Text,
+  Input,
 } from '../../components';
 import { settingsActions } from '../../../state/settings';
 import { DEFAULT_SETTINGS, appSettingsId } from '../../../config';
@@ -62,6 +63,22 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
               { name: 'Light', value: 'light' },
             ]}
           />
+          <Input
+            fieldOptions={{
+              name: 'remoteDBUrl',
+              type: 'password',
+              label: 'Remote DB URL',
+              placeholder: 'Enter a remote db url...',
+            }}
+          />
+          <RadioInput
+            name="isTrackingOn"
+            label="Do you want to track your app usage?"
+            options={[
+              { name: 'Yes', value: 'Y' },
+              { name: 'No', value: 'N' },
+            ]}
+          />
 
           <Flex
             display="inline-flex"
@@ -106,12 +123,16 @@ const SettingsForm = withFormik({
   mapPropsToValues: (values) => ({
     autoStart: values.autoStart,
     selectedTheme: values.selectedTheme,
+    remoteDBUrl: values.remoteDBUrl,
+    isTrackingOn: values.isTrackingOn,
   }),
 })(AppSettingsForm);
 
 const mapStateToProps = ({ settings }) => ({
   autoStart: settings.autoStart,
   selectedTheme: settings.selectedTheme,
+  remoteDBUrl: settings.remoteDBUrl,
+  isTrackingOn: settings.isTrackingOn,
 });
 
 const mapActionsToProps = {

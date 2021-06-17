@@ -1,14 +1,17 @@
 import AutoLaunch from 'auto-launch';
-import electron, { ipcRenderer } from 'electron';
+import electron from 'electron';
 import debug from 'electron-debug';
 import isDev from 'electron-is-dev';
 import path from 'path';
 
-import DB from '../config/db';
-import { createContextMenuTemplate } from '../menus';
-import metadata from '../utils/metadata';
-import createBreakTimeWindow from './break';
-import createMainWindow from './main';
+import * as config from './config';
+import DB, { initRemoteDB } from './config/db';
+import toBoolean from './helpers/toBoolean';
+import { createContextMenuTemplate } from './menus';
+import createBreakTimeWindow from './screens/break';
+import createMainWindow from './screens/main';
+import metadata from './utils/metadata';
+import track from './utils/tracker';
 
 debug({
   isEnabled: true,
@@ -16,9 +19,11 @@ debug({
 });
 
 try {
-  require('electron-reloader')(module, {
-    watchRenderer: false,
-  });
+  if (isDev) {
+    require('electron-reloader')(module, {
+      watchRenderer: false,
+    });
+  }
 } catch (error) {
   console.log(error);
 }
@@ -37,9 +42,19 @@ const {
 let mainWindow;
 let breakTimeWindow;
 let appIcon;
+let remoteDB;
 
 async function getSettings() {
   const settings = (await DB.getById('app/settings')) || {};
+
+  if (isDev && config.remoteDBUrl) {
+    settings.remoteDBUrl = config.remoteDBUrl;
+  }
+
+  if (settings.remoteDBUrl) {
+    remoteDB = initRemoteDB(settings.remoteDBUrl);
+  }
+
   return settings;
 }
 
@@ -47,7 +62,7 @@ function createContextMenu() {
   const contextMenuTemplate = createContextMenuTemplate(app, mainWindow);
   const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
 
-  appIcon = new Tray(path.join(__dirname, '../assets/icons/icon.png'));
+  appIcon = new Tray(path.join(__dirname, './assets/icons/icon.png'));
   appIcon.setToolTip('Deskstat');
   appIcon.setContextMenu(contextMenu);
   appIcon.on('click', () => {
@@ -92,11 +107,16 @@ app.on('ready', async () => {
   mainWindow = createMainWindow({ app, BrowserWindow, Menu, screen });
   createContextMenu();
   startPowerMonitoring();
-  await autoLaunchApp(settings.autoStart === 'Y');
+  await autoLaunchApp(toBoolean(settings.autoStart));
   globalShortcut.register('CommandOrControl+L', () => {
     const text = clipboard.readText();
     mainWindow.webContents.send('CLIPBOARD_TEXT', text);
   });
+
+  if (remoteDB) {
+    DB.sync(remoteDB);
+  }
+  track(toBoolean(settings.isTrackingOn));
 });
 
 app.on('window-all-closed', () => {

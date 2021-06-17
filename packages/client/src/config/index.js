@@ -4,6 +4,8 @@ export const A_SECOND = 1000;
 export const DEFAULT_SETTINGS = {
   selectedTheme: 'dark',
   autoStart: 'N',
+  remoteDBUrl: '',
+  isTrackingOn: 'N',
 };
 
 export const POMODORO_INITIAL_SETTINGS = {

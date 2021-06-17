@@ -1,6 +1,7 @@
 import { app } from 'electron';
 import isDev from 'electron-is-dev';
 import path from 'path';
+import PouchDB from 'pouchdb';
 
 import DBService from '../services/dbService';
 
@@ -13,5 +14,13 @@ if (isDev) {
 }
 
 const DB = new DBService(dbFilePath);
+
+export function initRemoteDB(dbURL = '') {
+  if (!dbURL) {
+    return null;
+  }
+
+  return new PouchDB(dbURL);
+}
 
 export default DB;
