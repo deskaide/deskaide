@@ -9,6 +9,7 @@ import {
   ModalActions,
   RadioInput,
   Text,
+  Input,
 } from '../../components';
 import { settingsActions } from '../../../state/settings';
 import { DEFAULT_SETTINGS, appSettingsId } from '../../../config';
@@ -31,6 +32,7 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    console.log(values);
     ipcRenderer.sendSync('UPSERT_DATA', {
       id: appSettingsId,
       data: values,
@@ -61,6 +63,15 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
               { name: 'Dark', value: 'dark' },
               { name: 'Light', value: 'light' },
             ]}
+          />
+
+          <Input
+            fieldOptions={{
+              name: 'remoteDBUrl',
+              type: 'text',
+              label: 'Remote DB URL',
+              placeholder: 'Enter a remote db url...',
+            }}
           />
 
           <Flex
@@ -106,12 +117,14 @@ const SettingsForm = withFormik({
   mapPropsToValues: (values) => ({
     autoStart: values.autoStart,
     selectedTheme: values.selectedTheme,
+    remoteDBUrl: values.remoteDBUrl,
   }),
 })(AppSettingsForm);
 
 const mapStateToProps = ({ settings }) => ({
   autoStart: settings.autoStart,
   selectedTheme: settings.selectedTheme,
+  remoteDBUrl: settings.remoteDBUrl,
 });
 
 const mapActionsToProps = {
