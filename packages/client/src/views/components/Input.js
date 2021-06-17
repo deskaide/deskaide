@@ -12,7 +12,8 @@ const InputContainer = styled.div`
     }
   }
 
-  input[type='text'] {
+  input[type='text'],
+  input[type='password'] {
     border: none;
     background: none;
     outline: none;

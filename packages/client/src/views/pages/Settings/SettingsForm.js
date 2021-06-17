@@ -66,7 +66,7 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
           <Input
             fieldOptions={{
               name: 'remoteDBUrl',
-              type: 'text',
+              type: 'password',
               label: 'Remote DB URL',
               placeholder: 'Enter a remote db url...',
             }}

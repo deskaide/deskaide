@@ -2,6 +2,9 @@ import activeWindow from 'active-win';
 import { differenceInSeconds } from 'date-fns';
 import ioHook from 'iohook';
 
+import DB from '../config/db';
+import prefixes from '../config/prefixes';
+
 export default function track(isTrackingOn = false) {
   const appInfo = {
     title: '',
@@ -31,17 +34,14 @@ export default function track(isTrackingOn = false) {
             ),
           };
 
-          console.log('Prev Appinfo ------->s');
-          console.log(prevAppInfo);
-          console.log('Prev Appinfo ------->e');
+          await DB.upsert({
+            ...prevAppInfo,
+            type: 'APP_USAGE_DOC_PREFIX',
+          });
 
           appInfo.title = windowInfo.title;
           appInfo.owner = windowInfo.owner ? windowInfo.owner.name : 'Misc';
           appInfo.startedAt = now;
-
-          console.log('Appinfo ------->s');
-          console.log(appInfo);
-          console.log('Appinfo ------->e');
         }
       })();
     });
