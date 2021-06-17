@@ -32,7 +32,6 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    console.log(values);
     ipcRenderer.sendSync('UPSERT_DATA', {
       id: appSettingsId,
       data: values,
@@ -64,7 +63,6 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
               { name: 'Light', value: 'light' },
             ]}
           />
-
           <Input
             fieldOptions={{
               name: 'remoteDBUrl',
@@ -72,6 +70,14 @@ const AppSettingsForm = ({ saveSettings, resetForm, values }) => {
               label: 'Remote DB URL',
               placeholder: 'Enter a remote db url...',
             }}
+          />
+          <RadioInput
+            name="isTrackingOn"
+            label="Do you want to track your app usage?"
+            options={[
+              { name: 'Yes', value: 'Y' },
+              { name: 'No', value: 'N' },
+            ]}
           />
 
           <Flex
@@ -118,6 +124,7 @@ const SettingsForm = withFormik({
     autoStart: values.autoStart,
     selectedTheme: values.selectedTheme,
     remoteDBUrl: values.remoteDBUrl,
+    isTrackingOn: values.isTrackingOn,
   }),
 })(AppSettingsForm);
 
@@ -125,6 +132,7 @@ const mapStateToProps = ({ settings }) => ({
   autoStart: settings.autoStart,
   selectedTheme: settings.selectedTheme,
   remoteDBUrl: settings.remoteDBUrl,
+  isTrackingOn: settings.isTrackingOn,
 });
 
 const mapActionsToProps = {

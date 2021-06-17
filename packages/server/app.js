@@ -6,6 +6,7 @@ import path from 'path';
 
 import * as config from './config';
 import DB, { initRemoteDB } from './config/db';
+import toBoolean from './helpers/toBoolean';
 import { createContextMenuTemplate } from './menus';
 import createBreakTimeWindow from './screens/break';
 import createMainWindow from './screens/main';
@@ -106,7 +107,7 @@ app.on('ready', async () => {
   mainWindow = createMainWindow({ app, BrowserWindow, Menu, screen });
   createContextMenu();
   startPowerMonitoring();
-  await autoLaunchApp(settings.autoStart === 'Y');
+  await autoLaunchApp(toBoolean(settings.autoStart));
   globalShortcut.register('CommandOrControl+L', () => {
     const text = clipboard.readText();
     mainWindow.webContents.send('CLIPBOARD_TEXT', text);
@@ -115,7 +116,7 @@ app.on('ready', async () => {
   if (remoteDB) {
     DB.sync(remoteDB);
   }
-  track(true);
+  track(toBoolean(settings.isTrackingOn));
 });
 
 app.on('window-all-closed', () => {

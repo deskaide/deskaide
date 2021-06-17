@@ -1,4 +1,5 @@
 import activeWindow from 'active-win';
+import { differenceInSeconds } from 'date-fns';
 import ioHook from 'iohook';
 
 export default function track(isTrackingOn = false) {
@@ -24,6 +25,10 @@ export default function track(isTrackingOn = false) {
           prevAppInfo = {
             ...appInfo,
             endedAt: now,
+            duration: differenceInSeconds(
+              new Date(now),
+              new Date(appInfo.startedAt)
+            ),
           };
 
           console.log('Prev Appinfo ------->s');

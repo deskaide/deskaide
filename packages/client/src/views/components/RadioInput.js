@@ -19,6 +19,7 @@ const InputContainer = styled.div`
   }
 
   label {
+    cursor: pointer;
     color: ${({ theme }) => theme.colors.text};
     margin-left: ${({ theme }) => `${theme.space[2]}px`};
     margin-right: ${({ theme }) => `${theme.space[4]}px`};
@@ -45,14 +46,14 @@ const RadioInput = ({
         <Flex key={option.value} display={optionDisplay}>
           <input
             type="radio"
-            id={`radio_${option.value}`}
+            id={`radio_${name}_${option.value}`}
             name={name}
             onClick={() => setValue(option.value)}
             {...field}
             value={option.value}
             checked={value === option.value}
           />
-          <label htmlFor={`radio_${option.value}`}>{option.name}</label>
+          <label htmlFor={`radio_${name}_${option.value}`}>{option.name}</label>
         </Flex>
       ))}
       {meta.touched && meta.error ? (
