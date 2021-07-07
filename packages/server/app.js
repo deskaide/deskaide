@@ -4,7 +4,6 @@ import debug from 'electron-debug';
 import isDev from 'electron-is-dev';
 import path from 'path';
 
-import * as config from './config';
 import DB, { initRemoteDB } from './config/db';
 import toBoolean from './helpers/toBoolean';
 import { createContextMenuTemplate } from './menus';
@@ -46,10 +45,6 @@ let remoteDB;
 
 async function getSettings() {
   const settings = (await DB.getById('app/settings')) || {};
-
-  if (isDev && config.remoteDBUrl) {
-    settings.remoteDBUrl = config.remoteDBUrl;
-  }
 
   if (settings.remoteDBUrl) {
     remoteDB = initRemoteDB(settings.remoteDBUrl);
