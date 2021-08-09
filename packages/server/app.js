@@ -10,7 +10,6 @@ import { createContextMenuTemplate } from './menus';
 import createBreakTimeWindow from './screens/break';
 import createMainWindow from './screens/main';
 import metadata from './utils/metadata';
-import track from './utils/tracker';
 
 debug({
   isEnabled: true,
@@ -111,7 +110,7 @@ app.on('ready', async () => {
   if (remoteDB) {
     DB.sync(remoteDB);
   }
-  track(toBoolean(settings.isTrackingOn));
+  // track(toBoolean(settings.isTrackingOn));
 });
 
 app.on('window-all-closed', () => {
