@@ -1,18 +1,92 @@
 {
   "name": "deskaide",
   "private": true,
-  "scripts": {
-    "up": "lerna bootstrap",
-    "start": "lerna exec --parallel --stream npm start",
-    "prepack": "lerna exec --scope deskaide-client npm run build",
-    "pack": "lerna exec --scope deskaide-server npm run pack",
-    "prepack:linux": "lerna exec --scope deskaide-client npm run build",
-    "pack:linux": "lerna exec --scope deskaide-server npm run pack:linux"
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/deskaide/deskaide.git"
   },
+  "keywords": [
+    "Pomodoro",
+    "remark",
+    "CodeMirror",
+    "Electron",
+    "Vite",
+    "TypeScript"
+  ],
+  "author": "Shahidul Islam Majumder <hello@shahid.pro>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=v14.16",
+    "npm": ">=7.7"
+  },
+  "main": "packages/main/dist/index.cjs",
+  "scripts": {
+    "buildEnvTypes": "node scripts/buildEnvTypes.js",
+    "build": "node scripts/build.js",
+    "precompile": "cross-env MODE=production npm run build",
+    "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
+    "pretest": "cross-env MODE=test npm run build",
+    "test": "node tests/app.spec.js",
+    "watch": "node scripts/watch.js",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
+    "format": "npm run prettier -- --write",
+    "check-format": "npm run prettier -- --list-different",
+    "pretypecheck": "npm run buildEnvTypes",
+    "typecheck-main": "tsc --noEmit -p packages/main/tsconfig.json",
+    "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+    "typecheck-renderer": "tsc --noEmit -p packages/renderer/tsconfig.json",
+    "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer",
+    "prevalidate": "npm run test",
+    "lint-staged": "lint-staged",
+    "validate": "npm-run-all --parallel typecheck check-format lint build",
+    "prepare": "husky install"
+  },
+  "browserslist": [
+    "Chrome 94"
+  ],
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/react": "^17.0.17",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
+    "cross-env": "^7.0.3",
+    "electron": "^13.1.9",
+    "electron-builder": "^22.11.7",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.4.1",
+    "spectron": "^15.0.0",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.4"
   },
   "dependencies": {
-    "pouchdb": "^7.2.2"
+    "@codemirror/commands": "^0.19.1",
+    "@codemirror/gutter": "^0.19.0",
+    "@codemirror/highlight": "^0.19.1",
+    "@codemirror/history": "^0.19.0",
+    "@codemirror/lang-javascript": "^0.19.1",
+    "@codemirror/lang-markdown": "^0.19.1",
+    "@codemirror/language": "^0.19.2",
+    "@codemirror/language-data": "^0.19.0",
+    "@codemirror/matchbrackets": "^0.19.1",
+    "@codemirror/state": "^0.19.0",
+    "@codemirror/theme-one-dark": "^0.19.0",
+    "assert": "^2.0.0",
+    "electron-updater": "^4.4.4",
+    "github-markdown-css": "^4.0.0",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "remark-gfm": "^2.0.0",
+    "remark-parse": "^10.0.0",
+    "remark-react": "^9.0.0",
+    "unified": "^10.1.0"
   }
 }
