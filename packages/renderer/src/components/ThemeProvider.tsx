@@ -22,7 +22,7 @@ const Provider: React.FC = ({ children }) => {
     const hasUsedToggle = typeof persistedPreference === 'string';
 
     if (hasUsedToggle) {
-      initialColorMode = persistedPreference;
+      initialColorMode = persistedPreference as string;
     } else {
       initialColorMode = prefersDarkFromMQ ? 'dark' : 'light';
     }
