@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeProvider } from 'styled-components';
 
+import * as themes from './styles/themes';
+import { ThemeContext } from './components/ThemeProvider';
+import GlobalStyles from './styles/GlobalStyles';
 import { Pomodoro } from './pages';
 
 // import Editor from './editor';
 // import Preview from './preview';
-import './app.css';
 
 const App: React.FC = () => {
   // const [doc, setDoc] = useState<string>('# Hello, World!\n');
@@ -13,12 +16,19 @@ const App: React.FC = () => {
   //   setDoc(newDoc);
   // }, []);
 
+  const context = useContext<{
+    colorMode: string | undefined;
+    setColorMode: (newValue: string) => void;
+  } | null>(ThemeContext);
+  const selectedTheme = (context?.colorMode ?? 'light') as keyof typeof themes;
+
   return (
-    <div className="app">
+    <ThemeProvider theme={themes[selectedTheme]}>
       {/* <Editor onChange={handleDocChange} initialDoc={doc} />
       <Preview doc={doc} /> */}
+      <GlobalStyles />
       <Pomodoro />
-    </div>
+    </ThemeProvider>
   );
 };
 

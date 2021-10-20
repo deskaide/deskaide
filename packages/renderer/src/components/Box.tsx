@@ -12,7 +12,29 @@ import {
   background,
 } from 'styled-system';
 
-const Box: React.FC = styled.div`
+import type {
+  SpaceProps,
+  ColorProps,
+  LayoutProps,
+  PositionProps,
+  TypographyProps,
+  BorderProps,
+  FlexboxProps,
+  GridProps,
+  BackgroundProps,
+} from 'styled-system';
+
+type Props = SpaceProps &
+  ColorProps &
+  LayoutProps &
+  PositionProps &
+  TypographyProps &
+  BorderProps &
+  FlexboxProps &
+  GridProps &
+  BackgroundProps;
+
+const Box = styled.div<Props>`
   ${compose(
     space,
     color,

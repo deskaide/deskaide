@@ -80,20 +80,21 @@ const TextBase = styled.p<TextBaseProps>`
   ${layout};
 `;
 
-// const RawHTML: React.FC<{
-//   dangerouslySetInnerHTML: { __html: string };
-// }> = styled.div`
-//   ${space};
-//   ${typography};
-//   ${color};
-//   ${layout};
-// `;
+const RawHTMLContainer = styled.div`
+  ${space};
+  ${typography};
+  ${color};
+  ${layout};
+`;
 
-// eslint-disable-next-line no-shadow
+const RawHTML = ({ html }: { html: string }) => (
+  <RawHTMLContainer dangerouslySetInnerHTML={{ __html: html }} />
+);
+
 const Text: React.FC<{
-  variant: string;
+  variant?: string;
   html?: string;
-}> = ({ variant = 'p', ...props }) => {
+}> = ({ variant = 'p', html, ...props }) => {
   switch (variant) {
     case 'h1':
       return <TextBase variant={variant} as="h1" {...props} />;
@@ -117,12 +118,8 @@ const Text: React.FC<{
       return <TextBase variant={variant} as="label" {...props} />;
     case 'blockquote':
       return <TextBase variant={variant} as="blockquote" {...props} />;
-    // case 'raw':
-    //   return html ? (
-    //     <RawHTML dangerouslySetInnerHTML={{ __html: html }} {...props} />
-    //   ) : (
-    //     <></>
-    //   );
+    case 'raw':
+      return <RawHTML html={html as string} {...props} />;
     default:
       return <TextBase variant="p" as="p" {...props} />;
   }

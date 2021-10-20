@@ -77,7 +77,7 @@ const GlobalStyle = createGlobalStyle`
 
     margin: ${({ theme }) => theme.space.lg}px 0;
     padding: ${({ theme }) => theme.space.xl}px;
-    border-left: 4px solid ${({ theme }) => theme.colors.primary0};
+    border-left: 4px solid ${({ theme }) => theme.colors.primary[0]};
     font-size: ${({ theme }) => theme.fontSizes.h5};
     font-style: italic;
     line-height: ${({ theme }) => theme.lineHeights.heading};

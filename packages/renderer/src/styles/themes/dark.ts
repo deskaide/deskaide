@@ -1,8 +1,10 @@
 import baseTheme from './baseTheme';
 
-const dark = {
-  name: 'dark',
+import type { ThemeInterface } from '../../types/ThemeInterface';
+
+const dark: ThemeInterface = {
   ...baseTheme,
+  name: 'dark',
   colors: {
     ...baseTheme.colors,
     bg0: baseTheme.colors.dark[0],

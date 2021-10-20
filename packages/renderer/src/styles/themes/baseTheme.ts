@@ -1,6 +1,14 @@
-/* eslint-disable prefer-destructuring */
-const space = [0, 4, 8, 16, 32, 64];
-const fontSizes = [
+import type {
+  ThemeInterface,
+  CustomNumberArrayType,
+  CustomStringArrayType,
+} from '../../types/ThemeInterface';
+
+const space: CustomNumberArrayType = [
+  0, 4, 8, 16, 32, 64,
+] as CustomNumberArrayType;
+
+const fontSizes: CustomStringArrayType = [
   `13px`,
   `15px`,
   `18px`,
@@ -11,10 +19,12 @@ const fontSizes = [
   `45px`,
   `54px`,
   `65px`,
-];
+] as CustomStringArrayType;
+
 const fonts = {
   body: `'Fira Sans', sans-serif`,
 };
+
 const breakpoints = ['240px', '480px', '768px', '1024px', '1224px'];
 
 const mediaQueries = {
@@ -24,8 +34,13 @@ const mediaQueries = {
   lg: `@media only screen and (min-width : ${breakpoints[4]})`,
 };
 
-const lineHeights = [1, 1.3, 1.6, 2];
-const fontWeights = [400, 500, 700];
+const lineHeights: CustomNumberArrayType = [
+  1, 1.3, 1.6, 2,
+] as CustomNumberArrayType;
+
+const fontWeights: CustomNumberArrayType = [
+  400, 500, 700,
+] as CustomNumberArrayType;
 
 const colors = {
   primary: ['#207490', '#21AAE2', '#5CC7EB'],
@@ -68,7 +83,8 @@ fontWeights.normal = fontWeights[0];
 fontWeights.medium = fontWeights[1];
 fontWeights.bold = fontWeights[2];
 
-const baseTheme = {
+const baseTheme: ThemeInterface = {
+  name: 'baseTheme',
   space,
   fontSizes,
   fonts,
