@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import * as themes from './styles/themes';
 import { ThemeContext } from './components/ThemeProvider';
 import GlobalStyles from './styles/GlobalStyles';
-import { Pomodoro } from './pages';
+import Routes from './routes';
 
 // import Editor from './editor';
 // import Preview from './preview';
@@ -16,10 +16,7 @@ const App: React.FC = () => {
   //   setDoc(newDoc);
   // }, []);
 
-  const context = useContext<{
-    colorMode: string | undefined;
-    setColorMode: (newValue: string) => void;
-  } | null>(ThemeContext);
+  const context = useContext(ThemeContext);
   const selectedTheme = (context?.colorMode ?? 'light') as keyof typeof themes;
 
   return (
@@ -27,7 +24,7 @@ const App: React.FC = () => {
       {/* <Editor onChange={handleDocChange} initialDoc={doc} />
       <Preview doc={doc} /> */}
       <GlobalStyles />
-      <Pomodoro />
+      <Routes />
     </ThemeProvider>
   );
 };
