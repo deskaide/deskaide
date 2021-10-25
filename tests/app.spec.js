@@ -49,7 +49,7 @@ const { strict: assert } = require('assert');
   );
 
   // Check Preload script
-  const renderedExposedApi = await page.evaluate(() => globalThis.electron);
+  const renderedExposedApi = await page.evaluate(() => globalThis.deskaide);
   const realVersions = await electronApp.evaluate(() => process.versions);
 
   assert.notStrictEqual(
@@ -58,7 +58,7 @@ const { strict: assert } = require('assert');
     'In renderer `globalThis.electron` is undefined'
   );
   assert.strictEqual(
-    renderedExposedApi?.versions?.electron,
+    renderedExposedApi?.platform?.electron,
     realVersions.electron
   );
 
