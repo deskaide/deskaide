@@ -1,8 +1,10 @@
-# Markdown Editor Tutorial
+<div align="center">
+  <img src="doc/deskaide-logo.png" height="120">
+  <h1>Deskaide</h1>
+  <strong>An aide to your desk life!</strong>
+</div>
 
-![screenshot](./doc/screenshot.png)
-
-A tutorial for building a beautiful Markdown editor
+## _N.B. The project is in the early stage of development. Anything can change anytime._
 
 ## Stack
 
