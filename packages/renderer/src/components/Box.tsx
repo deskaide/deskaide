@@ -1,0 +1,51 @@
+import styled from 'styled-components';
+import {
+  compose,
+  space,
+  color,
+  layout,
+  position,
+  typography,
+  border,
+  flexbox,
+  grid,
+  background,
+} from 'styled-system';
+
+import type {
+  SpaceProps,
+  ColorProps,
+  LayoutProps,
+  PositionProps,
+  TypographyProps,
+  BorderProps,
+  FlexboxProps,
+  GridProps,
+  BackgroundProps,
+} from 'styled-system';
+
+type Props = SpaceProps &
+  ColorProps &
+  LayoutProps &
+  PositionProps &
+  TypographyProps &
+  BorderProps &
+  FlexboxProps &
+  GridProps &
+  BackgroundProps;
+
+const Box = styled.div<Props>`
+  ${compose(
+    space,
+    color,
+    layout,
+    position,
+    typography,
+    border,
+    flexbox,
+    grid,
+    background
+  )};
+`;
+
+export default Box;
