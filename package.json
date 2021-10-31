@@ -41,7 +41,7 @@
     "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer",
     "prevalidate": "npm run test",
     "lint-staged": "lint-staged",
-    "validate": "npm-run-all --parallel typecheck check-format lint build",
+    "validate": "npm-run-all --parallel typecheck check-format lint",
     "prepare": "husky install"
   },
   "build": {
