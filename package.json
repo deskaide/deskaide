@@ -26,8 +26,9 @@
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
     "compile": "electron-builder --x64",
-    "pretest": "cross-env MODE=test npm run build",
-    "test": "node tests/app.spec.js",
+    "test": "npm run test:main",
+    "pretest:main": "cross-env MODE=test npm run build",
+    "test:main": "node tests/app.spec.js",
     "dev": "node scripts/watch.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
@@ -40,7 +41,7 @@
     "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer",
     "prevalidate": "npm run test",
     "lint-staged": "lint-staged",
-    "validate": "npm-run-all --parallel typecheck check-format lint build",
+    "validate": "npm-run-all --parallel typecheck check-format lint",
     "prepare": "husky install"
   },
   "build": {
