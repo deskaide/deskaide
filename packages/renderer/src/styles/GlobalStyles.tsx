@@ -134,6 +134,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .logo-bottom {
+    fill: var(--color-dark-1);
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
