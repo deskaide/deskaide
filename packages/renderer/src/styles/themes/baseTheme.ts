@@ -44,7 +44,7 @@ const fontWeights: CustomNumberArrayType = [
 
 const colors = {
   primary: ['#207490', '#21AAE2', '#5CC7EB'],
-  dark: ['#1E2029', '#2B2E3B', '#404454'],
+  dark: ['#191924', '#27283F', '#53556E'],
   light: ['#EDEDF2', '#F6F6F9', '#FFFFFF'],
   success: ['#04A660', '#07C270', '#3ADA8A'],
   error: ['#BE1918', '#F43A3C', '#F56161'],

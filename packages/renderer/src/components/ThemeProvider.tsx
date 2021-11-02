@@ -17,6 +17,8 @@ const Provider: React.FC = ({ children }) => {
     const prefersDarkFromMQ = mql.matches;
     const persistedPreference = localStorage.getItem('color-mode');
 
+    console.log(prefersDarkFromMQ);
+
     let initialColorMode = 'light';
 
     const hasUsedToggle = typeof persistedPreference === 'string';
