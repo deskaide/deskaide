@@ -43,12 +43,12 @@ const fontWeights: CustomNumberArrayType = [
 ] as CustomNumberArrayType;
 
 const colors = {
-  primary: ['#207490', '#21AAE2', '#5CC7EB'],
-  dark: ['#1E2029', '#2B2E3B', '#404454'],
-  light: ['#EDEDF2', '#F6F6F9', '#FFFFFF'],
+  primary: ['#532FA8', '#6237C6', '#9577D9'],
+  dark: ['#191924', '#27283F', '#53556E'],
+  light: ['#E7E7EE', '#F6F6F9', '#FFFFFF'],
   success: ['#04A660', '#07C270', '#3ADA8A'],
-  error: ['#BE1918', '#F43A3C', '#F56161'],
-  warning: ['#E27A00', '#FF8E00', '#FDA642'],
+  error: ['#A1140C', '#F25C54', '#F47771'],
+  warning: ['#C26C00', '#FF8E00', '#FDA642'],
 };
 
 const elevations = [

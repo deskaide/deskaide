@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
 
@@ -29,8 +29,13 @@ if (import.meta.env.MODE === 'development') {
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = async () => {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   mainWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
+    width,
+    height,
+    minWidth: 960,
+    minHeight: 720,
     webPreferences: {
       nativeWindowOpen: true,
       preload: join(__dirname, '../../preload/dist/index.cjs'),

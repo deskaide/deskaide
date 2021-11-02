@@ -8,8 +8,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: var(--color-bg-0);
-    color: var(--color-text-0);
+    background-color: var(--color-bg-1);
+    color: var(--color-text-1);
     font-family: ${({ theme }) => theme.fonts.body};
     font-size: ${({ theme }) => theme.fontSizes.body};
     line-height: ${({ theme }) => theme.lineHeights.body};
@@ -132,6 +132,10 @@ const GlobalStyle = createGlobalStyle`
     h6 {
       scroll-margin-top: 76px;
     }
+  }
+
+  .logo-bottom {
+    fill: var(--color-dark-1);
   }
 
   ::-webkit-scrollbar {
