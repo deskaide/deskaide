@@ -122,6 +122,7 @@
     "@codemirror/state": "^0.19.2",
     "@codemirror/theme-one-dark": "^0.19.0",
     "@reduxjs/toolkit": "^1.6.2",
+    "@styled-icons/boxicons-regular": "^10.38.0",
     "assert": "^2.0.0",
     "electron-updater": "^4.4.4",
     "github-markdown-css": "^5.0.0",
