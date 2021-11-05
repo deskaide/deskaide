@@ -23,7 +23,7 @@ jobs:
   e2e:
     strategy:
       matrix:
-        os: [ windows-latest ]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -36,6 +36,6 @@ jobs:
 
       # TODO: Install not all dependencies, but only those required for this workflow
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - run: npm test
