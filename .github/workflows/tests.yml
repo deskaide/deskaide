@@ -36,6 +36,6 @@ jobs:
 
       # TODO: Install not all dependencies, but only those required for this workflow
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - run: npm test
