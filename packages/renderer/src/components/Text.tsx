@@ -2,6 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { variant, space, typography, color, layout } from 'styled-system';
 
+type TextVariant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'p'
+  | 'display1'
+  | 'display2'
+  | 'label1'
+  | 'label2'
+  | 'blockquote'
+  | 'raw';
+
 const variants = {
   h1: {
     fontSize: 'h1',
@@ -92,7 +107,7 @@ const RawHTML = ({ html }: { html: string }) => (
 );
 
 const Text: React.FC<{
-  variant?: string;
+  variant?: TextVariant;
   html?: string;
 }> = ({ variant = 'p', html, ...props }) => {
   switch (variant) {

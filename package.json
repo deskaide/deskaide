@@ -29,6 +29,7 @@
     "test": "npm run test:main",
     "pretest:main": "cross-env MODE=test npm run build",
     "test:main": "node tests/app.spec.js",
+    "test:renderer": "vite-jest",
     "dev": "node scripts/watch.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
@@ -86,6 +87,9 @@
     "Chrome 94"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.10",
@@ -102,12 +106,15 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.2",
+    "jest": "^27.3.1",
+    "jest-environment-jsdom": "^27.3.1",
     "lint-staged": "^11.2.3",
     "npm-run-all": "^4.1.5",
     "playwright": "^1.15.2",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4",
-    "vite": "^2.6.10"
+    "vite": "^2.6.10",
+    "vite-jest": "^0.0.4"
   },
   "dependencies": {
     "@codemirror/commands": "^0.19.5",
