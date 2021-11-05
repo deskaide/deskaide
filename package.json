@@ -26,7 +26,7 @@
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
     "compile": "electron-builder --x64",
-    "test": "npm run test:renderer && npm run test:main",
+    "test": "npm run test:main",
     "pretest:main": "cross-env MODE=test npm run build",
     "test:main": "node tests/app.spec.js",
     "test:renderer": "vite-jest",
@@ -40,7 +40,7 @@
     "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "typecheck-renderer": "tsc --noEmit -p packages/renderer/tsconfig.json",
     "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer",
-    "prevalidate": "npm run test",
+    "prevalidate": "npm run test:renderer && npm run test",
     "lint-staged": "lint-staged",
     "validate": "npm-run-all --parallel typecheck check-format lint",
     "prepare": "husky install"
