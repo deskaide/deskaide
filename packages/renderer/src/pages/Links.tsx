@@ -1,16 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Box, Text } from '../components';
+import { DefaultLayout } from '../layouts';
+import { Box, Logo, Text } from '../components';
 
 const Links: React.FC = () => {
-  console.log('Hello...');
-
   return (
-    <Box>
-      <Text>Links</Text>
-      <Link to="/">Go to Home</Link>
-    </Box>
+    <DefaultLayout>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        textAlign="center"
+        maxWidth="36vw"
+        margin="0 auto"
+      >
+        <Logo height="6rem" width="6rem" />
+        <Text variant="h2" mb={0}>
+          Links page
+        </Text>
+      </Box>
+    </DefaultLayout>
   );
 };
 
