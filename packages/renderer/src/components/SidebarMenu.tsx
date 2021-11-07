@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Box from './Box';
@@ -57,10 +57,6 @@ const Wrapper: React.FC = styled(Box)`
 `;
 
 const SidebarMenu: React.FC = () => {
-  const theme = useTheme();
-
-  console.log(theme);
-
   return (
     <Wrapper>
       <ul>

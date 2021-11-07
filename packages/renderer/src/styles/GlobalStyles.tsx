@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: var(--color-bg-1);
+    background-color: var(--color-bg-0);
     color: var(--color-text-1);
     font-family: ${({ theme }) => theme.fonts.body};
     font-size: ${({ theme }) => theme.fontSizes.body};
@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: ${({ theme }) => theme.lineHeights.heading};
-    margin: ${({ theme }) => theme.space.xl}px 0;
+    margin: ${({ theme }) => theme.space.md}px 0;
   }
 
   h1 {

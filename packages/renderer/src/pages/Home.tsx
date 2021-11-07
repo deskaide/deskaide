@@ -1,20 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Box, Text } from '../components';
 import { DefaultLayout } from '../layouts';
+import { Box, Divider, Logo, Text } from '../components';
 
 const Home: React.FC = () => {
   return (
     <DefaultLayout>
-      <Box>
-        <Text>Home</Text>
-        <Link to="/diary">Go to diary</Link> <br />
-        <Link to="/links">Go to links</Link> <br />
-        <Link to="/notes">Go to notes</Link> <br />
-        <Link to="/pomodoro">Go to pomodoro</Link> <br />
-        <Link to="/settings">Go to settings</Link> <br />
-        <Link to="/todos">Go to todos</Link>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        textAlign="center"
+        maxWidth="36vw"
+        margin="0 auto"
+      >
+        <Logo height="6rem" width="6rem" />
+        <Text variant="h2" mb={0}>
+          Deskaide
+        </Text>
+        <Text variant="h5" fontWeight="normal" mt={3}>
+          An aide to your desk life!
+        </Text>
+        <Divider my={3} border="1px dashed" borderColor="bg2" />
+        <Text variant="h6">v1.0.0</Text>
+        <Text fontWeight="normal">
+          Deskaide is a desktop application to assist a user make their desk
+          life efficient.
+        </Text>
       </Box>
     </DefaultLayout>
   );
