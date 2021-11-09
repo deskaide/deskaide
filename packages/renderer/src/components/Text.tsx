@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { variant, space, typography, color, layout } from 'styled-system';
+import type {
+  SpaceProps,
+  TypographyProps,
+  ColorProps,
+  LayoutProps,
+} from 'styled-system';
 
 type TextVariant =
   | 'h1'
@@ -80,12 +86,15 @@ const variants = {
   },
 };
 
-interface TextBaseProps {
-  variant: string;
-  as?: React.ElementType;
-}
+type TextProps = SpaceProps &
+  TypographyProps &
+  ColorProps &
+  LayoutProps & {
+    variant?: string;
+    as?: React.ElementType;
+  };
 
-const TextBase = styled.p<TextBaseProps>`
+const TextBase = styled.p<TextProps>`
   ${variant({
     variants,
   })};
@@ -106,10 +115,12 @@ const RawHTML = ({ html }: { html: string }) => (
   <RawHTMLContainer dangerouslySetInnerHTML={{ __html: html }} />
 );
 
-const Text: React.FC<{
-  variant?: TextVariant;
-  html?: string;
-}> = ({ variant = 'p', html, ...props }) => {
+const Text: React.FC<
+  TextProps & {
+    variant?: TextVariant;
+    html?: string;
+  }
+> = ({ variant = 'p', html, ...props }) => {
   switch (variant) {
     case 'h1':
       return <TextBase variant={variant} as="h1" {...props} />;
