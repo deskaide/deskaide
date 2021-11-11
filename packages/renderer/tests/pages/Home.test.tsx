@@ -14,7 +14,7 @@ describe('Home', () => {
     expect(screen.getByLabelText(/pomodoro/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/settings/i)).toBeInTheDocument();
 
-    expect(screen.getAllByText(/deskaide/i)).toHaveLength(2);
+    expect(screen.getAllByText(/deskaide/i)).toHaveLength(3);
     expect(screen.getByText(/An aide to your desk life!/i)).toBeInTheDocument();
     expect(screen.getByText(/An aide to your desk life!/i)).toBeInTheDocument();
     expect(

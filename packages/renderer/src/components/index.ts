@@ -5,3 +5,4 @@ export { default as Logo } from './Logo';
 export { default as SEO } from './SEO';
 export { default as SidebarMenu } from './SidebarMenu';
 export { default as Text } from './Text';
+export { default as Tooltip } from './Tooltip';
