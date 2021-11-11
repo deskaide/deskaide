@@ -61,37 +61,37 @@ const SidebarMenu: React.FC = () => {
     <Wrapper>
       <ul>
         <li>
-          <Link to="/">
+          <Link to="/" aria-label="Welcome Screen">
             <Logo width={32} height={32} />
           </Link>
         </li>
         <li>
-          <Link to="/diary">
+          <Link to="/diary" aria-label="Diary">
             <IconJournal width={32} height={32} />
           </Link>
         </li>
         <li>
-          <Link to="/notes">
+          <Link to="/notes" aria-label="Notes">
             <IconNotepad width={32} height={32} />
           </Link>
         </li>
         <li>
-          <Link to="/links">
+          <Link to="/links" aria-label="Links">
             <IconLink width={32} height={32} />
           </Link>
         </li>
         <li>
-          <Link to="/pomodoro">
+          <Link to="/pomodoro" aria-label="Pomodoro">
             <IconStopwatch width={32} height={32} />
           </Link>
         </li>
         <li>
-          <Link to="/todos">
+          <Link to="/todos" aria-label="Todos">
             <IconTask width={32} height={32} />
           </Link>
         </li>
       </ul>
-      <span className="settings-logo">
+      <span className="settings-logo" aria-label="Settings">
         <Link to="/settings">
           <IconSettings width={32} height={32} />
         </Link>

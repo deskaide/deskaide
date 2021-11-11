@@ -26,10 +26,10 @@
     "build": "node scripts/build.js",
     "precompile": "cross-env MODE=production npm run build",
     "compile": "electron-builder --x64",
-    "test": "npm run test:main",
+    "test": "npm run test:renderer && npm run test:main",
     "pretest:main": "cross-env MODE=test npm run build",
     "test:main": "node tests/app.spec.js",
-    "test:renderer": "vite-jest",
+    "test:renderer": "jest packages/renderer",
     "dev": "node scripts/watch.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
@@ -87,12 +87,16 @@
     "Chrome 94"
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/electron-devtools-installer": "^2.2.0",
-    "@types/react": "^17.0.30",
-    "@types/react-dom": "^17.0.10",
+    "@types/jest": "^27.0.2",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.1",
     "@types/styled-components": "^5.1.15",
     "@types/styled-system": "^5.1.13",
@@ -113,8 +117,7 @@
     "playwright": "^1.15.2",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4",
-    "vite": "^2.6.10",
-    "vite-jest": "^0.0.4"
+    "vite": "^2.6.10"
   },
   "dependencies": {
     "@codemirror/commands": "^0.19.5",
