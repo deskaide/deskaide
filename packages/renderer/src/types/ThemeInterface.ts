@@ -22,6 +22,8 @@ export interface ThemeInterface {
   fontSizes: CustomStringArrayType;
   fonts: {
     body: string;
+    heading: string;
+    code: string;
   };
   breakpoints: string[];
   mediaQueries: {

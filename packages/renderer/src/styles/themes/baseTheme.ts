@@ -23,6 +23,8 @@ const fontSizes: CustomStringArrayType = [
 
 const fonts = {
   body: `'Fira Sans', sans-serif`,
+  heading: `'PT Sans', sans-serif`,
+  code: `'Fira Code', monospace`,
 };
 
 const breakpoints = ['240px', '480px', '768px', '1024px', '1224px'];
@@ -45,7 +47,7 @@ const fontWeights: CustomNumberArrayType = [
 const colors = {
   primary: ['#532FA8', '#6237C6', '#9577D9'],
   dark: ['#191924', '#27283F', '#53556E'],
-  light: ['#E7E7EE', '#F6F6F9', '#FFFFFF'],
+  light: ['#FFFFFF', '#F6F6F9', '#E7E7EE'],
   success: ['#04A660', '#07C270', '#3ADA8A'],
   error: ['#A1140C', '#F25C54', '#F47771'],
   warning: ['#C26C00', '#FF8E00', '#FDA642'],

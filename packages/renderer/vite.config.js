@@ -31,6 +31,7 @@ export default defineConfig({
       root: join(PACKAGE_ROOT, '../../'),
     },
   },
+  publicDir: 'assets',
   build: {
     sourcemap: true,
     target: `chrome${chrome}`,

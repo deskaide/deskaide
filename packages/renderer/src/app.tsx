@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { HashRouter as Router } from 'react-router-dom';
 
 import * as themes from './styles/themes';
 import { ThemeContext } from './components/ThemeProvider';
@@ -17,15 +18,23 @@ const App: React.FC = () => {
   // }, []);
 
   const context = useContext(ThemeContext);
-  const selectedTheme = (context?.colorMode ?? 'light') as keyof typeof themes;
+  const selectedTheme = context?.colorMode as keyof typeof themes;
 
   return (
-    <ThemeProvider theme={themes[selectedTheme]}>
-      {/* <Editor onChange={handleDocChange} initialDoc={doc} />
+    <>
+      {selectedTheme ? (
+        <ThemeProvider theme={themes[selectedTheme]}>
+          {/* <Editor onChange={handleDocChange} initialDoc={doc} />
       <Preview doc={doc} /> */}
-      <GlobalStyles />
-      <Routes />
-    </ThemeProvider>
+          <GlobalStyles />
+          <Router>
+            <Routes />
+          </Router>
+        </ThemeProvider>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </>
   );
 };
 

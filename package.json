@@ -55,7 +55,7 @@
     "appId": "app.deskaide.www",
     "files": [
       "packages/**/dist/**",
-      "assets/icons"
+      "assets/**"
     ],
     "extends": null,
     "directories": {
