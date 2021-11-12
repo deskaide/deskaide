@@ -23,6 +23,8 @@ const fontSizes: CustomStringArrayType = [
 
 const fonts = {
   body: `'Fira Sans', sans-serif`,
+  heading: `'PT Sans', sans-serif`,
+  code: `'Fira Code', monospace`,
 };
 
 const breakpoints = ['240px', '480px', '768px', '1024px', '1224px'];

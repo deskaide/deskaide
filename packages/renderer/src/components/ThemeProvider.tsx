@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 
 import SEO from './SEO';
 import { baseTheme as theme } from '../styles/themes';
@@ -11,13 +11,11 @@ export const ThemeContext = React.createContext<{
 const Provider: React.FC = ({ children }) => {
   const [colorMode, rawSetColorMode] = useState<string | undefined>(undefined);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = document.documentElement;
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const prefersDarkFromMQ = mql.matches;
     const persistedPreference = localStorage.getItem('color-mode');
-
-    console.log(prefersDarkFromMQ);
 
     let initialColorMode = 'light';
 

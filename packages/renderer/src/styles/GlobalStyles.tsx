@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
+    font-family: ${({ theme }) => theme.fonts.heading};
     line-height: ${({ theme }) => theme.lineHeights.heading};
     margin: ${({ theme }) => theme.space.md}px 0;
   }
@@ -86,13 +87,8 @@ const GlobalStyle = createGlobalStyle`
     border-bottom-right-radius: 8px;
   }
 
-  .gatsby-highlight {
-    overflow: auto;
-    margin: ${({ theme }) => theme.space.lg}px 0;
-    
-    pre {
-      border-radius: 8px;
-    }
+  pre, code {
+    font-family: ${({ theme }) => theme.fonts.code};
   }
 
   ul {
