@@ -135,8 +135,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 4px;
+    height: 4px;
   }
 
   ::-webkit-scrollbar-track {
@@ -145,12 +145,12 @@ const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;
-    background-color: var(--color-accent-0);
+    background-color: var(--color-bg-2);
     transition: all ease-in-out 0.3s;
 
     
     :hover {
-      background-color: var(--color-accent-1);
+      background-color: var(--color-accent-2);
     }
     
     :active {
