@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, Logo, Text } from '../components';
+import { Box, Button, Logo, Text, IconJournal, IconLink } from '../components';
 
 const Pomodoro: React.FC = () => {
   return (
@@ -9,6 +9,23 @@ const Pomodoro: React.FC = () => {
       <WithSidebarLayout
         sidebar={
           <Box padding={3}>
+            <Button variant="primary" icon={<IconJournal />}>
+              test
+            </Button>
+            <br />
+            <br />
+            <Button
+              variant="secondary"
+              icon={<IconLink />}
+              iconPosition="right"
+            >
+              test
+            </Button>
+            <br />
+            <br />
+            <Button variant="destructive">test</Button>
+            <br />
+            <br />
             <Text>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Blanditiis optio tempora libero voluptate nam commodi iste at

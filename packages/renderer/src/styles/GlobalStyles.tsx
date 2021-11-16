@@ -139,15 +139,11 @@ const GlobalStyle = createGlobalStyle`
     height: 4px;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: var(--color-bg-1);
-  }
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;
     background-color: var(--color-bg-2);
     transition: all ease-in-out 0.3s;
-
     
     :hover {
       background-color: var(--color-accent-2);
