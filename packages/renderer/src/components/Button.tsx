@@ -45,6 +45,7 @@ type ButtonProps = SpaceProps &
   LayoutProps & {
     variant?: ButtonVariant;
     as?: React.ElementType;
+    disabled?: boolean;
   };
 
 const ButtonBase = styled.button<ButtonProps>`
@@ -59,6 +60,19 @@ const ButtonBase = styled.button<ButtonProps>`
   font-weight: 700;
   position: relative;
   overflow: hidden;
+  box-shadow: ${({ theme }) => theme.elevations[1]};
+  background-color: ${({ theme }) => theme.colors.bg1};
+  color: ${({ theme }) => theme.colors.text1};
+
+  &:hover {
+    transition: all ease-in-out 0.3s;
+    box-shadow: ${({ theme }) => theme.elevations[2]};
+  }
+
+  &:disabled {
+    opacity: 0.32;
+    cursor: not-allowed;
+  }
 
   .button-icon-right,
   .button-icon-left {
@@ -72,11 +86,11 @@ const ButtonBase = styled.button<ButtonProps>`
   }
 
   .button-icon-right {
-    margin-left: ${({ theme }) => theme.space.sm}px;
+    margin-left: ${({ theme }) => theme.space.md}px;
   }
 
   .button-icon-left {
-    margin-right: ${({ theme }) => theme.space.sm}px;
+    margin-right: ${({ theme }) => theme.space.md}px;
   }
 
   .button-icon-secondary {
@@ -125,6 +139,7 @@ const Button: React.FC<
     variant?: ButtonVariant;
     icon?: React.ReactNode;
     iconPosition?: 'right' | 'left';
+    disabled?: boolean;
   }
 > = ({ variant = 'default', icon, iconPosition = 'left', ...props }) => {
   return icon ? (
