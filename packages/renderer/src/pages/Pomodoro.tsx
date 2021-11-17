@@ -12,6 +12,13 @@ const Pomodoro: React.FC = () => {
             <Button variant="primary" icon={<IconJournal />}>
               test
             </Button>
+
+            <br />
+            <br />
+            <Button variant="primary" disabled={true}>
+              test
+            </Button>
+
             <br />
             <br />
             <Button
@@ -23,7 +30,27 @@ const Pomodoro: React.FC = () => {
             </Button>
             <br />
             <br />
+            <Button
+              variant="secondary"
+              icon={<IconLink />}
+              iconPosition="right"
+              disabled={true}
+            >
+              test
+            </Button>
+            <br />
+            <br />
             <Button variant="destructive">test</Button>
+            <br />
+            <br />
+            <Button variant="destructive" disabled={true}>
+              test
+            </Button>
+
+            <br />
+            <br />
+            <Button>test</Button>
+
             <br />
             <br />
             <Text>
