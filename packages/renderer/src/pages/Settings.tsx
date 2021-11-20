@@ -18,6 +18,9 @@ const Settings: React.FC = () => {
             lastName: Yup.string()
               .max(15, 'Must be 15 characters or less')
               .required('Required'),
+            shortBreakTime: Yup.number()
+              .min(5, 'Must be at least 5 minutes')
+              .required('Required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
@@ -38,7 +41,7 @@ const Settings: React.FC = () => {
               min={0}
               max={25}
               unit="min"
-              name="slider"
+              name="shortBreakTime"
               label="Range input"
             />
             <Button type="submit">Save Settings</Button>

@@ -6,7 +6,6 @@ import Text from './Text';
 
 const InputContainer = styled.div`
   margin: 16px 0;
-  /* background-color: ${({ theme }) => theme.colors.bg2}; */
 
   .label-area {
     p {

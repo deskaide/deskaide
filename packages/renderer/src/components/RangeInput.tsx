@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useField } from 'formik';
+
 import Text from './Text';
 
 const InputContainer = styled.div`
   margin-bottom: ${({ theme }) => `${theme.space[3]}px`};
+  width: 100%;
+  position: relative;
+
   .label-area {
     width: 100%;
     display: inline-flex;
     justify-content: space-between;
+
     .range-value {
       text-transform: lowercase;
     }
+
     p {
-      margin-top: ${({ theme }) => theme.space.xl}px;
+      margin-top: ${({ theme }) => theme.space.lg}px;
       margin-bottom: ${({ theme }) => theme.space.sm}px;
     }
   }
+
   input[type='range'] {
     -webkit-appearance: none;
     width: 100%;
@@ -35,6 +42,13 @@ const InputContainer = styled.div`
       transition: background 0.15s ease-in-out;
     }
   }
+
+  .input-error {
+    color: ${({ theme }) => theme.colors.error[1]};
+    margin-top: ${({ theme }) => theme.space.sm}px;
+    margin-bottom: ${({ theme }) => theme.space.lg}px;
+    font-size: ${({ theme }) => theme.fontSizes.label1};
+  }
 `;
 
 const RangeInput: React.FC<
@@ -50,9 +64,6 @@ const RangeInput: React.FC<
   const [bg, setBg] = useState('');
   const [field, meta] = useField({ ...props, type: 'range' });
   const fill = 100 * (((meta.value || min) - min) / (max - min));
-
-  console.log(meta.value);
-  console.log(fill);
 
   useEffect(() => {
     setBg(`linear-gradient(
@@ -77,9 +88,7 @@ const RangeInput: React.FC<
         style={{ background: bg }}
         value={meta.value || min}
       />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
+      {meta.error ? <div className="input-error">{meta.error}</div> : null}
     </InputContainer>
   );
 };
