@@ -39,7 +39,8 @@ const variants = {
   },
 };
 
-type ButtonProps = SpaceProps &
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  SpaceProps &
   TypographyProps &
   ColorProps &
   LayoutProps & {
