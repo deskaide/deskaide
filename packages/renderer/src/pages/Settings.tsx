@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DefaultLayout } from '../layouts';
-import { Box, Button, Input } from '../components';
+import { Box, Button, Input, RangeInput } from '../components';
 
 const Settings: React.FC = () => {
   return (
@@ -34,7 +34,13 @@ const Settings: React.FC = () => {
               placeholder="john"
             />
             <Input name="lastName" type="text" label="Last Name" />
-
+            <RangeInput
+              min={0}
+              max={25}
+              unit="min"
+              name="slider"
+              label="Range input"
+            />
             <Button type="submit">Save Settings</Button>
           </Form>
         </Formik>
