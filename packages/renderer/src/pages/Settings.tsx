@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DefaultLayout } from '../layouts';
-import { Box, Button, Input } from '../components';
+import { Box, Button, Input, RangeInput } from '../components';
 
 const Settings: React.FC = () => {
   return (
@@ -17,6 +17,9 @@ const Settings: React.FC = () => {
               .required('Required'),
             lastName: Yup.string()
               .max(15, 'Must be 15 characters or less')
+              .required('Required'),
+            shortBreakTime: Yup.number()
+              .min(5, 'Must be at least 5 minutes')
               .required('Required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
@@ -34,7 +37,13 @@ const Settings: React.FC = () => {
               placeholder="john"
             />
             <Input name="lastName" type="text" label="Last Name" />
-
+            <RangeInput
+              min={0}
+              max={25}
+              unit="min"
+              name="shortBreakTime"
+              label="Range input"
+            />
             <Button type="submit">Save Settings</Button>
           </Form>
         </Formik>
