@@ -5,7 +5,7 @@ import { useField } from 'formik';
 import Text from './Text';
 
 const InputContainer = styled.div`
-  margin-bottom: ${({ theme }) => `${theme.space[3]}px`};
+  margin-bottom: ${({ theme }) => `${theme.space.lg}px`};
   width: 100%;
   position: relative;
 
@@ -19,7 +19,7 @@ const InputContainer = styled.div`
     }
 
     p {
-      margin-top: ${({ theme }) => theme.space.lg}px;
+      margin-top: 0;
       margin-bottom: ${({ theme }) => theme.space.sm}px;
     }
   }
