@@ -1,97 +1,19 @@
 import React from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, Button, Logo, Text, IconJournal, IconLink } from '../components';
+import { Box, Logo, Text } from '../components';
+import PomodoroSettings from '../components/PomodoroSettings';
 
 const Pomodoro: React.FC = () => {
   return (
     <DefaultLayout>
       <WithSidebarLayout
+        sidebarTitle="Pomodoro Settings"
         sidebar={
-          <Box padding={3}>
-            <Button variant="primary" icon={<IconJournal />}>
-              test
-            </Button>
-
-            <br />
-            <br />
-            <Button variant="primary" disabled={true}>
-              test
-            </Button>
-
-            <br />
-            <br />
-            <Button
-              variant="secondary"
-              icon={<IconLink />}
-              iconPosition="right"
-            >
-              test
-            </Button>
-            <br />
-            <br />
-            <Button
-              variant="secondary"
-              icon={<IconLink />}
-              iconPosition="right"
-              disabled={true}
-            >
-              test
-            </Button>
-            <br />
-            <br />
-            <Button variant="destructive">test</Button>
-            <br />
-            <br />
-            <Button variant="destructive" disabled={true}>
-              test
-            </Button>
-
-            <br />
-            <br />
-            <Button>test</Button>
-
-            <br />
-            <br />
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis optio tempora libero voluptate nam commodi iste at
-              veniam enim consequatur quia maiores dolor quisquam, debitis ipsam
-              odio culpa. Nam, voluptatem.
-            </Text>
+          <Box padding={4}>
+            <PomodoroSettings />
           </Box>
         }
-        sidebarTitle="Pomodoro Settings"
       >
         <Box
           display="flex"

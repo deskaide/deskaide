@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import Text from './Text';
 
 const InputContainer = styled.div`
-  margin: 16px 0;
+  margin-bottom: ${({ theme }) => theme.space.lg}px;
 
   .label-area {
     p {
-      margin-top: ${({ theme }) => theme.space.xl}px;
+      margin-top: 0;
       margin-bottom: ${({ theme }) => theme.space.sm}px;
     }
   }
