@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { render } from '../test-utils';
 import { fireEvent, waitFor } from '@testing-library/dom';
 
+import { render } from '../test-utils';
 import PomodoroSettings from '../../src/components/PomodoroSettings';
 
 describe('PomodoroSettings', () => {
