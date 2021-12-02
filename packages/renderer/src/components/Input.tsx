@@ -45,11 +45,13 @@ const Input: React.FC<
     <InputContainer>
       {label && (
         <div className="label-area">
-          <Text>{label}</Text>
+          <label htmlFor={`input-${props.name}`}>
+            <Text>{label}</Text>
+          </label>
         </div>
       )}
 
-      <Field {...props} />
+      <Field {...props} id={`input-${props.name}`} />
       <ErrorMessage
         name={props.name as string}
         component="p"
