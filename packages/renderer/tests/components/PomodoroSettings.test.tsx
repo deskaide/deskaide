@@ -53,7 +53,5 @@ describe('PomodoroSettings', () => {
     expect(remindBeforeError.innerHTML).toBe(
       'Must be greater or equal 15 seconds'
     );
-
-    // screen.debug();
   });
 });
