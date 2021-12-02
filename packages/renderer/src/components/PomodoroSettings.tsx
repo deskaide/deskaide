@@ -8,14 +8,14 @@ import RangeInput from './RangeInput';
 
 const PomodoroSettings: React.FC = () => (
   <Formik
-    initialValues={{ focusTime: 20, shortBreakTime: 2, remindBefore: 15 }}
+    initialValues={{ focusTime: 20, shortBreakTime: 5, remindBefore: 30 }}
     validationSchema={Yup.object({
       focusTime: Yup.number()
         .min(20, 'Must be greater or equal 20 minutes')
-        .max(45, 'Must be less or equal 45 minutes')
+        .max(40, 'Must be less or equal 45 minutes')
         .required('Focus time is required'),
       shortBreakTime: Yup.number()
-        .min(2, 'Must be greater or equal 2 minutes')
+        .min(3, 'Must be greater or equal 2 minutes')
         .max(10, 'Must be less or equal 10 minutes')
         .required('Focus time is required'),
       remindBefore: Yup.number()
@@ -33,13 +33,13 @@ const PomodoroSettings: React.FC = () => (
     <Form>
       <RangeInput
         min={20}
-        max={45}
+        max={40}
         unit="min"
         name="focusTime"
         label="Focus Time"
       />
       <RangeInput
-        min={2}
+        min={3}
         max={10}
         unit="min"
         name="shortBreakTime"

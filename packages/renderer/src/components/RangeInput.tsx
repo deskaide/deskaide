@@ -76,7 +76,9 @@ const RangeInput: React.FC<
   return (
     <InputContainer>
       <div className="label-area">
-        <Text>{label}</Text>
+        <label htmlFor={`range-input-${props.name}`}>
+          <Text>{label}</Text>
+        </label>
         <Text>{`${meta.value || min} ${unit}`}</Text>
       </div>
       <input
@@ -87,8 +89,14 @@ const RangeInput: React.FC<
         max={max}
         style={{ background: bg }}
         value={meta.value || min}
+        id={`input-${props.name}`}
+        data-testid={`input-${props.name}`}
       />
-      {meta.error ? <div className="input-error">{meta.error}</div> : null}
+      {meta.touched && meta.error ? (
+        <div className="input-error" data-testid={`input-error-${props.name}`}>
+          {meta.error}
+        </div>
+      ) : null}
     </InputContainer>
   );
 };
