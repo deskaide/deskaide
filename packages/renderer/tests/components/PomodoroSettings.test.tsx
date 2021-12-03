@@ -1,19 +1,22 @@
 import React from 'react';
-import { fireEvent, waitFor } from '@testing-library/dom';
+import { waitFor, fireEvent } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 
-import { render } from '../test-utils';
+import { render, screen } from '../test-utils';
 import PomodoroSettings from '../../src/components/PomodoroSettings';
 
 describe('PomodoroSettings', () => {
   test('renders PomodoroSettings component', async () => {
-    const { getByTestId, getByText, findByTestId } = render(
-      <PomodoroSettings />
-    );
+    render(<PomodoroSettings />);
 
-    const focusInput = getByTestId('input-focusTime');
-    const shortBreakInput = getByTestId('input-shortBreakTime');
-    const remindBeforeInput = getByTestId('input-remindBefore');
-    const saveButton = getByText('Save');
+    const focusInput = screen.getByRole('slider', { name: /focusTime/i });
+    const shortBreakInput = screen.getByRole('slider', {
+      name: /shortBreakTime/i,
+    });
+    const remindBeforeInput = screen.getByRole('slider', {
+      name: /remindBefore/i,
+    });
+    const saveButton = screen.getByRole('button', { name: /Save/i });
 
     await waitFor(() => {
       fireEvent.change(focusInput, {
@@ -34,23 +37,11 @@ describe('PomodoroSettings', () => {
     });
 
     await waitFor(() => {
-      fireEvent.click(saveButton);
+      userEvent.click(saveButton);
     });
 
-    const focusTimeError = await findByTestId(`input-error-focusTime`);
-    const shortBreakTimeError = await findByTestId(
-      `input-error-shortBreakTime`
-    );
-    const remindBeforeError = await findByTestId(`input-error-remindBefore`);
-
-    expect(focusTimeError.innerHTML).toBe(
-      'Must be greater or equal 20 minutes'
-    );
-    expect(shortBreakTimeError.innerHTML).toBe(
-      'Must be less or equal 10 minutes'
-    );
-    expect(remindBeforeError.innerHTML).toBe(
-      'Must be greater or equal 15 seconds'
-    );
+    await screen.findByText(`Must be greater or equal 20 minutes`);
+    await screen.findByText('Must be less or equal 10 minutes');
+    await screen.findByText('Must be greater or equal 15 seconds');
   });
 });

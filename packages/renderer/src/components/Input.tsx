@@ -51,7 +51,7 @@ const Input: React.FC<
         </div>
       )}
 
-      <Field {...props} id={`input-${props.name}`} />
+      <Field {...props} id={`input-${props.name}`} aria-label={props.name} />
       <ErrorMessage
         name={props.name as string}
         component="p"
