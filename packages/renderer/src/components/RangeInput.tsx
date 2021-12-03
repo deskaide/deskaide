@@ -90,12 +90,10 @@ const RangeInput: React.FC<
         style={{ background: bg }}
         value={meta.value || min}
         id={`input-${props.name}`}
-        data-testid={`input-${props.name}`}
+        aria-label={props.name}
       />
       {meta.touched && meta.error ? (
-        <div className="input-error" data-testid={`input-error-${props.name}`}>
-          {meta.error}
-        </div>
+        <div className="input-error">{meta.error}</div>
       ) : null}
     </InputContainer>
   );
