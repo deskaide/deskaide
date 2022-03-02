@@ -1,17 +1,17 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Diary, Home, Links, Notes, Pomodoro, Settings, Todos } from './pages';
 
-const Routes = (): JSX.Element => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/diary" component={Diary} />
-    <Route exact path="/links" component={Links} />
-    <Route exact path="/notes" component={Notes} />
-    <Route exact path="/pomodoro" component={Pomodoro} />
-    <Route exact path="/settings" component={Settings} />
-    <Route exact path="/todos" component={Todos} />
-  </Switch>
+const AppRoutes = (): JSX.Element => (
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/diary" element={<Diary />} />
+    <Route path="/links" element={<Links />} />
+    <Route path="/notes" element={<Notes />} />
+    <Route path="/pomodoro" element={<Pomodoro />} />
+    <Route path="/settings" element={<Settings />} />
+    <Route path="/todos" element={<Todos />} />
+  </Routes>
 );
 
-export default Routes;
+export default AppRoutes;
