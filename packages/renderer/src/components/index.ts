@@ -5,6 +5,7 @@ export { default as IconJournal } from './IconJournal';
 export { default as IconLink } from './IconLink';
 export { default as Input } from './Input';
 export { default as Logo } from './Logo';
+export { default as PomodoroClock } from './PomodoroClock';
 export { default as RangeInput } from './RangeInput';
 export { default as SEO } from './SEO';
 export { default as SidebarMenu } from './SidebarMenu';

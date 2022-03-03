@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, Logo, Text } from '../components';
+import { Box, PomodoroClock } from '../components';
 import PomodoroSettings from '../components/PomodoroSettings';
 
 const Pomodoro: React.FC = () => {
@@ -25,10 +25,7 @@ const Pomodoro: React.FC = () => {
           maxWidth="36vw"
           margin="0 auto"
         >
-          <Logo height="6rem" width="6rem" />
-          <Text variant="h2" mb={0}>
-            Pomodoro page
-          </Text>
+          <PomodoroClock time="00:24:31" />
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>
