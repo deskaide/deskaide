@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import Box from './Box';
 import Tooltip from './Tooltip';
@@ -42,7 +42,8 @@ const Wrapper: React.FC = styled(Box)`
     line-height: 0;
 
     &:hover,
-    &:focus-visible {
+    &:focus-visible,
+    &.active {
       background-color: ${({ theme }) => theme.colors.bg1};
     }
 
@@ -63,53 +64,80 @@ const SidebarMenu: React.FC = () => {
       <ul>
         <Tooltip message="Deskaide" position="right">
           <li>
-            <Link to="/" aria-label="Welcome Screen">
+            <NavLink
+              to="/"
+              aria-label="Welcome Screen"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <Logo width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
 
         <Tooltip message="Diary" position="right">
           <li>
-            <Link to="/diary" aria-label="Diary">
+            <NavLink
+              to="/diary"
+              aria-label="Diary"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <IconJournal width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
         <Tooltip message="Notes" position="right">
           <li>
-            <Link to="/notes" aria-label="Notes">
+            <NavLink
+              to="/notes"
+              aria-label="Notes"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <IconNotepad width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
         <Tooltip message="Links" position="right">
           <li>
-            <Link to="/links" aria-label="Links">
+            <NavLink
+              to="/links"
+              aria-label="Links"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <IconLink width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
         <Tooltip message="Pomodoro" position="right">
           <li>
-            <Link to="/pomodoro" aria-label="Pomodoro">
+            <NavLink
+              to="/pomodoro"
+              aria-label="Pomodoro"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <IconStopwatch width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
         <Tooltip message="Todos" position="right">
           <li>
-            <Link to="/todos" aria-label="Todos">
+            <NavLink
+              to="/todos"
+              aria-label="Todos"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
               <IconTask width={32} height={32} />
-            </Link>
+            </NavLink>
           </li>
         </Tooltip>
       </ul>
       <Tooltip message="Settings" position="right">
         <span className="settings-logo" aria-label="Settings">
-          <Link to="/settings">
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
             <IconSettings width={32} height={32} />
-          </Link>
+          </NavLink>
         </span>
       </Tooltip>
     </Wrapper>

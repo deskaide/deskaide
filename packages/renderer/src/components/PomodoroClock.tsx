@@ -23,14 +23,11 @@ const Wrapper = styled.div<{ isAnimationOn: boolean }>`
     transform: translate(-50%, -50%);
   }
 
-  svg {
-    ${({ isAnimationOn }) =>
-      isAnimationOn &&
-      css`
-        animation: 0.5s ease-in 0s infinite alternate none running
-          ${animateHeart};
-      `};
-  }
+  ${({ isAnimationOn }) =>
+    isAnimationOn &&
+    css`
+      animation: 0.5s ease-in 0s infinite alternate none running ${animateHeart};
+    `};
 `;
 
 const PomodoroClock = ({

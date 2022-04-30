@@ -30,7 +30,7 @@
     "pretest:main": "cross-env MODE=test npm run build",
     "test:main": "node tests/app.spec.js",
     "test:renderer": "jest packages/renderer",
-    "dev": "node scripts/watch.js",
+    "start": "node scripts/watch.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|json|ts|tsx)\"",
     "format": "npm run prettier -- --write",

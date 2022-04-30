@@ -34,7 +34,7 @@ const PomodoroClockBG = ({
             type="rotate"
             from="0 260.35260009765625 260.00025939941406"
             to="360 260.35260009765625 260.00025939941406"
-            dur="2.8s"
+            dur="3s"
             repeatCount="indefinite"
           />
         )}
@@ -50,7 +50,7 @@ const PomodoroClockBG = ({
             type="rotate"
             from="0 254.78392028808594 259.9998550415039"
             to="360 254.78392028808594 259.9998550415039"
-            dur="2.7s"
+            dur="2.9s"
             repeatCount="indefinite"
           />
         )}
@@ -66,7 +66,7 @@ const PomodoroClockBG = ({
             type="rotate"
             from="0 254.62026977539062 260.00045013427734"
             to="360 254.62026977539062 260.00045013427734"
-            dur="2.6s"
+            dur="2.8s"
             repeatCount="indefinite"
           />
         )}
