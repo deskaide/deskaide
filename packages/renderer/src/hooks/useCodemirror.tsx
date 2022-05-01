@@ -45,6 +45,7 @@ import type React from 'react';
 interface Props {
   initialDoc: string;
   onChange?: (state: EditorState) => void;
+  showGutter?: boolean;
 }
 
 const useCodeMirror = <T extends Element>(
@@ -52,37 +53,42 @@ const useCodeMirror = <T extends Element>(
 ): [React.MutableRefObject<T | null>, EditorView?] => {
   const refContainer = useRef<T>(null);
   const [editorView, setEditorView] = useState<EditorView>();
-  const { onChange } = props;
+  const { onChange, showGutter = true } = props;
+  const extensions = [
+    keymap.of([...defaultKeymap, ...historyKeymap]),
+    history(),
+    indentOnInput(),
+    bracketMatching(),
+    defaultHighlightStyle.fallback,
+
+    markdown({
+      base: markdownLanguage,
+      codeLanguages: languages,
+      addKeymap: true,
+    }),
+    oneDark,
+    transparentTheme,
+    syntaxHighlighting,
+    EditorView.lineWrapping,
+    EditorView.updateListener.of((update) => {
+      if (update.changes) {
+        onChange && onChange(update.state);
+      }
+    }),
+  ];
+
+  if (showGutter) {
+    extensions.push(
+      ...[lineNumbers(), highlightActiveLineGutter(), highlightActiveLine()]
+    );
+  }
 
   useEffect(() => {
     if (!refContainer.current) return;
 
     const startState = EditorState.create({
       doc: props.initialDoc,
-      extensions: [
-        keymap.of([...defaultKeymap, ...historyKeymap]),
-        lineNumbers(),
-        highlightActiveLineGutter(),
-        history(),
-        indentOnInput(),
-        bracketMatching(),
-        defaultHighlightStyle.fallback,
-        highlightActiveLine(),
-        markdown({
-          base: markdownLanguage,
-          codeLanguages: languages,
-          addKeymap: true,
-        }),
-        oneDark,
-        transparentTheme,
-        syntaxHighlighting,
-        EditorView.lineWrapping,
-        EditorView.updateListener.of((update) => {
-          if (update.changes) {
-            onChange && onChange(update.state);
-          }
-        }),
-      ],
+      extensions,
     });
 
     const view = new EditorView({

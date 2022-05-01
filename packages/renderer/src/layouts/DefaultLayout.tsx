@@ -10,7 +10,7 @@ const Wrapper = styled(Box)`
 
 const DefaultLayout: React.FC = ({ children }) => {
   return (
-    <Box display="flex">
+    <Box display="flex" overflow="hidden">
       <SidebarMenu />
       <Wrapper>{children}</Wrapper>
     </Box>

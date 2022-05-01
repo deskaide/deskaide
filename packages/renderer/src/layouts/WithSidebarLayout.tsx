@@ -26,11 +26,13 @@ const WithSidebarLayout: React.FC<{
             <Text variant="h5">{sidebarTitle}</Text>
           </Box>
         )}
-        <Box overflowY="auto" maxHeight="calc(100vh - 66px)">
+        <Box overflowY="auto" height="calc(100vh - 66px)">
           {sidebar}
         </Box>
       </Box>
-      <Box width={2 / 3}>{children}</Box>
+      <Box width={2 / 3} overflowY="auto" height="100vh">
+        {children}
+      </Box>
     </Box>
   );
 };

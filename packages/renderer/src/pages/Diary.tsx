@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
-import { DefaultLayout } from '../layouts';
-import { Box, Logo, Text } from '../components';
+import { DefaultLayout, WithSidebarLayout } from '../layouts';
+import {
+  Box,
+  DiaryEditor,
+  DiaryPreview,
+  PomodoroSettings,
+} from '../components';
 
 const Diary: React.FC = () => {
+  const [doc, setDoc] = useState<string>('# Hello World!\n');
+  const [isEditing, setIsEditing] = useState<boolean>(true);
+  const handleDocChange = useCallback((newDoc) => setDoc(newDoc), []);
+  const handleOnBlur = useCallback((e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsEditing(false);
+    }
+  }, []);
+  const handlePreviewClick = useCallback((e) => {
+    if (e.detail === 2) {
+      setIsEditing(true);
+    }
+  }, []);
+
   return (
     <DefaultLayout>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-        textAlign="center"
-        maxWidth="36vw"
-        margin="0 auto"
+      <WithSidebarLayout
+        sidebarTitle="Pomodoro Settings"
+        sidebar={
+          <Box padding={4}>
+            <PomodoroSettings />
+          </Box>
+        }
       >
-        <Logo height="6rem" width="6rem" />
-        <Text variant="h2" mb={0}>
-          Diary page
-        </Text>
-      </Box>
+        {isEditing && (
+          <DiaryEditor
+            onChange={handleDocChange}
+            onBlur={handleOnBlur}
+            initialDoc={doc}
+          />
+        )}
+        {!isEditing && <DiaryPreview doc={doc} onClick={handlePreviewClick} />}
+      </WithSidebarLayout>
     </DefaultLayout>
   );
 };

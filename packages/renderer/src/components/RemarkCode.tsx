@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import runmode, { getLanguage } from './runmode';
+import runmode, { getLanguage } from '../utils/runmode';
 
 type Tokens = {
   text: string;
