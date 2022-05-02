@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "paths": {
       "/@/*": ["./src/*"]
     },
