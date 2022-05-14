@@ -11,14 +11,16 @@ interface Props {
 }
 
 const Wrapper = styled(Box)`
-  height: 100%;
-  padding: ${({ theme }) => theme.space[5]}px;
+  height: calc(100vh - 188px);
 
   .diary-editor {
     width: 100%;
     background: ${({ theme }) => theme.colors.dark[1]};
     border-radius: 4px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
+    padding-top: ${({ theme }) => theme.space[2]}px;
 
     .cm-focused {
       outline: none;

@@ -17,22 +17,25 @@ interface Props {
 }
 
 const Wrapper = styled(Box)`
-  height: 100vh;
-  padding: ${({ theme }) => theme.space[5]}px;
-
-  pre {
-    background: rgba(28, 31, 35, 0.45);
-    overflow: auto;
-    white-space: pre-wrap;
-    padding: ${({ theme }) => theme.space[4]}px;
-    margin: ${({ theme }) => theme.space[4]}px 0;
-  }
+  height: calc(100vh - 188px);
 
   .diary-preview {
     overflow-y: auto;
     background: ${({ theme }) => theme.colors.dark[1]};
     border-radius: 4px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
+    padding-top: 0;
+
+    pre {
+      background: rgba(28, 31, 35, 0.45);
+      overflow: auto;
+      white-space: pre-wrap;
+      padding: ${({ theme }) => theme.space[4]}px;
+      margin: ${({ theme }) => theme.space[4]}px 0;
+      word-break: break-all;
+    }
   }
 `;
 

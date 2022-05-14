@@ -6,6 +6,7 @@ import {
   DiaryEditor,
   DiaryPreview,
   PomodoroSettings,
+  Text,
 } from '../components';
 
 const Diary: React.FC = () => {
@@ -33,14 +34,31 @@ const Diary: React.FC = () => {
           </Box>
         }
       >
-        {isEditing && (
-          <DiaryEditor
-            onChange={handleDocChange}
-            onBlur={handleOnBlur}
-            initialDoc={doc}
-          />
-        )}
-        {!isEditing && <DiaryPreview doc={doc} onClick={handlePreviewClick} />}
+        <Box height="100vh" p={5}>
+          <Text
+            m={0}
+            p={4}
+            pb={0}
+            bg="bg1"
+            variant="h5"
+            fontStyle="italic"
+            color="bg2"
+            borderTopRightRadius={4}
+            borderTopLeftRadius={4}
+          >
+            Staurday, May 14, 2022
+          </Text>
+          {isEditing && (
+            <DiaryEditor
+              onChange={handleDocChange}
+              onBlur={handleOnBlur}
+              initialDoc={doc}
+            />
+          )}
+          {!isEditing && (
+            <DiaryPreview doc={doc} onClick={handlePreviewClick} />
+          )}
+        </Box>
       </WithSidebarLayout>
     </DefaultLayout>
   );
