@@ -276,7 +276,7 @@ interface Props {
   showGutter?: boolean;
 }
 
-const useCodeMirror = <T extends Element>(
+export const useCodeMirror = <T extends Element>(
   props: Props
 ): [React.MutableRefObject<T | null>, EditorView?] => {
   const refContainer = useRef<T>(null);
@@ -328,5 +328,3 @@ const useCodeMirror = <T extends Element>(
 
   return [refContainer, editorView];
 };
-
-export default useCodeMirror;

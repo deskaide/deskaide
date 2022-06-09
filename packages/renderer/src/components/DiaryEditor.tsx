@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 
 import Box from './Box';
-import useCodemirror from '../hooks/useCodemirror';
+import { useCodeMirror } from '../hooks';
 import styled from 'styled-components';
 
 interface Props {
@@ -34,7 +34,7 @@ const DiaryEditor: React.FC<Props> = (props) => {
     (state) => onChange(state.doc.toString()),
     [onChange]
   );
-  const [refContainer, editorView] = useCodemirror<HTMLDivElement>({
+  const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
     initialDoc,
     onChange: handleChange,
     showGutter: false,

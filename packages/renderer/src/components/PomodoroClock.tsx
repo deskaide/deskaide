@@ -30,27 +30,33 @@ const Wrapper = styled.div<{ isAnimationOn: boolean }>`
     `};
 `;
 
+interface Props {
+  bgBottomFill?: string;
+  bgMiddleFill?: string;
+  bgTopFill?: string;
+  seconds?: number;
+}
+
 const PomodoroClock = ({
   bgBottomFill,
   bgMiddleFill,
   bgTopFill,
-  time,
-}: {
-  bgBottomFill?: string;
-  bgMiddleFill?: string;
-  bgTopFill?: string;
-  time: string;
-}) => {
+  seconds = 0,
+}: Props) => {
+  const paddedHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
+  const paddedMinutes = `0${Math.floor((seconds % 3600) / 60)}`.slice(-2);
+  const paddedSeconds = `0${Math.floor((seconds % 3600) % 60)}`.slice(-2);
+
   return (
-    <Wrapper isAnimationOn={true}>
+    <Wrapper isAnimationOn={seconds > 0}>
       <PomodoroClockBG
         bgBottomFill={bgBottomFill}
         bgMiddleFill={bgMiddleFill}
         bgTopFill={bgTopFill}
-        isRotateOn={true}
+        isRotateOn={seconds > 0}
       />
       <span>
-        <Text variant="h2">{time}</Text>
+        <Text variant="h2">{`${paddedHours}:${paddedMinutes}:${paddedSeconds}`}</Text>
       </span>
     </Wrapper>
   );
