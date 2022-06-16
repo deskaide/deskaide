@@ -104,7 +104,7 @@
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "cross-env": "^7.0.3",
-    "electron": "^17.1.0",
+    "electron": "^17.2.0",
     "electron-builder": "^22.14.13",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^8.10.0",
