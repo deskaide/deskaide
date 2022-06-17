@@ -13,6 +13,7 @@ type TooltipContainerProps = SpaceProps &
 export type TooltipType = {
   message: string;
   position?: 'top' | 'right' | 'bottom' | 'left';
+  children: React.ReactNode;
 };
 
 const TooltipContainer = styled.span<TooltipContainerProps>`

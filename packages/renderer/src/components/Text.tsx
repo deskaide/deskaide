@@ -101,6 +101,7 @@ type TextProps = SpaceProps &
   BorderProps & {
     variant?: string;
     as?: React.ElementType;
+    children?: React.ReactNode;
   };
 
 const TextBase = styled.p<TextProps>`

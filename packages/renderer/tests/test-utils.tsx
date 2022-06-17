@@ -8,7 +8,7 @@ import type { RenderOptions } from '@testing-library/react';
 
 import { light } from '../src/styles/themes';
 
-const AllTheProviders: FC = ({ children }) => {
+const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <ThemeProvider theme={light}>
       <Router>{children}</Router>

@@ -8,7 +8,9 @@ const Wrapper = styled(Box)`
   height: 100vh;
 `;
 
-const DefaultLayout: React.FC = ({ children }) => {
+const DefaultLayout: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <Box display="flex" overflow="hidden">
       <SidebarMenu />

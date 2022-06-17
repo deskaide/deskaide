@@ -12,7 +12,7 @@ import IconSettings from './IconSettings';
 import IconStopwatch from './IconStopwatch';
 import IconTask from './IconTask';
 
-const Wrapper: React.FC = styled(Box)`
+const Wrapper = styled(Box)`
   height: 100vh;
 
   border-right: 2px solid ${({ theme }) => theme.colors.dark[2]};

@@ -37,7 +37,6 @@ const createWindow = async () => {
     minWidth: 960,
     minHeight: 720,
     webPreferences: {
-      nativeWindowOpen: true,
       preload: join(__dirname, '../../preload/dist/index.cjs'),
     },
   });

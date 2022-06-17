@@ -14,13 +14,13 @@ const Diary: React.FC = () => {
     '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n```bash\n npm i\n```'
   );
   const [isEditing, setIsEditing] = useState<boolean>(true);
-  const handleDocChange = useCallback((newDoc) => setDoc(newDoc), []);
-  const handleOnBlur = useCallback((e) => {
+  const handleDocChange = useCallback((newDoc: any) => setDoc(newDoc), []);
+  const handleOnBlur = useCallback((e: any) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       setIsEditing(false);
     }
   }, []);
-  const handlePreviewClick = useCallback((e) => {
+  const handlePreviewClick = useCallback((e: any) => {
     if (e.detail === 2) {
       setIsEditing(true);
     }
@@ -59,11 +59,6 @@ const Diary: React.FC = () => {
           )}
           {!isEditing && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
-            // <DiaryEditor
-            //   onChange={handleDocChange}
-            //   onBlur={handleOnBlur}
-            //   initialDoc={doc}
-            // />
           )}
         </Box>
       </WithSidebarLayout>

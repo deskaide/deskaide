@@ -31,7 +31,7 @@ const Wrapper = styled(Box)`
 const DiaryEditor: React.FC<Props> = (props) => {
   const { initialDoc, onChange } = props;
   const handleChange = useCallback(
-    (state) => onChange(state.doc.toString()),
+    (state: any) => onChange(state.doc.toString()),
     [onChange]
   );
   const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
