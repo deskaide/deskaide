@@ -10,7 +10,6 @@
     },
     "lib": ["ESNext", "dom", "dom.iterable"]
   },
-
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

@@ -51,6 +51,7 @@ const DiaryPreview: React.FC<Props> = (props) => {
   const md = unified()
     .use(remarkParse)
     .use(remarkGfm)
+    // @ts-expect-error: yeah it’s not okay per react types, but it works fine.
     .use(remarkReact, {
       createElement: React.createElement,
       sanitize: schema,
@@ -58,7 +59,7 @@ const DiaryPreview: React.FC<Props> = (props) => {
         code: RemarkCode,
       },
     })
-    .processSync(props.doc).result;
+    .processSync(props.doc).result as React.ReactNode;
   return (
     <Wrapper>
       <Box height="100%" className="diary-preview" onClick={props.onClick}>

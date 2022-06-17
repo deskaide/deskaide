@@ -71,6 +71,7 @@ const RangeInput: React.FC<
     ${theme.colors.primary[1]} ${fill}%,
     ${theme.colors.text1} ${fill + 0.1}%
   )`);
+    return () => setBg('');
   }, [fill]);
 
   return (

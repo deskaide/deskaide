@@ -10,6 +10,7 @@ import { Box, Text } from '../components';
 const WithSidebarLayout: React.FC<{
   sidebar: React.ReactNode;
   sidebarTitle?: string;
+  children: React.ReactNode;
 }> = ({ children, sidebar, sidebarTitle }) => {
   return (
     <Box display="flex">

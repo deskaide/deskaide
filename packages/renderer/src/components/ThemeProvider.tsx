@@ -8,7 +8,7 @@ export const ThemeContext = React.createContext<{
   setColorMode: (newValue: string) => void;
 } | null>(null);
 
-const Provider: React.FC = ({ children }) => {
+const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [colorMode, rawSetColorMode] = useState<string | undefined>(undefined);
 
   useLayoutEffect(() => {
@@ -141,8 +141,8 @@ const Provider: React.FC = ({ children }) => {
   );
 };
 
-const ThemeProvider: React.FC = ({ children }) => (
-  <Provider>{children}</Provider>
-);
+const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <Provider>{children}</Provider>;
 
 export default ThemeProvider;
