@@ -1,11 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { variant, space, typography, color, layout } from 'styled-system';
+import {
+  variant,
+  space,
+  typography,
+  color,
+  layout,
+  border,
+} from 'styled-system';
 import type {
   SpaceProps,
   TypographyProps,
   ColorProps,
   LayoutProps,
+  BorderProps,
 } from 'styled-system';
 
 type TextVariant =
@@ -89,7 +97,8 @@ const variants = {
 type TextProps = SpaceProps &
   TypographyProps &
   ColorProps &
-  LayoutProps & {
+  LayoutProps &
+  BorderProps & {
     variant?: string;
     as?: React.ElementType;
   };
@@ -102,6 +111,7 @@ const TextBase = styled.p<TextProps>`
   ${typography};
   ${color};
   ${layout};
+  ${border};
 `;
 
 const RawHTMLContainer = styled.div`
@@ -109,6 +119,7 @@ const RawHTMLContainer = styled.div`
   ${typography};
   ${color};
   ${layout};
+  ${border};
 `;
 
 const RawHTML = ({ html }: { html: string }) => (
