@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 
 import Box from './Box';
-import { useCodeMirror } from '../hooks';
+// import { useCodeMirror } from '../hooks';
 import styled from 'styled-components';
 
 interface Props {
@@ -29,31 +29,28 @@ const Wrapper = styled(Box)`
 `;
 
 const DiaryEditor: React.FC<Props> = (props) => {
-  const { initialDoc, onChange } = props;
-  const handleChange = useCallback(
-    (state: any) => onChange(state.doc.toString()),
-    [onChange]
-  );
-  const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
-    initialDoc,
-    onChange: handleChange,
-    showGutter: false,
-  });
+  console.log(props);
 
-  useEffect(() => {
-    if (editorView) {
-      editorView.focus();
-    }
-  }, [editorView]);
+  // const { initialDoc, onChange } = props;
+  // const handleChange = useCallback(
+  //   (state: any) => onChange(state.doc.toString()),
+  //   [onChange]
+  // );
+  // const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
+  //   initialDoc,
+  //   onChange: handleChange,
+  //   showGutter: false,
+  // });
+
+  // useEffect(() => {
+  //   if (editorView) {
+  //     editorView.focus();
+  //   }
+  // }, [editorView]);
 
   return (
     <Wrapper>
-      <Box
-        className="diary-editor"
-        height="100%"
-        ref={refContainer}
-        onBlur={props.onBlur}
-      />
+      <p> Test</p>
     </Wrapper>
   );
 };
