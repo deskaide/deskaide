@@ -1,2 +1,4 @@
-export * from './useCodeMirror';
-export * from './useTimer';
+import { useCodeMirror } from './useCodeMirror';
+import { useTimer } from './useTimer';
+
+export { useCodeMirror, useTimer };
