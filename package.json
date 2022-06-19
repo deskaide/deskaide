@@ -17,8 +17,8 @@
   "author": "Shahidul Islam Majumder <hello@shahid.pro>",
   "license": "MIT",
   "engines": {
-    "node": ">=v14.16",
-    "npm": ">=7.7"
+    "node": ">=16.15.0",
+    "npm": ">=8.5.5"
   },
   "main": "packages/main/dist/index.cjs",
   "scripts": {
