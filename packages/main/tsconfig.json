@@ -1,11 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
+
   "compilerOptions": {
     "baseUrl": ".",
+
     "paths": {
       "/@/*": ["./src/*"]
     }
   },
-  "files": ["src/index.ts"],
-  "include": ["../../types/**/*.d.ts"]
+
+  "include": ["src/**/*.ts", "../../types/**/*.d.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.config.js", "dist"]
 }

@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {
-  variant,
+  variant as generateVariant,
   space,
   typography,
   color,
@@ -105,7 +105,7 @@ type TextProps = SpaceProps &
   };
 
 const TextBase = styled.p<TextProps>`
-  ${variant({
+  ${generateVariant({
     variants,
   })};
   ${space};

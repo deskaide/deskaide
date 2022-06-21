@@ -1,8 +1,8 @@
-import React from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
 import Box from './Box';
-// import { useCodeMirror } from '../hooks';
-import styled from 'styled-components';
+import { useCodeMirror } from '../hooks';
 
 interface Props {
   initialDoc: string;
@@ -25,32 +25,47 @@ const Wrapper = styled(Box)`
     .cm-focused {
       outline: none;
     }
+
+    .cm-gutters {
+      display: none;
+    }
+
+    .cm-line {
+      white-space: pre-wrap;
+    }
   }
 `;
 
 const DiaryEditor: React.FC<Props> = (props) => {
   console.log(props);
 
-  // const { initialDoc, onChange } = props;
-  // const handleChange = useCallback(
-  //   (state: any) => onChange(state.doc.toString()),
-  //   [onChange]
-  // );
-  // const [refContainer, editorView] = useCodeMirror<HTMLDivElement>({
-  //   initialDoc,
-  //   onChange: handleChange,
-  //   showGutter: false,
-  // });
+  const { initialDoc, onChange } = props;
+  const handleChange = useCallback((state: any) => onChange(state), [onChange]);
+  const editor = useRef<HTMLDivElement>(null);
+  const { setContainer } = useCodeMirror({
+    container: editor.current,
+    onChange: handleChange,
+    value: initialDoc,
+    basicSetup: {
+      lineNumbers: false,
+      highlightActiveLine: false,
+      highlightActiveLineGutter: false,
+    },
+  });
 
-  // useEffect(() => {
-  //   if (editorView) {
-  //     editorView.focus();
-  //   }
-  // }, [editorView]);
+  useEffect(() => {
+    setContainer(editor.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Wrapper>
-      <p> Test</p>
+      <Box
+        className="diary-editor"
+        height="100%"
+        ref={editor}
+        onBlur={props.onBlur}
+      />
     </Wrapper>
   );
 };

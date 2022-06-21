@@ -1,13 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Box, Text } from '../components';
 
-// const Wrapper = styled(Box)`
-//   width: 100%;
-//   height: 100vh;
-// `;
-
-const WithSidebarLayout: React.FC<{
+export const WithSidebarLayout: React.FC<{
   sidebar: React.ReactNode;
   sidebarTitle?: string;
   children: React.ReactNode;
@@ -37,5 +32,3 @@ const WithSidebarLayout: React.FC<{
     </Box>
   );
 };
-
-export default WithSidebarLayout;

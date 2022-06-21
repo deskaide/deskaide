@@ -1,8 +1,8 @@
-import baseTheme from './baseTheme';
+import { baseTheme } from './baseTheme';
 
 import type { ThemeInterface } from '../../types/ThemeInterface';
 
-const light: ThemeInterface = {
+export const light: ThemeInterface = {
   ...baseTheme,
   name: 'light',
   colors: {
@@ -21,5 +21,3 @@ const light: ThemeInterface = {
     `0px 2px 8px rgba(39, 40, 63, 0.08), 0px 16px 32px rgba(25, 25, 36, 0.16)`,
   ],
 };
-
-export default light;

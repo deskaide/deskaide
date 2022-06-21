@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
@@ -8,7 +9,7 @@ import PomodoroSettings from '../components/PomodoroSettings';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
 
-const Pomodoro: React.FC = () => {
+export const Pomodoro: React.FC = () => {
   const timerType = useSelector((state: RootState) => state.timer.timerType);
   const dispatch = useDispatch();
   const { time, start, reset } = useTimer({
@@ -16,6 +17,7 @@ const Pomodoro: React.FC = () => {
     initialTime: 0,
     onTimeOver: () => {
       console.log('done');
+      reset();
     },
   });
 
@@ -25,7 +27,7 @@ const Pomodoro: React.FC = () => {
     return () => {
       reset();
     };
-  }, [timerType]);
+  }, [dispatch, reset, start, timerType]);
 
   return (
     <DefaultLayout>
@@ -53,5 +55,3 @@ const Pomodoro: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default Pomodoro;

@@ -1,14 +1,14 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 const { createServer, build, createLogger } = require('vite');
 const electronPath = require('electron');
 const { spawn } = require('child_process');
 
-/** @type 'production' | 'development' | 'test' */
+/** @type 'production' | 'development'' */
 const mode = (process.env.MODE = process.env.MODE || 'development');
 
 /** @type {import('vite').LogLevel} */
-const LOG_LEVEL = 'warn';
+const LOG_LEVEL = 'info';
 
 /** @type {import('vite').InlineConfig} */
 const sharedConfig = {
@@ -19,11 +19,18 @@ const sharedConfig = {
   logLevel: LOG_LEVEL,
 };
 
+/** Messages on stderr that match any of the contained patterns will be stripped from output */
+const stderrFilterPatterns = [
+  // warning about devtools extension
+  // https://github.com/cawa-93/vite-electron-builder/issues/492
+  // https://github.com/MarshallOfSound/electron-devtools-installer/issues/143
+  /ExtensionLoadWarning/,
+];
+
 /**
- * @param configFile
- * @param writeBundle
- * @param name
- * @returns {Promise<import('vite').RollupOutput | Array<import('vite').RollupOutput> | import('vite').RollupWatcher>}
+ *
+ * @param {{name: string; configFile: string; writeBundle: import('rollup').OutputPlugin['writeBundle'] }} param0
+ * @returns {import('rollup').RollupWatcher}
  */
 const getWatcher = ({ name, configFile, writeBundle }) => {
   return build({
@@ -71,11 +78,13 @@ const setupMainPackageWatcher = (viteDevServer) => {
         (d) =>
           d.toString().trim() && logger.warn(d.toString(), { timestamp: true })
       );
-      spawnProcess.stderr.on(
-        'data',
-        (d) =>
-          d.toString().trim() && logger.error(d.toString(), { timestamp: true })
-      );
+      spawnProcess.stderr.on('data', (d) => {
+        const data = d.toString().trim();
+        if (!data) return;
+        const mayIgnore = stderrFilterPatterns.some((r) => r.test(data));
+        if (mayIgnore) return;
+        logger.error(data, { timestamp: true });
+      });
     },
   });
 };

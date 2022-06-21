@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import styled from 'styled-components';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -53,7 +53,7 @@ const DiaryPreview: React.FC<Props> = (props) => {
     .use(remarkGfm)
     // @ts-expect-error: yeah it’s not okay per react types, but it works fine.
     .use(remarkReact, {
-      createElement: React.createElement,
+      createElement,
       sanitize: schema,
       remarkReactComponents: {
         code: RemarkCode,

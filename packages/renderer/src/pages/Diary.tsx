@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import * as React from 'react';
+import { useState, useCallback } from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import {
@@ -9,7 +10,7 @@ import {
   Text,
 } from '../components';
 
-const Diary: React.FC = () => {
+export const Diary: React.FC = () => {
   const [doc, setDoc] = useState<string>(
     '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n```bash\n npm i\n```'
   );
@@ -60,10 +61,11 @@ const Diary: React.FC = () => {
           {!isEditing && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
           )}
+          {/* {!isEditing && (
+            <DiaryEditor onChange={handleDocChange} onBlur={handleOnBlur} initialDoc={doc} />
+          )} */}
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>
   );
 };
-
-export default Diary;

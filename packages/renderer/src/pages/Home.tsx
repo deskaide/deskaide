@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
 import { DefaultLayout } from '../layouts';
 import { Box, Divider, Logo, Text } from '../components';
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   return (
     <DefaultLayout>
       <Box
@@ -33,5 +33,3 @@ const Home: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default Home;

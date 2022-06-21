@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
 import { DefaultLayout } from '../layouts';
 import { Box, Logo, Text } from '../components';
 
-const Links: React.FC = () => {
+export const Links: React.FC = () => {
   return (
     <DefaultLayout>
       <Box
@@ -24,5 +24,3 @@ const Links: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default Links;

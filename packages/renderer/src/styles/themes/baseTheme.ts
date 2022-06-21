@@ -85,7 +85,7 @@ fontWeights.normal = fontWeights[0];
 fontWeights.medium = fontWeights[1];
 fontWeights.bold = fontWeights[2];
 
-const baseTheme: ThemeInterface = {
+export const baseTheme: ThemeInterface = {
   name: 'baseTheme',
   space,
   fontSizes,
@@ -97,5 +97,3 @@ const baseTheme: ThemeInterface = {
   colors,
   elevations,
 };
-
-export default baseTheme;

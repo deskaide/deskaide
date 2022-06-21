@@ -1,8 +1,8 @@
-import baseTheme from './baseTheme';
+import { baseTheme } from './baseTheme';
 
 import type { ThemeInterface } from '../../types/ThemeInterface';
 
-const dark: ThemeInterface = {
+export const dark: ThemeInterface = {
   ...baseTheme,
   name: 'dark',
   colors: {
@@ -21,5 +21,3 @@ const dark: ThemeInterface = {
     `0px 2px 8px rgba(39, 40, 63, 0.08), 0px 16px 32px rgba(0, 0, 0, 0.16)`,
   ],
 };
-
-export default dark;
