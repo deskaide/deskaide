@@ -43,8 +43,7 @@
     "tsc:main": "tsc --noEmit -p packages/main/tsconfig.json",
     "tsc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "tsc:renderer": "tsc --noEmit -p packages/renderer/tsconfig.json",
-    "typecheck": "npm run tsc:main && npm run tsc:preload && npm run tsc:renderer",
-    "validate": "npm run test && npm run lint && npm run typecheck",
+    "validate": "npm run lint && npm run tsc && npm run test",
     "lint-staged": "lint-staged"
   },
   "build": {
