@@ -32,10 +32,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'yarn'
+          cache: 'npm'
 
       # TODO: Install not all dependencies, but only those required for this workflow
       - name: Install dependencies
-        run: yarn install --immutable
+        run: npm ci
 
-      - run: yarn lint
+      - run: npm lint
