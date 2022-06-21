@@ -43,6 +43,7 @@ module.exports = {
       {
         js: 'never',
         jsx: 'never',
+        mjs: 'never',
         ts: 'never',
         tsx: 'never',
         '': 'never',
@@ -55,6 +56,9 @@ module.exports = {
   settings: {
     'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      },
       typescript: {
         project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
       },
