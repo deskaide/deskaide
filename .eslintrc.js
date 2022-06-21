@@ -52,6 +52,7 @@ module.exports = {
     'import/namespace': ['error', { allowComputed: true }],
   },
   settings: {
+    'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
       typescript: {
         project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
