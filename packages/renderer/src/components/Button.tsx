@@ -1,6 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { variant, space, typography, color, layout } from 'styled-system';
+import {
+  variant as generateVariant,
+  space,
+  typography,
+  color,
+  layout,
+} from 'styled-system';
 import type {
   SpaceProps,
   TypographyProps,
@@ -126,7 +132,7 @@ const ButtonBase = styled.button<ButtonProps>`
     }
   }
 
-  ${variant({
+  ${generateVariant({
     variants,
   })};
   ${space};

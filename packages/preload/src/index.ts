@@ -1,12 +1,7 @@
-import { contextBridge } from 'electron';
+/**
+ * @module preload
+ */
 
-const pkg = require('../../../package.json');
-
-const apiKey = 'deskaide';
-
-const api = {
-  platform: process.versions,
-  version: pkg.version,
-};
-
-contextBridge.exposeInMainWorld(apiKey, api);
+import './nodeCrypto';
+import './notification';
+import './versions';

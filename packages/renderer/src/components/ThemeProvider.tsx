@@ -1,4 +1,5 @@
-import React, { useState, useLayoutEffect } from 'react';
+import * as React from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 import SEO from './SEO';
 import { baseTheme as theme } from '../styles/themes';

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useField } from 'formik';
 

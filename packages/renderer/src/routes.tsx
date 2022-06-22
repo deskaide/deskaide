@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Diary, Home, Links, Notes, Pomodoro, Settings, Todos } from './pages';
 

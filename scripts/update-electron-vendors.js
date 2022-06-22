@@ -1,4 +1,4 @@
-const { writeFile, readFile } = require('fs/promises');
+const { writeFile } = require('fs/promises');
 const { execSync } = require('child_process');
 const electron = require('electron');
 const path = require('path');
@@ -19,10 +19,6 @@ function getVendors() {
   return JSON.parse(output);
 }
 
-function formattedJSON(obj) {
-  return JSON.stringify(obj, null, 2) + '\n';
-}
-
 function updateVendors() {
   const electronRelease = getVendors();
 
@@ -30,28 +26,22 @@ function updateVendors() {
   const chromeMajorVersion =
     electronRelease.v8.split('.')[0] + electronRelease.v8.split('.')[1];
 
-  const packageJSONPath = path.resolve(process.cwd(), 'package.json');
+  const browserslistrcPath = path.resolve(process.cwd(), '.browserslistrc');
 
   return Promise.all([
     writeFile(
-      './electron-vendors.config.json',
-      formattedJSON({
-        chrome: chromeMajorVersion,
-        node: nodeMajorVersion,
-      })
+      './.electron-vendors.cache.json',
+      JSON.stringify(
+        {
+          chrome: chromeMajorVersion,
+          node: nodeMajorVersion,
+        },
+        null,
+        2
+      ) + '\n'
     ),
 
-    readFile(packageJSONPath)
-      .then(JSON.parse)
-      .then((packageJSON) => {
-        if (!packageJSON || !Array.isArray(packageJSON.browserslist)) {
-          throw new Error(`Can't find browserslist in ${packageJSONPath}`);
-        }
-
-        packageJSON.browserslist = [`Chrome ${chromeMajorVersion}`];
-
-        return writeFile(packageJSONPath, formattedJSON(packageJSON));
-      }),
+    writeFile(browserslistrcPath, `Chrome ${chromeMajorVersion}\n`, 'utf8'),
   ]);
 }
 

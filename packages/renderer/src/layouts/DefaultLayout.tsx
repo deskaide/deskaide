@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
 import { Box, SidebarMenu } from '../components';
@@ -8,7 +8,7 @@ const Wrapper = styled(Box)`
   height: 100vh;
 `;
 
-const DefaultLayout: React.FC<{ children: React.ReactNode }> = ({
+export const DefaultLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
@@ -18,5 +18,3 @@ const DefaultLayout: React.FC<{ children: React.ReactNode }> = ({
     </Box>
   );
 };
-
-export default DefaultLayout;

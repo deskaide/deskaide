@@ -1,20 +1,32 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
+
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "react",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+
     "paths": {
       "/@/*": ["./src/*"]
     },
-    "lib": ["ESNext", "dom", "dom.iterable"]
+
+    "lib": ["ESNext", "dom", "dom.iterable"],
+    "jsx": "react-jsx"
   },
+
   "include": [
+    "src/**/*.js",
     "src/**/*.ts",
+    "src/**/*.jsx",
     "src/**/*.tsx",
     "types/**/*.d.ts",
     "../../types/**/*.d.ts",
-    "../preload/types/electron-api.d.ts"
+    "../preload/contracts.d.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "*.config.js",
+    "dist"
   ]
 }

@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DefaultLayout } from '../layouts';
 import { Box, Button, Input, RangeInput } from '../components';
 
-const Settings: React.FC = () => {
+export const Settings: React.FC = () => {
   return (
     <DefaultLayout>
       <Box m={4}>
@@ -51,5 +51,3 @@ const Settings: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default Settings;

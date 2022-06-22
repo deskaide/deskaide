@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 
 import { DefaultLayout } from '../layouts';
 import { Box, Logo, Text } from '../components';
 
-const Todos: React.FC = () => {
+export const Todos: React.FC = () => {
   return (
     <DefaultLayout>
       <Box
@@ -24,5 +24,3 @@ const Todos: React.FC = () => {
     </DefaultLayout>
   );
 };
-
-export default Todos;

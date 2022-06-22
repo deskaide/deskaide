@@ -1,54 +1,45 @@
 /* eslint-env node */
 
-import { chrome } from '../../electron-vendors.config.json';
+import { defineConfig } from 'vite';
+import { chrome } from '../../.electron-vendors.cache.json';
 import { join } from 'path';
 import { builtinModules } from 'module';
-import { defineConfig } from 'vite';
-import { loadAndSetEnv } from '../../scripts/loadAndSetEnv.mjs';
+import react from '@vitejs/plugin-react';
 
 const PACKAGE_ROOT = __dirname;
 
 /**
- * Vite looks for `.env.[mode]` files only in `PACKAGE_ROOT` directory.
- * Therefore, you must manually load and set the environment variables from the root directory above
- */
-loadAndSetEnv(process.env.MODE, process.cwd());
-
-/**
+ * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-export default defineConfig({
+export default defineConfig(() => ({
+  mode: process.env.MODE,
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
     },
   },
-  plugins: [],
+  plugins: [react()],
   base: '',
   server: {
-    fsServe: {
-      root: join(PACKAGE_ROOT, '../../'),
+    fs: {
+      strict: true,
     },
   },
-  publicDir: 'assets',
   build: {
     sourcemap: true,
     target: `chrome${chrome}`,
     outDir: 'dist',
     assetsDir: '.',
-    terserOptions: {
-      ecma: 2020,
-      compress: {
-        passes: 2,
-      },
-      safari10: false,
-    },
     rollupOptions: {
-      external: [
-        ...builtinModules.filter((m) => m !== 'process' && m !== 'assert'),
-      ],
+      input: join(PACKAGE_ROOT, 'index.html'),
+      external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],
     },
     emptyOutDir: true,
+    brotliSize: false,
   },
-});
+  test: {
+    environment: 'happy-dom',
+  },
+}));
