@@ -28,7 +28,7 @@ export const Pomodoro: React.FC = () => {
 
   useEffect(() => {
     dispatch(setTimerType(TimerType.POMODORO_TIMER));
-    start(timerType === TimerType.POMODORO_TIMER ? 25 : 5);
+    start(timerType === TimerType.POMODORO_TIMER ? 25 * 60 : 5);
     return () => {
       reset();
     };
