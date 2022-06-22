@@ -2,6 +2,5 @@
  * @module preload
  */
 
-import './nodeCrypto';
 import './notification';
-import './versions';
+import './info';
