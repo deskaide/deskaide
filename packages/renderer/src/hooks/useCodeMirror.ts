@@ -5,8 +5,8 @@ import type { ViewUpdate } from '@codemirror/view';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
 
 import { oneDark } from '@codemirror/theme-one-dark';
-import { basicSetup } from './basicSetup';
-import type { ReactCodeMirrorProps } from './ReactCodeMirror';
+import { basicSetup } from '../components/basicSetup';
+import type { ReactCodeMirrorProps } from '../components/CodeMirror';
 
 export interface UseCodeMirror extends ReactCodeMirrorProps {
   container?: HTMLDivElement | null;
