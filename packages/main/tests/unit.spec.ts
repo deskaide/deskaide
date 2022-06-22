@@ -2,6 +2,7 @@ import type { MaybeMocked } from 'vitest';
 import { beforeEach, expect, test, vi } from 'vitest';
 import { restoreOrCreateWindow } from '../src/mainWindow';
 
+import type { ipcMain } from 'electron';
 import { BrowserWindow } from 'electron';
 
 /**
@@ -9,6 +10,7 @@ import { BrowserWindow } from 'electron';
  */
 vi.mock('electron', () => {
   const bw = vi.fn() as MaybeMocked<typeof BrowserWindow>;
+  const im = vi.fn() as MaybeMocked<typeof ipcMain>;
   // @ts-expect-error It's work in runtime, but I Haven't idea how to fix this type error
   bw.getAllWindows = vi.fn(() => bw.mock.instances);
   bw.prototype.loadURL = vi.fn();
@@ -19,7 +21,9 @@ vi.mock('electron', () => {
   bw.prototype.focus = vi.fn();
   bw.prototype.restore = vi.fn();
 
-  return { BrowserWindow: bw };
+  im.on = vi.fn();
+
+  return { BrowserWindow: bw, ipcMain: im };
 });
 
 beforeEach(() => {

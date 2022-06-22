@@ -3,4 +3,5 @@
  */
 
 import './nodeCrypto';
+import './notification';
 import './versions';

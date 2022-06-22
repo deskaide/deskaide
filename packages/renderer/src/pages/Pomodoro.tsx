@@ -8,6 +8,7 @@ import { useTimer } from '../hooks';
 import PomodoroSettings from '../components/PomodoroSettings';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
+import { sendNotification } from '../utils';
 
 export const Pomodoro: React.FC = () => {
   const timerType = useSelector((state: RootState) => state.timer.timerType);
@@ -17,6 +18,10 @@ export const Pomodoro: React.FC = () => {
     initialTime: 0,
     onTimeOver: () => {
       console.log('done');
+      sendNotification({
+        title: 'Time completed!',
+        body: 'Horray! A new notification!',
+      });
       reset();
     },
   });

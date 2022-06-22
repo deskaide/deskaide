@@ -1,6 +1,10 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
+
+import type { NotificationMessage } from '../../../types/NotificationMessage';
+
+import { notify } from './utils';
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -23,6 +27,10 @@ async function createWindow() {
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools();
     }
+  });
+
+  ipcMain.on('SHOW_NOTIFICATION', (_e, message: NotificationMessage) => {
+    notify(message);
   });
 
   /**
