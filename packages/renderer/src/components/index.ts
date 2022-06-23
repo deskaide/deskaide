@@ -7,6 +7,8 @@ export { default as IconJournal } from './IconJournal';
 export { default as IconLink } from './IconLink';
 export { default as Input } from './Input';
 export { default as Logo } from './Logo';
+export * from './Modal';
+export * from './ModalActions';
 export { default as PomodoroClock } from './PomodoroClock';
 export { default as PomodoroSettings } from './PomodoroSettings';
 export { default as RangeInput } from './RangeInput';
