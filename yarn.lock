@@ -2450,9 +2450,9 @@
     "semver" "^7.3.5"
 
 "electron@^19.0.4":
-  "integrity" "sha512-gC4kPr/Mf7QbeE5NAo1AC4Zg/SXLnW0ttlyzhVdyB2aErBspWh231UhHLJUlOdaVNqitdbnppdaXjoZHsR5QzQ=="
-  "resolved" "https://registry.npmjs.org/electron/-/electron-19.0.5.tgz"
-  "version" "19.0.5"
+  "integrity" "sha512-S9Yud32nKhB0iWC0lGl2JXz4FQnCiLCnP5Vehm1/CqyeICcQGmgQaZl2HYpCJ2pesKIsYL9nsgmku/10cxm/gg=="
+  "resolved" "https://registry.npmjs.org/electron/-/electron-19.0.6.tgz"
+  "version" "19.0.6"
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
