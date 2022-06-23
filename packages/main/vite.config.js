@@ -32,6 +32,7 @@ export default defineConfig(() => ({
       external: [
         'electron',
         'electron-devtools-installer',
+        'uiohook-napi',
         ...builtinModules.flatMap((p) => [p, `node:${p}`]),
       ],
       output: {

@@ -156,6 +156,7 @@
     "remark-rehype": "^10.1.0",
     "styled-components": "^5.3.5",
     "styled-system": "^5.1.5",
+    "uiohook-napi": "^1.2.0",
     "unified": "^10.1.2",
     "yup": "^0.32.11"
   }
