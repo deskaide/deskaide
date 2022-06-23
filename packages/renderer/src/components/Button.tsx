@@ -14,7 +14,12 @@ import type {
   LayoutProps,
 } from 'styled-system';
 
-type ButtonVariant = 'default' | 'primary' | 'secondary' | 'destructive';
+type ButtonVariant =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'warning'
+  | 'destructive';
 
 const circleGrow = keyframes`
   0% {
@@ -38,6 +43,10 @@ const variants = {
   secondary: {
     backgroundColor: 'text1',
     color: 'bg1',
+  },
+  warning: {
+    backgroundColor: 'warning.1',
+    color: 'light.1',
   },
   destructive: {
     backgroundColor: 'error.1',

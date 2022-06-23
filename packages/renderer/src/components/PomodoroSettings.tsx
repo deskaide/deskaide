@@ -108,7 +108,7 @@ const PomodoroSettings: React.FC = () => {
           >
             No
           </Button>
-          <Button onClick={handleReset} variant="destructive">
+          <Button onClick={handleReset} variant="warning">
             Yes
           </Button>
         </ModalActions>
