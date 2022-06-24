@@ -7,14 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
 import { setPomodoroSettings } from '../store/settingsSlice';
 import { defaultPomodoroSettings } from '../constants';
-import Button from './Button';
-import Box from './Box';
-import RangeInput from './RangeInput';
+import { Button } from './Button';
+import { Box } from './Box';
+import { RangeInput } from './RangeInput';
 import { Modal } from './Modal';
 import { ModalActions } from './ModalActions';
-import Text from './Text';
+import { Text } from './Text';
 
-const PomodoroSettings: React.FC = () => {
+export const PomodoroSettings: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const pomodoroSettings = useSelector(
@@ -119,5 +119,3 @@ const PomodoroSettings: React.FC = () => {
     </>
   );
 };
-
-export default PomodoroSettings;

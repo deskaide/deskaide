@@ -106,7 +106,7 @@ const TooltipContainer = styled.span<TooltipContainerProps>`
   }
 `;
 
-const Tooltip: React.FC<TooltipType> = ({
+export const Tooltip: React.FC<TooltipType> = ({
   message,
   children,
   position = 'top',
@@ -117,5 +117,3 @@ const Tooltip: React.FC<TooltipType> = ({
     <span className="tooltip-message">{message}</span>
   </TooltipContainer>
 );
-
-export default Tooltip;

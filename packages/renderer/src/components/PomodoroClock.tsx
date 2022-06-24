@@ -1,7 +1,6 @@
-import * as React from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import PomodoroClockBG from './PomodoroClockBG';
-import Text from './Text';
+import { PomodoroClockBG } from './PomodoroClockBG';
+import { Text } from './Text';
 
 const animateHeart = keyframes`
    0% {
@@ -37,7 +36,7 @@ interface Props {
   seconds?: number;
 }
 
-const PomodoroClock = ({
+export const PomodoroClock = ({
   bgBottomFill,
   bgMiddleFill,
   bgTopFill,
@@ -61,5 +60,3 @@ const PomodoroClock = ({
     </Wrapper>
   );
 };
-
-export default PomodoroClock;

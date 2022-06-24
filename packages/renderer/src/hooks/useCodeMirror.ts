@@ -6,9 +6,9 @@ import { EditorView, keymap, placeholder } from '@codemirror/view';
 
 import { oneDark } from '@codemirror/theme-one-dark';
 import { basicSetup } from '../components/basicSetup';
-import type { ReactCodeMirrorProps } from '../components/CodeMirror';
+import type { CodeMirrorProps } from '../components/CodeMirror';
 
-export interface UseCodeMirror extends ReactCodeMirrorProps {
+export interface UseCodeMirror extends CodeMirrorProps {
   container?: HTMLDivElement | null;
 }
 

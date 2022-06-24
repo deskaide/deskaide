@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import Box from './Box';
+import { Box } from './Box';
 import { useCodeMirror } from '../hooks';
 
 interface Props {
   initialDoc: string;
   onChange: (doc: string) => void;
-  onBlur: (e: any) => void;
+  onBlur: (e: unknown) => void;
 }
 
 const Wrapper = styled(Box)`
@@ -36,11 +36,12 @@ const Wrapper = styled(Box)`
   }
 `;
 
-const DiaryEditor: React.FC<Props> = (props) => {
-  console.log(props);
-
+export const DiaryEditor: React.FC<Props> = (props) => {
   const { initialDoc, onChange } = props;
-  const handleChange = useCallback((state: any) => onChange(state), [onChange]);
+  const handleChange = useCallback(
+    (state: string) => onChange(state),
+    [onChange]
+  );
   const editor = useRef<HTMLDivElement>(null);
   const { setContainer } = useCodeMirror({
     container: editor.current,
@@ -69,5 +70,3 @@ const DiaryEditor: React.FC<Props> = (props) => {
     </Wrapper>
   );
 };
-
-export default DiaryEditor;

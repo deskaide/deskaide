@@ -34,7 +34,7 @@ type Props = SpaceProps &
   GridProps &
   BackgroundProps;
 
-const Box = styled.div<Props>`
+export const Box = styled.div<Props>`
   ${compose(
     space,
     color,
@@ -47,5 +47,3 @@ const Box = styled.div<Props>`
     background
   )};
 `;
-
-export default Box;

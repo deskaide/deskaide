@@ -7,7 +7,7 @@ type Tokens = {
   style: string | null;
 }[];
 
-const RemarkCode: React.FC<
+export const RemarkCode: React.FC<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
 > = (props) => {
   const [spans, setSpans] = useState<Tokens>([]);
@@ -29,7 +29,7 @@ const RemarkCode: React.FC<
         setSpans(tokens);
       }
     });
-  }, [props.children]);
+  }, [props.children, langName]);
 
   if (spans.length > 0) {
     return (
@@ -45,5 +45,3 @@ const RemarkCode: React.FC<
     return <code>{props.children}</code>;
   }
 };
-
-export default RemarkCode;

@@ -2,15 +2,15 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import Box from './Box';
-import Tooltip from './Tooltip';
-import Logo from './Logo';
-import IconJournal from './IconJournal';
-import IconLink from './IconLink';
-import IconNotepad from './IconNotepad';
-import IconSettings from './IconSettings';
-import IconStopwatch from './IconStopwatch';
-import IconTask from './IconTask';
+import { Box } from './Box';
+import { Tooltip } from './Tooltip';
+import { Logo } from './Logo';
+import { IconJournal } from './IconJournal';
+import { IconLink } from './IconLink';
+import { IconNotepad } from './IconNotepad';
+import { IconSettings } from './IconSettings';
+import { IconStopwatch } from './IconStopwatch';
+import { IconTask } from './IconTask';
 
 const Wrapper = styled(Box)`
   height: 100vh;
@@ -58,7 +58,7 @@ const Wrapper = styled(Box)`
   }
 `;
 
-const SidebarMenu: React.FC = () => {
+export const SidebarMenu: React.FC = () => {
   return (
     <Wrapper>
       <ul>
@@ -143,5 +143,3 @@ const SidebarMenu: React.FC = () => {
     </Wrapper>
   );
 };
-
-export default SidebarMenu;

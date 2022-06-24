@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useField } from 'formik';
 
-import Text from './Text';
+import { Text } from './Text';
 
 const InputContainer = styled.div`
   margin-bottom: ${({ theme }) => `${theme.space.lg}px`};
@@ -52,7 +52,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const RangeInput: React.FC<
+export const RangeInput: React.FC<
   React.InputHTMLAttributes<HTMLInputElement> & {
     label?: string;
     min: number;
@@ -73,7 +73,7 @@ const RangeInput: React.FC<
     ${theme.colors.text1} ${fill + 0.1}%
   )`);
     return () => setBg('');
-  }, [fill]);
+  }, [fill, theme]);
 
   return (
     <InputContainer>
@@ -100,5 +100,3 @@ const RangeInput: React.FC<
     </InputContainer>
   );
 };
-
-export default RangeInput;

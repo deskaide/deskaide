@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, PomodoroClock } from '../components';
 import { useTimer } from '../hooks';
-import PomodoroSettings from '../components/PomodoroSettings';
+import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
 import { sendNotification } from '../utils';

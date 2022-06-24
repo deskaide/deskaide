@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const IconNotepad = ({
+export const IconNotepad = ({
   pathFillColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & {
@@ -28,5 +28,3 @@ const IconNotepad = ({
     </svg>
   );
 };
-
-export default IconNotepad;
