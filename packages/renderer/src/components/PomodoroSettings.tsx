@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import type { RootState } from '../store';
 import { setPomodoroSettings } from '../store/settingsSlice';
-import { defaultPomodoroSettings } from '../constants';
+import { defaultPomodoroSettings } from '../config';
 import { Button } from './Button';
 import { Box } from './Box';
 import { RangeInput } from './RangeInput';
