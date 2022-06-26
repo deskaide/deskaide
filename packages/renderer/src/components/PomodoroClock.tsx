@@ -1,6 +1,8 @@
 import styled, { keyframes, css } from 'styled-components';
+
 import { PomodoroClockBG } from './PomodoroClockBG';
 import { Text } from './Text';
+import { getFormattedTime } from '../utils';
 
 const animateHeart = keyframes`
    0% {
@@ -33,29 +35,26 @@ interface Props {
   bgBottomFill?: string;
   bgMiddleFill?: string;
   bgTopFill?: string;
-  seconds?: number;
+  time?: number;
 }
 
 export const PomodoroClock = ({
   bgBottomFill,
   bgMiddleFill,
   bgTopFill,
-  seconds = 0,
+  time = 0,
 }: Props) => {
-  const paddedHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
-  const paddedMinutes = `0${Math.floor((seconds % 3600) / 60)}`.slice(-2);
-  const paddedSeconds = `0${Math.floor((seconds % 3600) % 60)}`.slice(-2);
-
+  const { hours, minutes, seconds } = getFormattedTime(time);
   return (
-    <Wrapper isAnimationOn={seconds > 0}>
+    <Wrapper isAnimationOn={time > 0}>
       <PomodoroClockBG
         bgBottomFill={bgBottomFill}
         bgMiddleFill={bgMiddleFill}
         bgTopFill={bgTopFill}
-        isRotateOn={seconds > 0}
+        isRotateOn={time > 0}
       />
       <span>
-        <Text variant="h2">{`${paddedHours}:${paddedMinutes}:${paddedSeconds}`}</Text>
+        <Text variant="h2">{`${hours}:${minutes}:${seconds}`}</Text>
       </span>
     </Wrapper>
   );

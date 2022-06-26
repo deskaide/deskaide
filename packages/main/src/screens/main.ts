@@ -2,8 +2,8 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
 
-import type { NotificationMessage } from '../../../types/NotificationMessage';
-import { notify } from './utils';
+import type { NotificationMessage } from '../../../../types/NotificationMessage';
+import { notify } from '../utils';
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -45,7 +45,7 @@ async function createWindow() {
     import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
       ? import.meta.env.VITE_DEV_SERVER_URL
       : new URL(
-          '../renderer/dist/index.html',
+          '../../renderer/dist/index.html',
           'file://' + __dirname
         ).toString();
 

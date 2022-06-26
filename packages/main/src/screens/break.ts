@@ -1,18 +1,20 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
 
-import type { NotificationMessage } from '../../../types/NotificationMessage';
-import { notify } from './utils';
-
 async function createWindow() {
   const browserWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    minWidth: 1280,
-    minHeight: 720,
+    width: 864,
+    height: 486,
+    resizable: false,
     show: false, // Use 'ready-to-show' event to show window
+    minimizable: false,
+    fullscreenable: false,
+    frame: false,
+    alwaysOnTop: true,
     webPreferences: {
+      nodeIntegration: true,
+      // contextIsolation: false,
       webviewTag: false, // The webview tag is not recommended. Consider alternatives like iframe or Electron's BrowserView. https://www.electronjs.org/docs/latest/api/webview-tag#warning
       preload: join(__dirname, '../../preload/dist/index.cjs'),
     },
@@ -27,13 +29,9 @@ async function createWindow() {
   browserWindow.on('ready-to-show', () => {
     browserWindow?.show();
 
-    if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools();
-    }
-  });
-
-  ipcMain.on('SHOW_NOTIFICATION', (_e, message: NotificationMessage) => {
-    notify(message);
+    // if (import.meta.env.DEV) {
+    //   browserWindow?.webContents.openDevTools();
+    // }
   });
 
   /**
@@ -43,9 +41,9 @@ async function createWindow() {
    */
   const pageUrl =
     import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
-      ? import.meta.env.VITE_DEV_SERVER_URL
+      ? `${import.meta.env.VITE_DEV_SERVER_URL}#/break`
       : new URL(
-          '../renderer/dist/index.html',
+          '../../renderer/dist/index.html#break',
           'file://' + __dirname
         ).toString();
 
@@ -57,7 +55,7 @@ async function createWindow() {
 /**
  * Restore existing BrowserWindow or Create new BrowserWindow
  */
-export async function restoreOrCreateMainWindow() {
+export async function restoreOrCreateBreakWindow() {
   let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
 
   if (window === undefined) {
