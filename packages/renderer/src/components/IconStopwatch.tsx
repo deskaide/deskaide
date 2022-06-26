@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const IconStopwatch = ({
+export const IconStopwatch = ({
   pathFillColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & {
@@ -28,5 +28,3 @@ const IconStopwatch = ({
     </svg>
   );
 };
-
-export default IconStopwatch;

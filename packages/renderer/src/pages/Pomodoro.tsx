@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, PomodoroClock } from '../components';
 import { useTimer } from '../hooks';
-import PomodoroSettings from '../components/PomodoroSettings';
+import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
 import { sendNotification } from '../utils';
+import { defaultPomodoroSettings } from '../config';
 
 export const Pomodoro: React.FC = () => {
   const timerType = useSelector((state: RootState) => state.timer.timerType);
@@ -18,10 +19,6 @@ export const Pomodoro: React.FC = () => {
     initialTime: 0,
     onTimeOver: () => {
       console.log('done');
-      sendNotification({
-        title: 'Time completed!',
-        body: 'Horray! A new notification!',
-      });
       reset();
     },
   });
@@ -33,6 +30,15 @@ export const Pomodoro: React.FC = () => {
       reset();
     };
   }, [dispatch, reset, start, timerType]);
+
+  useEffect(() => {
+    if (defaultPomodoroSettings.remindBefore === time) {
+      sendNotification({
+        title: 'Break Time!',
+        body: 'Hey Buddy! A short break will start soon !!!',
+      });
+    }
+  }, [time]);
 
   return (
     <DefaultLayout>
@@ -54,7 +60,7 @@ export const Pomodoro: React.FC = () => {
           maxWidth="36vw"
           margin="0 auto"
         >
-          <PomodoroClock seconds={time} />
+          <PomodoroClock time={time} />
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>

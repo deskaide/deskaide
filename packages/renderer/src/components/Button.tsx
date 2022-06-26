@@ -21,7 +21,7 @@ type ButtonVariant =
   | 'warning'
   | 'destructive';
 
-const circleGrow = keyframes`
+export const circleGrow = keyframes`
   0% {
     transform: scale(0);
     opacity: 0;
@@ -150,7 +150,7 @@ const ButtonBase = styled.button<ButtonProps>`
   ${layout};
 `;
 
-const Button: React.FC<
+export const Button: React.FC<
   ButtonProps & {
     variant?: ButtonVariant;
     icon?: React.ReactNode;
@@ -186,5 +186,3 @@ const Button: React.FC<
     </ButtonBase>
   );
 };
-
-export default Button;

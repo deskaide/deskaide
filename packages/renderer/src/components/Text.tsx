@@ -127,7 +127,7 @@ const RawHTML = ({ html }: { html: string }) => (
   <RawHTMLContainer dangerouslySetInnerHTML={{ __html: html }} />
 );
 
-const Text: React.FC<
+export const Text: React.FC<
   TextProps & {
     variant?: TextVariant;
     html?: string;
@@ -162,5 +162,3 @@ const Text: React.FC<
       return <TextBase variant="p" as="p" {...props} />;
   }
 };
-
-export default Text;

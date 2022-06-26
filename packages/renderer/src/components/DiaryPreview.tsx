@@ -8,12 +8,12 @@ import { defaultSchema } from 'hast-util-sanitize';
 
 import 'github-markdown-css/github-markdown.css';
 
-import Box from './Box';
-import RemarkCode from './RemarkCode';
+import { Box } from './Box';
+import { RemarkCode } from './RemarkCode';
 
 interface Props {
   doc: string;
-  onClick: (e: any) => void;
+  onClick: (e: unknown) => void;
 }
 
 const Wrapper = styled(Box)`
@@ -47,7 +47,7 @@ const schema = {
   },
 };
 
-const DiaryPreview: React.FC<Props> = (props) => {
+export const DiaryPreview: React.FC<Props> = (props) => {
   const md = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -68,5 +68,3 @@ const DiaryPreview: React.FC<Props> = (props) => {
     </Wrapper>
   );
 };
-
-export default DiaryPreview;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const PomodoroClockBG = ({
+export const PomodoroClockBG = ({
   bgBottomFill,
   bgMiddleFill,
   bgTopFill,
@@ -74,5 +74,3 @@ const PomodoroClockBG = ({
     </svg>
   );
 };
-
-export default PomodoroClockBG;

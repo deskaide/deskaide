@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useLayoutEffect } from 'react';
 
-import SEO from './SEO';
+import { SEO } from './SEO';
 import { baseTheme as theme } from '../styles/themes';
 
 export const ThemeContext = React.createContext<{
@@ -142,8 +142,6 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => <Provider>{children}</Provider>;
-
-export default ThemeProvider;

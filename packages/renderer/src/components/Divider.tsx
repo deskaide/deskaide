@@ -15,10 +15,8 @@ type Props = SpaceProps &
   PositionProps &
   BorderProps;
 
-const Divider = styled.div<Props>`
+export const Divider = styled.div<Props>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.text1};
   width: 100%;
   ${compose(space, color, layout, position, border)};
 `;
-
-export default Divider;

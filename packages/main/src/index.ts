@@ -1,7 +1,7 @@
 import { app } from 'electron';
 
 import './security-restrictions';
-import { restoreOrCreateWindow } from './mainWindow';
+import { restoreOrCreateMainWindow } from './screens';
 
 /**
  * Prevent multiple instances
@@ -11,7 +11,7 @@ if (!isSingleInstance) {
   app.quit();
   process.exit(0);
 }
-app.on('second-instance', restoreOrCreateWindow);
+app.on('second-instance', restoreOrCreateMainWindow);
 
 /**
  * Disable Hardware Acceleration for more power-save
@@ -30,15 +30,15 @@ app.on('window-all-closed', () => {
 /**
  * @see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
  */
-app.on('activate', restoreOrCreateWindow);
+app.on('activate', restoreOrCreateMainWindow);
 
 /**
  * Create app window when background process will be ready
  */
 app
   .whenReady()
-  .then(restoreOrCreateWindow)
-  .catch((e) => console.error('Failed create window:', e));
+  .then(restoreOrCreateMainWindow)
+  .catch((e) => console.error('Failed create main window:', e));
 
 /**
  * Install React devtools in development mode only

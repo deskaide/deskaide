@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
 import type { IPomodoroSettings, SettingsState } from '../types/Settings';
-import { defaultPomodoroSettings } from '../constants';
+import { defaultPomodoroSettings } from '../config';
 
 const initialState: SettingsState = {
   pomodoroSettings: { ...defaultPomodoroSettings },

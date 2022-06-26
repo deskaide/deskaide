@@ -1,5 +1,14 @@
 import { Route, Routes } from 'react-router-dom';
-import { Diary, Home, Links, Notes, Pomodoro, Settings, Todos } from './pages';
+import {
+  Diary,
+  Home,
+  Links,
+  Notes,
+  Pomodoro,
+  Settings,
+  Todos,
+  Break,
+} from './pages';
 
 const AppRoutes = (): JSX.Element => (
   <Routes>
@@ -10,6 +19,7 @@ const AppRoutes = (): JSX.Element => (
     <Route path="/pomodoro" element={<Pomodoro />} />
     <Route path="/settings" element={<Settings />} />
     <Route path="/todos" element={<Todos />} />
+    <Route path="/break" element={<Break />} />
   </Routes>
 );
 
