@@ -36,6 +36,10 @@ async function createWindow() {
     notify(message);
   });
 
+  ipcMain.on('SHOW_BREAK_WINDOW', () => {
+    console.log('Show break window!');
+  });
+
   /**
    * URL for main window.
    * Vite dev server for development.

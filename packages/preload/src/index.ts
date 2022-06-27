@@ -2,5 +2,6 @@
  * @module preload
  */
 
-import './notification';
 import './info';
+import './notification';
+import './showWindow';
