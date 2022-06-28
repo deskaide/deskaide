@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, PomodoroClock } from '../components';
+import { Box, PomodoroClock, Button } from '../components';
 import { useTimer } from '../hooks';
 import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
-import { sendNotification } from '../utils';
-import { defaultPomodoroSettings } from '../config';
+import { sendNotification, showBreakWindow } from '../utils';
+import { defaultPomodoroSettings, A_MINUTE } from '../config';
 
 export const Pomodoro: React.FC = () => {
   const timerType = useSelector((state: RootState) => state.timer.timerType);
@@ -18,14 +18,17 @@ export const Pomodoro: React.FC = () => {
     type: 'DECREMENTAL',
     initialTime: 0,
     onTimeOver: () => {
-      console.log('done');
+      setTimerType(TimerType.BREAK_TIMER);
       reset();
+      showBreakWindow();
     },
   });
 
   useEffect(() => {
-    dispatch(setTimerType(TimerType.POMODORO_TIMER));
-    start(timerType === TimerType.POMODORO_TIMER ? 25 * 60 : 5);
+    if (timerType === TimerType.POMODORO_TIMER) {
+      // start(defaultPomodoroSettings.focusTime * A_MINUTE);
+      start(A_MINUTE);
+    }
     return () => {
       reset();
     };
@@ -61,6 +64,9 @@ export const Pomodoro: React.FC = () => {
           margin="0 auto"
         >
           <PomodoroClock time={time} />
+          <Button mt={4} onClick={showBreakWindow}>
+            Skip to Break
+          </Button>
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>
