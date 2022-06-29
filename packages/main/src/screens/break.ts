@@ -43,7 +43,7 @@ async function createWindow() {
     import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
       ? `${import.meta.env.VITE_DEV_SERVER_URL}#/break`
       : new URL(
-          '../../renderer/dist/index.html#break',
+          '../renderer/dist/index.html#break',
           'file://' + __dirname
         ).toString();
 

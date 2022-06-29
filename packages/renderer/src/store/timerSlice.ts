@@ -7,12 +7,14 @@ export enum TimerType {
 }
 
 export interface TimerState {
-  currentTime: number;
+  currentFocusTime: number;
+  currentBreakTime: number;
   timerType: TimerType;
 }
 
 const initialState: TimerState = {
-  currentTime: 0,
+  currentFocusTime: 0,
+  currentBreakTime: 0,
   timerType: TimerType.POMODORO_TIMER,
 };
 
@@ -20,8 +22,11 @@ export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
-    setTime: (state, action: PayloadAction<number>) => {
-      state.currentTime = action.payload;
+    setCurrentFocusTime: (state, action: PayloadAction<number>) => {
+      state.currentFocusTime = action.payload;
+    },
+    setCurrentBreakTime: (state, action: PayloadAction<number>) => {
+      state.currentBreakTime = action.payload;
     },
     setTimerType: (state, action: PayloadAction<TimerType>) => {
       state.timerType = action.payload;
@@ -30,6 +35,7 @@ export const timerSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTime, setTimerType } = timerSlice.actions;
+export const { setCurrentFocusTime, setCurrentBreakTime, setTimerType } =
+  timerSlice.actions;
 
 export default timerSlice.reducer;
