@@ -38,6 +38,7 @@ async function createWindow() {
 
   ipcMain.on('SHOW_BREAK_WINDOW', () => {
     console.log('Show break window!');
+    // notify({ title: 'Break Time!', body: 'Showing break window.' });
   });
 
   /**
@@ -49,7 +50,7 @@ async function createWindow() {
     import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
       ? import.meta.env.VITE_DEV_SERVER_URL
       : new URL(
-          '../../renderer/dist/index.html',
+          '../renderer/dist/index.html',
           'file://' + __dirname
         ).toString();
 
