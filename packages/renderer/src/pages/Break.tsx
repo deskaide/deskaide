@@ -1,31 +1,37 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Button, Text } from '../components';
+import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
 import { useTimer } from '../hooks';
-import { defaultPomodoroSettings } from '../config';
-import { getFormattedTime } from '../utils';
+import { getFormattedTime, showMainWindow } from '../utils';
 
 export const Break: React.FC = () => {
+  const { timerType } = useSelector((state: RootState) => state.timer);
+  const { pomodoroSettings } = useSelector(
+    (state: RootState) => state.settings
+  );
   const dispatch = useDispatch();
   const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
     initialTime: 0,
     onTimeOver: () => {
-      console.log('done');
+      dispatch(setTimerType(TimerType.POMODORO_TIMER));
       reset();
+      showMainWindow();
     },
   });
 
   useEffect(() => {
-    dispatch(setTimerType(TimerType.BREAK_TIMER));
-    start(defaultPomodoroSettings.shortBreakTime * 60);
+    if (timerType === TimerType.BREAK_TIMER) {
+      start(pomodoroSettings.shortBreakTime);
+    }
     return () => {
       reset();
     };
-  }, [dispatch, reset, start]);
+  }, [pomodoroSettings.shortBreakTime, reset, start, timerType]);
   const { minutes, seconds } = getFormattedTime(time);
   return (
     <Box

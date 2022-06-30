@@ -29,7 +29,7 @@ const App: React.FC = () => {
     type: 'DECREMENTAL',
     initialTime: 0,
     onTimeOver: () => {
-      setTimerType(TimerType.BREAK_TIMER);
+      dispatch(setTimerType(TimerType.BREAK_TIMER));
       reset();
       showBreakWindow();
     },
