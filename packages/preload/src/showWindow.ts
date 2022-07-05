@@ -1,13 +1,14 @@
 import { ipcRenderer } from 'electron';
+import { IpcEventTypes } from '../../../types';
 
 import { exposeInMainWorld } from './exposeInMainWorld';
 
 function showBreakWindow() {
-  ipcRenderer.send('SHOW_BREAK_WINDOW');
+  ipcRenderer.send(IpcEventTypes.ShowBreakWindow);
 }
 
 function showMainWindow() {
-  ipcRenderer.send('SHOW_MAIN_WINDOW');
+  ipcRenderer.send(IpcEventTypes.ShowMainWindow);
 }
 
 // Export for types in contracts.d.ts

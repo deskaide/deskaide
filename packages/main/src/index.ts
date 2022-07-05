@@ -1,7 +1,10 @@
-import { app } from 'electron';
+import { app, ipcMain } from 'electron';
 
 import './security-restrictions';
 import { restoreOrCreateMainWindow } from './screens';
+import { notify } from './utils';
+import type { NotificationMessage } from '../../../types';
+import { IpcEventTypes } from '../../../types';
 
 /**
  * Prevent multiple instances
@@ -40,6 +43,22 @@ app
   .then(restoreOrCreateMainWindow)
   .catch((e) => console.error('Failed create main window:', e));
 
+ipcMain.on(
+  IpcEventTypes.ShowNotification,
+  (_e, message: NotificationMessage) => {
+    notify(message);
+  }
+);
+
+ipcMain.on(IpcEventTypes.ShowBreakWindow, () => {
+  console.log('Show break window!');
+  // notify({ title: 'Break Time!', body: 'Showing break window.' });
+});
+
+ipcMain.on(IpcEventTypes.ShowMainWindow, () => {
+  console.log('Show main window!');
+  // notify({ title: 'Break Time!', body: 'Showing break window.' });
+});
 /**
  * Install React devtools in development mode only
  */

@@ -19,6 +19,7 @@
     "src/**/*.tsx",
     "types/**/*.d.ts",
     "../../types/**/*.d.ts",
+    "../../types/**/*.ts",
     "../preload/contracts.d.ts"
   ],
   "exclude": [

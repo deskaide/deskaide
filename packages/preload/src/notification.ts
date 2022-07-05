@@ -1,10 +1,11 @@
 const { ipcRenderer } = require('electron');
 
-import type { NotificationMessage } from '../../../types/NotificationMessage';
+import type { NotificationMessage } from '../../../types';
+import { IpcEventTypes } from '../../../types';
 import { exposeInMainWorld } from './exposeInMainWorld';
 
 function send(message: NotificationMessage) {
-  ipcRenderer.send('SHOW_NOTIFICATION', message);
+  ipcRenderer.send(IpcEventTypes.ShowNotification, message);
 }
 
 // Export for types in contracts.d.ts

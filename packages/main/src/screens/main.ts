@@ -1,9 +1,6 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
-
-import type { NotificationMessage } from '../../../../types/NotificationMessage';
-import { notify } from '../utils';
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -30,20 +27,6 @@ async function createWindow() {
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools();
     }
-  });
-
-  ipcMain.on('SHOW_NOTIFICATION', (_e, message: NotificationMessage) => {
-    notify(message);
-  });
-
-  ipcMain.on('SHOW_BREAK_WINDOW', () => {
-    console.log('Show break window!');
-    // notify({ title: 'Break Time!', body: 'Showing break window.' });
-  });
-
-  ipcMain.on('SHOW_MAIN_WINDOW', () => {
-    console.log('Show main window!');
-    // notify({ title: 'Break Time!', body: 'Showing break window.' });
   });
 
   /**
