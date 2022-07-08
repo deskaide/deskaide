@@ -7,11 +7,11 @@ function showBreakWindow() {
   ipcRenderer.send(IpcEventTypes.ShowBreakWindow);
 }
 
-function showMainWindow() {
-  ipcRenderer.send(IpcEventTypes.ShowMainWindow);
+function hideBreakWindow() {
+  ipcRenderer.send(IpcEventTypes.HideBreakWindow);
 }
 
 // Export for types in contracts.d.ts
-export const showWindow = { showBreakWindow, showMainWindow } as const;
+export const manageWindow = { showBreakWindow, hideBreakWindow } as const;
 
-exposeInMainWorld('showWindow', showWindow);
+exposeInMainWorld('manageWindow', manageWindow);

@@ -4,4 +4,4 @@
 
 import './info';
 import './notification';
-import './showWindow';
+import './manageWindow';

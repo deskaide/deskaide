@@ -56,7 +56,9 @@ async function createWindow() {
  * Restore existing BrowserWindow or Create new BrowserWindow
  */
 export async function restoreOrCreateBreakWindow() {
-  let window = BrowserWindow.getAllWindows().find((w) => !w.isDestroyed());
+  let window = BrowserWindow.getAllWindows().find(
+    (w) => !w.isDestroyed() && w.id !== 1
+  );
 
   if (window === undefined) {
     window = await createWindow();
@@ -67,4 +69,6 @@ export async function restoreOrCreateBreakWindow() {
   }
 
   window.focus();
+
+  return window;
 }

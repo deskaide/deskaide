@@ -5,7 +5,9 @@ interface Exposed {
   readonly notification: Readonly<
     typeof import('./src/notification').notification
   >;
-  readonly showWindow: Readonly<typeof import('./src/showWindow').showWindow>;
+  readonly manageWindow: Readonly<
+    typeof import('./src/manageWindow').manageWindow
+  >;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

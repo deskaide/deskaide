@@ -1,7 +1,11 @@
+import type { BrowserWindow } from 'electron';
 import { app, ipcMain } from 'electron';
 
 import './security-restrictions';
-import { restoreOrCreateMainWindow } from './screens';
+import {
+  restoreOrCreateMainWindow,
+  restoreOrCreateBreakWindow,
+} from './screens';
 import { notify } from './utils';
 import type { NotificationMessage } from '../../../types';
 import { IpcEventTypes } from '../../../types';
@@ -10,6 +14,8 @@ import { IpcEventTypes } from '../../../types';
  * Prevent multiple instances
  */
 const isSingleInstance = app.requestSingleInstanceLock();
+let breakWindow: BrowserWindow;
+
 if (!isSingleInstance) {
   app.quit();
   process.exit(0);
@@ -50,14 +56,14 @@ ipcMain.on(
   }
 );
 
-ipcMain.on(IpcEventTypes.ShowBreakWindow, () => {
-  console.log('Show break window!');
-  // notify({ title: 'Break Time!', body: 'Showing break window.' });
+ipcMain.on(IpcEventTypes.ShowBreakWindow, async () => {
+  breakWindow = await restoreOrCreateBreakWindow();
 });
 
-ipcMain.on(IpcEventTypes.ShowMainWindow, () => {
-  console.log('Show main window!');
-  // notify({ title: 'Break Time!', body: 'Showing break window.' });
+ipcMain.on(IpcEventTypes.HideBreakWindow, () => {
+  if (breakWindow) {
+    breakWindow.close();
+  }
 });
 /**
  * Install React devtools in development mode only
