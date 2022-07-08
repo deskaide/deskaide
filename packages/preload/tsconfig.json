@@ -5,6 +5,11 @@
     "baseUrl": "."
   },
 
-  "include": ["src/**/*.ts", "contracts.d.ts", "../../types/**/*.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "contracts.d.ts",
+    "../../types/**/*.d.ts",
+    "../../types/**/*.ts"
+  ],
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.config.js", "dist"]
 }

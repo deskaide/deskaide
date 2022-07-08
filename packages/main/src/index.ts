@@ -1,12 +1,21 @@
-import { app } from 'electron';
+import type { BrowserWindow } from 'electron';
+import { app, ipcMain } from 'electron';
 
 import './security-restrictions';
-import { restoreOrCreateMainWindow } from './screens';
+import {
+  restoreOrCreateMainWindow,
+  restoreOrCreateBreakWindow,
+} from './screens';
+import { notify } from './utils';
+import type { NotificationMessage } from '../../../types';
+import { IpcEventTypes } from '../../../types';
 
 /**
  * Prevent multiple instances
  */
 const isSingleInstance = app.requestSingleInstanceLock();
+let breakWindow: BrowserWindow;
+
 if (!isSingleInstance) {
   app.quit();
   process.exit(0);
@@ -40,6 +49,22 @@ app
   .then(restoreOrCreateMainWindow)
   .catch((e) => console.error('Failed create main window:', e));
 
+ipcMain.on(
+  IpcEventTypes.ShowNotification,
+  (_e, message: NotificationMessage) => {
+    notify(message);
+  }
+);
+
+ipcMain.on(IpcEventTypes.ShowBreakWindow, async () => {
+  breakWindow = await restoreOrCreateBreakWindow();
+});
+
+ipcMain.on(IpcEventTypes.HideBreakWindow, () => {
+  if (breakWindow) {
+    breakWindow.close();
+  }
+});
 /**
  * Install React devtools in development mode only
  */

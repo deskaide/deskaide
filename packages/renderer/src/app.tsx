@@ -37,6 +37,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (timerType === TimerType.POMODORO_TIMER) {
+      // start(pomodoroSettings.focusTime * A_MINUTE);
       start(pomodoroSettings.focusTime * A_MINUTE);
     }
     return () => {
@@ -47,6 +48,9 @@ const App: React.FC = () => {
   useEffect(() => {
     if (timerType === TimerType.POMODORO_TIMER) {
       dispatch(setCurrentFocusTime(time));
+    } else {
+      reset();
+      dispatch(setCurrentFocusTime(0));
     }
     return () => {
       dispatch(setCurrentFocusTime(0));

@@ -6,7 +6,8 @@ import { Box, Button, Text } from '../components';
 import type { RootState } from '../store';
 import { setTimerType, TimerType } from '../store/timerSlice';
 import { useTimer } from '../hooks';
-import { getFormattedTime, showMainWindow } from '../utils';
+import { getFormattedTime, hideBreakWindow } from '../utils';
+import { A_MINUTE } from '../config';
 
 export const Break: React.FC = () => {
   const { timerType } = useSelector((state: RootState) => state.timer);
@@ -20,19 +21,28 @@ export const Break: React.FC = () => {
     onTimeOver: () => {
       dispatch(setTimerType(TimerType.POMODORO_TIMER));
       reset();
-      showMainWindow();
+      hideBreakWindow();
     },
   });
+  const { minutes, seconds } = getFormattedTime(time);
 
   useEffect(() => {
     if (timerType === TimerType.BREAK_TIMER) {
-      start(pomodoroSettings.shortBreakTime);
+      start(pomodoroSettings.shortBreakTime * A_MINUTE);
+    } else {
+      reset();
     }
     return () => {
       reset();
     };
   }, [pomodoroSettings.shortBreakTime, reset, start, timerType]);
-  const { minutes, seconds } = getFormattedTime(time);
+
+  const handleSkipBreak = () => {
+    dispatch(setTimerType(TimerType.POMODORO_TIMER));
+    reset();
+    hideBreakWindow();
+  };
+
   return (
     <Box
       display="flex"
@@ -45,7 +55,7 @@ export const Break: React.FC = () => {
       margin="0 auto"
     >
       <Text variant="h2" mb={3}>{`${minutes}:${seconds}`}</Text>
-      <Button variant="default" mb={0}>
+      <Button variant="default" mb={0} onClick={handleSkipBreak}>
         Skip Break
       </Button>
     </Box>

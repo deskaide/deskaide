@@ -1,16 +1,23 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, PomodoroClock, Button } from '../components';
 import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
+import { setTimerType, TimerType } from '../store/timerSlice';
 import { showBreakWindow } from '../utils';
 
 export const Pomodoro: React.FC = () => {
   const currentFocusTime = useSelector(
     (state: RootState) => state.timer.currentFocusTime
   );
+  const dispatch = useDispatch();
+
+  const handleSkipToBreak = () => {
+    dispatch(setTimerType(TimerType.BREAK_TIMER));
+    showBreakWindow();
+  };
 
   return (
     <DefaultLayout>
@@ -33,7 +40,7 @@ export const Pomodoro: React.FC = () => {
           margin="0 auto"
         >
           <PomodoroClock time={currentFocusTime} />
-          <Button mt={4} onClick={showBreakWindow}>
+          <Button mt={4} onClick={handleSkipToBreak}>
             Skip to Break
           </Button>
         </Box>
