@@ -29,9 +29,9 @@ async function createWindow() {
   browserWindow.on('ready-to-show', () => {
     browserWindow?.show();
 
-    // if (import.meta.env.DEV) {
-    //   browserWindow?.webContents.openDevTools();
-    // }
+    if (import.meta.env.DEV) {
+      browserWindow?.webContents.openDevTools();
+    }
   });
 
   /**

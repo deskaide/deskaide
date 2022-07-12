@@ -5,8 +5,9 @@ import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, PomodoroClock, Button } from '../components';
 import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
-import { setTimerType, TimerType } from '../store/timerSlice';
+import { setTimerType } from '../store/timerSlice';
 import { showBreakWindow } from '../utils';
+import { TimerType } from '../../../../types';
 
 export const Pomodoro: React.FC = () => {
   const currentFocusTime = useSelector(
@@ -15,7 +16,7 @@ export const Pomodoro: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleSkipToBreak = () => {
-    dispatch(setTimerType(TimerType.BREAK_TIMER));
+    dispatch(setTimerType(TimerType.BreakTimer));
     showBreakWindow();
   };
 
