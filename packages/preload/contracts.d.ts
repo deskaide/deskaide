@@ -8,6 +8,7 @@ interface Exposed {
   readonly manageWindow: Readonly<
     typeof import('./src/manageWindow').manageWindow
   >;
+  readonly manageTimer: typeof import('./src/manageTimer').manageTimer;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

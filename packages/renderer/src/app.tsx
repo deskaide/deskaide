@@ -9,13 +9,10 @@ import { GlobalStyle } from './styles';
 import Routes from './routes';
 import type { RootState } from './store';
 import { useTimer } from './hooks';
-import {
-  setCurrentFocusTime,
-  setTimerType,
-  TimerType,
-} from './store/timerSlice';
+import { setCurrentFocusTime, setTimerType } from './store/timerSlice';
 import { sendNotification, showBreakWindow } from './utils';
 import { A_MINUTE } from './config';
+import { IpcEventTypes, TimerType } from '../../../types';
 
 const App: React.FC = () => {
   const context = useContext(ThemeContext);
@@ -29,16 +26,16 @@ const App: React.FC = () => {
     type: 'DECREMENTAL',
     initialTime: 0,
     onTimeOver: () => {
-      dispatch(setTimerType(TimerType.BREAK_TIMER));
+      dispatch(setTimerType(TimerType.BreakTimer));
       reset();
       showBreakWindow();
     },
   });
 
   useEffect(() => {
-    if (timerType === TimerType.POMODORO_TIMER) {
+    if (timerType === TimerType.PomodoroTimer) {
       // start(pomodoroSettings.focusTime * A_MINUTE);
-      start(pomodoroSettings.focusTime * A_MINUTE);
+      start(0.3 * A_MINUTE);
     }
     return () => {
       reset();
@@ -46,7 +43,7 @@ const App: React.FC = () => {
   }, [pomodoroSettings.focusTime, reset, start, timerType]);
 
   useEffect(() => {
-    if (timerType === TimerType.POMODORO_TIMER) {
+    if (timerType === TimerType.PomodoroTimer) {
       dispatch(setCurrentFocusTime(time));
     } else {
       reset();
@@ -55,7 +52,7 @@ const App: React.FC = () => {
     return () => {
       dispatch(setCurrentFocusTime(0));
     };
-  }, [dispatch, timerType, time]);
+  }, [dispatch, timerType, time, reset]);
 
   useEffect(() => {
     if (pomodoroSettings.remindBefore === time) {
@@ -65,6 +62,14 @@ const App: React.FC = () => {
       });
     }
   }, [pomodoroSettings.remindBefore, time]);
+
+  useEffect(() => {
+    if (window.manageTimer) {
+      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
+        dispatch(setTimerType(value));
+      });
+    }
+  }, [dispatch]);
 
   return (
     <>

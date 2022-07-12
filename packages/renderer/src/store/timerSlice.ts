@@ -1,10 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-
-export enum TimerType {
-  'POMODORO_TIMER',
-  'BREAK_TIMER',
-}
+import { TimerType } from '../../../../types';
 
 export interface TimerState {
   currentFocusTime: number;
@@ -13,7 +9,7 @@ export interface TimerState {
 
 const initialState: TimerState = {
   currentFocusTime: 0,
-  timerType: TimerType.POMODORO_TIMER,
+  timerType: TimerType.PomodoroTimer,
 };
 
 export const timerSlice = createSlice({

@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Button, Text } from '../components';
 import type { RootState } from '../store';
-import { setTimerType, TimerType } from '../store/timerSlice';
+import { setTimerType } from '../store/timerSlice';
 import { useTimer } from '../hooks';
 import { getFormattedTime, hideBreakWindow } from '../utils';
 import { A_MINUTE } from '../config';
+import { IpcEventTypes, TimerType } from '../../../../types';
 
 export const Break: React.FC = () => {
   const { timerType } = useSelector((state: RootState) => state.timer);
@@ -19,7 +20,7 @@ export const Break: React.FC = () => {
     type: 'DECREMENTAL',
     initialTime: 0,
     onTimeOver: () => {
-      dispatch(setTimerType(TimerType.POMODORO_TIMER));
+      dispatch(setTimerType(TimerType.PomodoroTimer));
       reset();
       hideBreakWindow();
     },
@@ -27,8 +28,8 @@ export const Break: React.FC = () => {
   const { minutes, seconds } = getFormattedTime(time);
 
   useEffect(() => {
-    if (timerType === TimerType.BREAK_TIMER) {
-      start(pomodoroSettings.shortBreakTime * A_MINUTE);
+    if (timerType === TimerType.BreakTimer) {
+      start(0.2 * A_MINUTE);
     } else {
       reset();
     }
@@ -37,8 +38,16 @@ export const Break: React.FC = () => {
     };
   }, [pomodoroSettings.shortBreakTime, reset, start, timerType]);
 
+  useEffect(() => {
+    if (window.manageTimer) {
+      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
+        dispatch(setTimerType(value));
+      });
+    }
+  }, [dispatch]);
+
   const handleSkipBreak = () => {
-    dispatch(setTimerType(TimerType.POMODORO_TIMER));
+    dispatch(setTimerType(TimerType.PomodoroTimer));
     reset();
     hideBreakWindow();
   };

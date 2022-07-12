@@ -8,19 +8,22 @@ import {
 } from './screens';
 import { notify } from './utils';
 import type { NotificationMessage } from '../../../types';
-import { IpcEventTypes } from '../../../types';
+import { TimerType, IpcEventTypes } from '../../../types';
 
 /**
  * Prevent multiple instances
  */
 const isSingleInstance = app.requestSingleInstanceLock();
+let mainWindow: BrowserWindow;
 let breakWindow: BrowserWindow;
 
 if (!isSingleInstance) {
   app.quit();
   process.exit(0);
 }
-app.on('second-instance', restoreOrCreateMainWindow);
+app.on('second-instance', async () => {
+  mainWindow = await restoreOrCreateMainWindow();
+});
 
 /**
  * Disable Hardware Acceleration for more power-save
@@ -39,14 +42,18 @@ app.on('window-all-closed', () => {
 /**
  * @see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
  */
-app.on('activate', restoreOrCreateMainWindow);
+app.on('activate', async () => {
+  mainWindow = await restoreOrCreateMainWindow();
+});
 
 /**
  * Create app window when background process will be ready
  */
 app
   .whenReady()
-  .then(restoreOrCreateMainWindow)
+  .then(async () => {
+    mainWindow = await restoreOrCreateMainWindow();
+  })
   .catch((e) => console.error('Failed create main window:', e));
 
 ipcMain.on(
@@ -58,9 +65,21 @@ ipcMain.on(
 
 ipcMain.on(IpcEventTypes.ShowBreakWindow, async () => {
   breakWindow = await restoreOrCreateBreakWindow();
+  if (breakWindow) {
+    breakWindow.webContents.send(
+      IpcEventTypes.ToggleTimerType,
+      TimerType.BreakTimer
+    );
+  }
 });
 
 ipcMain.on(IpcEventTypes.HideBreakWindow, () => {
+  if (mainWindow) {
+    mainWindow.webContents.send(
+      IpcEventTypes.ToggleTimerType,
+      TimerType.PomodoroTimer
+    );
+  }
   if (breakWindow) {
     breakWindow.close();
   }
