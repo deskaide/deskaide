@@ -1,10 +1,15 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-import type { IPomodoroSettings, SettingsState } from '../types/Settings';
-import { defaultPomodoroSettings } from '../config';
+import type {
+  IAppSettings,
+  IPomodoroSettings,
+  SettingsState,
+} from '../types/Settings';
+import { defaultAppSettings, defaultPomodoroSettings } from '../config';
 
 const initialState: SettingsState = {
+  appSettings: { ...defaultAppSettings },
   pomodoroSettings: { ...defaultPomodoroSettings },
 };
 
@@ -12,6 +17,9 @@ export const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setAppSettings: (state, action: PayloadAction<IAppSettings>) => {
+      state.appSettings = action.payload;
+    },
     setPomodoroSettings: (state, action: PayloadAction<IPomodoroSettings>) => {
       state.pomodoroSettings = action.payload;
     },
