@@ -29,9 +29,9 @@ async function createWindow() {
   browserWindow.on('ready-to-show', () => {
     browserWindow?.show();
 
-    if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools();
-    }
+    // if (import.meta.env.DEV) {
+    //   browserWindow?.webContents.openDevTools();
+    // }
   });
 
   /**
@@ -43,8 +43,8 @@ async function createWindow() {
     import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
       ? `${import.meta.env.VITE_DEV_SERVER_URL}#/break`
       : new URL(
-          '../renderer/dist/index.html#break',
-          'file://' + __dirname
+          '../renderer/dist/index.html#/break',
+          `file://${__dirname}`
         ).toString();
 
   await browserWindow.loadURL(pageUrl);

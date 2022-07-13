@@ -34,8 +34,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
-      // start(pomodoroSettings.focusTime * A_MINUTE);
-      start(0.3 * A_MINUTE);
+      start(pomodoroSettings.focusTime * A_MINUTE);
     }
     return () => {
       reset();
