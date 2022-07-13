@@ -1,7 +1,7 @@
 import { Notification } from 'electron';
 
 import type { NotificationMessage } from '../../../../types/NotificationMessage';
-import logo from '../../../../assets/icons/icon.png';
+import logo from '../../../../buildResources/icon.png';
 
 export const notify = (message: NotificationMessage) => {
   new Notification({

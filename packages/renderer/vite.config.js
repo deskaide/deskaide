@@ -31,7 +31,7 @@ export default defineConfig(() => ({
     sourcemap: true,
     target: `chrome${chrome}`,
     outDir: 'dist',
-    assetsDir: '.',
+    assetsDir: 'public',
     rollupOptions: {
       input: join(PACKAGE_ROOT, 'index.html'),
       external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],

@@ -9,7 +9,6 @@ import { defaultSchema } from 'hast-util-sanitize';
 import 'github-markdown-css/github-markdown.css';
 
 import { Box } from './Box';
-import { RemarkCode } from './RemarkCode';
 
 interface Props {
   doc: string;
@@ -55,9 +54,6 @@ export const DiaryPreview: React.FC<Props> = (props) => {
     .use(remarkReact, {
       createElement,
       sanitize: schema,
-      remarkReactComponents: {
-        code: RemarkCode,
-      },
     })
     .processSync(props.doc).result as React.ReactNode;
   return (

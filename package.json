@@ -46,46 +46,6 @@
     "validate": "npm run lint && npm run tsc && npm run test",
     "lint-staged": "lint-staged"
   },
-  "build": {
-    "extraMetadata": {
-      "name": "deskaide",
-      "productName": "Deskaide",
-      "homepage": "https://www.deskaide.app",
-      "description": "An open source application to help managing your desk (Computer) usage."
-    },
-    "appId": "app.deskaide.www",
-    "files": [
-      "packages/**/dist/**",
-      "assets/**"
-    ],
-    "extends": null,
-    "directories": {
-      "buildResources": "assets",
-      "output": "dist"
-    },
-    "linux": {
-      "category": "Utility",
-      "target": [
-        "deb",
-        "AppImage"
-      ]
-    },
-    "win": {
-      "icon": "assets/icons/icon.ico",
-      "target": [
-        "nsis"
-      ]
-    },
-    "afterSign": "electron-builder-notarize",
-    "mac": {
-      "hardenedRuntime": true,
-      "category": "public.app-category.utilities",
-      "icon": "assets/icons/icon.icns",
-      "target": [
-        "dmg"
-      ]
-    }
-  },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.2",
     "@types/react": "^18.0.14",
