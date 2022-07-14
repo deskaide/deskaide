@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DefaultLayout } from '../layouts';
-import { Box, Button, Input, RangeInput } from '../components';
+import { Box, Button, Input, RangeInput, SelectInput } from '../components';
 
 export const Settings: React.FC = () => {
   return (
@@ -15,9 +15,7 @@ export const Settings: React.FC = () => {
             firstName: Yup.string()
               .max(15, 'Must be 15 characters or less')
               .required('Required'),
-            lastName: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .required('Required'),
+            activeTheme: Yup.string().required('Required'),
             shortBreakTime: Yup.number()
               .min(5, 'Must be at least 5 minutes')
               .required('Required'),
@@ -36,7 +34,14 @@ export const Settings: React.FC = () => {
               label="First Name"
               placeholder="john"
             />
-            <Input name="lastName" type="text" label="Last Name" />
+            <SelectInput
+              name="activeTheme"
+              options={[
+                { label: 'Light', value: 'light' },
+                { label: 'Dark', value: 'dark' },
+              ]}
+              label="Active Theme"
+            />
             <RangeInput
               min={0}
               max={25}

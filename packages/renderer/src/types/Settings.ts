@@ -1,3 +1,8 @@
+export interface IAppSettings {
+  activeTheme: string;
+  shouldOpenOnStart: boolean;
+}
+
 export interface IPomodoroSettings {
   focusTime: number;
   shortBreakTime: number;
@@ -6,5 +11,6 @@ export interface IPomodoroSettings {
 }
 
 export interface SettingsState {
+  appSettings: IAppSettings;
   pomodoroSettings: IPomodoroSettings;
 }
