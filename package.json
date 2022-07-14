@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.2",
+    "@types/pouchdb": "^6.4.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-router-dom": "^5.3.3",
@@ -103,6 +104,7 @@
     "formik": "^2.2.9",
     "github-markdown-css": "^5.1.0",
     "hast-util-sanitize": "^4.0.0",
+    "pouchdb": "^7.3.0",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
