@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 
 interface Exposed {
+  readonly db: Readonly<typeof import('./src/db').db>;
   readonly info: Readonly<typeof import('./src/info').info>;
   readonly notification: Readonly<
     typeof import('./src/notification').notification
