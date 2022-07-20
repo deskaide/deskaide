@@ -20,6 +20,22 @@ export const Pomodoro: React.FC = () => {
     showBreakWindow();
   };
 
+  React.useEffect(() => {
+    let ignore = false;
+    async function fetchData() {
+      const data = await window.db.getAll({ limit: 5 });
+
+      if (!ignore) {
+        console.log(data);
+      }
+    }
+    fetchData();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
     <DefaultLayout>
       <WithSidebarLayout
