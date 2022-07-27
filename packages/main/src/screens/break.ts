@@ -68,7 +68,9 @@ export async function restoreOrCreateBreakWindow() {
     window.restore();
   }
 
+  window.setVisibleOnAllWorkspaces(true);
   window.focus();
+  window.setVisibleOnAllWorkspaces(false);
 
   return window;
 }
