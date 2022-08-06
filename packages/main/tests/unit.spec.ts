@@ -1,29 +1,32 @@
-import type { MaybeMocked } from 'vitest';
+import type { Mocked, MockedClass } from 'vitest';
 import { beforeEach, expect, test, vi } from 'vitest';
 import { restoreOrCreateMainWindow } from '../src/screens';
 
-import type { ipcMain } from 'electron';
+import type { ipcMain, screen } from 'electron';
 import { BrowserWindow } from 'electron';
 
 /**
  * Mock real electron BrowserWindow API
  */
 vi.mock('electron', () => {
-  const bw = vi.fn() as MaybeMocked<typeof BrowserWindow>;
-  const im = vi.fn() as MaybeMocked<typeof ipcMain>;
-  // @ts-expect-error It's work in runtime, but I Haven't idea how to fix this type error
+  const bw = vi.fn() as unknown as MockedClass<typeof BrowserWindow>;
+  const sc = vi.fn() as unknown as Mocked<typeof screen>;
+  const im = vi.fn() as unknown as Mocked<typeof ipcMain>;
+
   bw.getAllWindows = vi.fn(() => bw.mock.instances);
   bw.prototype.loadURL = vi.fn();
-  bw.prototype.on = vi.fn();
+  bw.prototype.on = vi.fn<any>();
   bw.prototype.destroy = vi.fn();
   bw.prototype.isDestroyed = vi.fn();
   bw.prototype.isMinimized = vi.fn();
   bw.prototype.focus = vi.fn();
   bw.prototype.restore = vi.fn();
 
-  im.on = vi.fn();
+  sc.getPrimaryDisplay = vi.fn<any>(() => ({ workArea: {} }));
 
-  return { BrowserWindow: bw, ipcMain: im };
+  im.on = vi.fn<any>();
+
+  return { BrowserWindow: bw, ipcMain: im, screen: sc };
 });
 
 beforeEach(() => {

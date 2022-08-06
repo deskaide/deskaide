@@ -15,13 +15,29 @@ const animateHeart = keyframes`
 `;
 
 const Wrapper = styled.div<{ isAnimationOn: boolean }>`
+  display: inline-block;
   position: relative;
+  width: 36vw;
+  padding-bottom: calc((480 / 471) * 36vw);
+  vertical-align: middle;
+  overflow: hidden;
+
+  #pomodoro-clock {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   span {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+      font-size: 3vw;
+    }
   }
 
   ${({ isAnimationOn }) =>

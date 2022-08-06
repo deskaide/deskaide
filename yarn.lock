@@ -4326,10 +4326,10 @@
     "through" "^2.3.8"
     "wrap-ansi" "^7.0.0"
 
-"local-pkg@^0.4.1":
-  "integrity" "sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw=="
-  "resolved" "https://registry.npmjs.org/local-pkg/-/local-pkg-0.4.1.tgz"
-  "version" "0.4.1"
+"local-pkg@^0.4.2":
+  "integrity" "sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg=="
+  "resolved" "https://registry.npmjs.org/local-pkg/-/local-pkg-0.4.2.tgz"
+  "version" "0.4.2"
 
 "locate-path@^2.0.0":
   "integrity" "sha512-NCI2kiDkyR7VeEKm27Kda/iQHyKJe1Bu0FlTbYp3CqJu+9IFe9bLyAjMxf5ZDDbEg+iMPzB5zYyUTSm8wVTKmA=="
@@ -6331,15 +6331,15 @@
   "resolved" "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
   "version" "1.0.3"
 
-"tinypool@^0.1.3":
-  "integrity" "sha512-2IfcQh7CP46XGWGGbdyO4pjcKqsmVqFAPcXfPxcPXmOWt9cYkTP9HcDmGgsfijYoAEc4z9qcpM/BaBz46Y9/CQ=="
-  "resolved" "https://registry.npmjs.org/tinypool/-/tinypool-0.1.3.tgz"
-  "version" "0.1.3"
+"tinypool@^0.2.4":
+  "integrity" "sha512-Vs3rhkUH6Qq1t5bqtb816oT+HeJTXfwt2cbPH17sWHIYKTotQIFPk3tf2fgqRrVyMDVOc1EnPgzIxfIulXVzwQ=="
+  "resolved" "https://registry.npmjs.org/tinypool/-/tinypool-0.2.4.tgz"
+  "version" "0.2.4"
 
-"tinyspy@^0.3.3":
-  "integrity" "sha512-gRiUR8fuhUf0W9lzojPf1N1euJYA30ISebSfgca8z76FOvXtVXqd5ojEIaKLWbDQhAaC3ibxZIjqbyi4ybjcTw=="
-  "resolved" "https://registry.npmjs.org/tinyspy/-/tinyspy-0.3.3.tgz"
-  "version" "0.3.3"
+"tinyspy@^1.0.0":
+  "integrity" "sha512-FI5B2QdODQYDRjfuLF+OrJ8bjWRMCXokQPcwKm0W3IzcbUmBNv536cQc7eXGoAuXphZwgx1DFbqImwzz08Fnhw=="
+  "resolved" "https://registry.npmjs.org/tinyspy/-/tinyspy-1.0.0.tgz"
+  "version" "1.0.0"
 
 "tmp-promise@^3.0.2":
   "integrity" "sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ=="
@@ -6750,7 +6750,7 @@
     "unist-util-stringify-position" "^3.0.0"
     "vfile-message" "^3.0.0"
 
-"vite@^2.9.12":
+"vite@^2.9.12", "vite@^2.9.12 || ^3.0.0-0":
   "integrity" "sha512-suxC36dQo9Rq1qMB2qiRorNJtJAdxguu5TMvBHOc/F370KvqAe9t48vYp+/TbPKRNrMh/J55tOUmkuIqstZaew=="
   "resolved" "https://registry.npmjs.org/vite/-/vite-2.9.12.tgz"
   "version" "2.9.12"
@@ -6762,20 +6762,20 @@
   optionalDependencies:
     "fsevents" "~2.3.2"
 
-"vitest@^0.15.1":
-  "integrity" "sha512-cMabuUqu+nNHafkdN7H8Z20+UZTrrUfqjGwAoLwUwrqFGWBz3gXwxndjbLf6mgSFs9lF/JWjKeNM1CXKwtk26w=="
-  "resolved" "https://registry.npmjs.org/vitest/-/vitest-0.15.2.tgz"
-  "version" "0.15.2"
+"vitest@^0.21.0":
+  "integrity" "sha512-+BQB2swk4wQdw5loOoL8esIYh/1ifAliuwj2HWHNE2F8SAl/jF7/aoCJBoXGSf/Ws19k3pH4NrWeVtcSwM0j2w=="
+  "resolved" "https://registry.npmjs.org/vitest/-/vitest-0.21.0.tgz"
+  "version" "0.21.0"
   dependencies:
     "@types/chai" "^4.3.1"
     "@types/chai-subset" "^1.3.3"
     "@types/node" "*"
     "chai" "^4.3.6"
     "debug" "^4.3.4"
-    "local-pkg" "^0.4.1"
-    "tinypool" "^0.1.3"
-    "tinyspy" "^0.3.3"
-    "vite" "^2.9.12"
+    "local-pkg" "^0.4.2"
+    "tinypool" "^0.2.4"
+    "tinyspy" "^1.0.0"
+    "vite" "^2.9.12 || ^3.0.0-0"
 
 "vuvuzela@1.0.3":
   "integrity" "sha512-Tm7jR1xTzBbPW+6y1tknKiEhz04Wf/1iZkcTJjSFcpNko43+dFW6+OOeQe9taJIug3NdfUAjFKgUSyQrIKaDvQ=="

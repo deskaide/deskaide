@@ -4,6 +4,8 @@ export interface IAppSettings {
 }
 
 export interface IPomodoroSettings {
+  _id?: string;
+  _rev?: string;
   focusTime: number;
   shortBreakTime: number;
   longBreakTime: number;

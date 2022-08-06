@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
 
 import type { RootState } from '../store';
-import { setPomodoroSettings } from '../store/settingsSlice';
+import { savePomodoroSettings } from '../store/settingsSlice';
 import { defaultPomodoroSettings } from '../config';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { Button } from './Button';
 import { Box } from './Box';
 import { RangeInput } from './RangeInput';
@@ -17,13 +17,13 @@ import { Text } from './Text';
 export const PomodoroSettings: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const pomodoroSettings = useSelector(
+  const pomodoroSettings = useAppSelector(
     (state: RootState) => state.settings.pomodoroSettings
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleReset = () => {
-    dispatch(setPomodoroSettings(defaultPomodoroSettings));
+    dispatch(savePomodoroSettings(defaultPomodoroSettings));
     setIsModalOpen(false);
   };
 
@@ -47,7 +47,7 @@ export const PomodoroSettings: React.FC = () => {
             .required('Focus time is required'),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          dispatch(setPomodoroSettings(values));
+          dispatch(savePomodoroSettings(values));
           setSubmitting(false);
           setSuccessModal(true);
           setTimeout(() => {
