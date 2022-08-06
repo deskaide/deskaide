@@ -6,15 +6,15 @@ type GetAllQuery = { limit?: number; startKey?: string; endKey?: string };
 
 const database = new Pouchdb('deskaide');
 
-export const save = async <T>(data: T, idPrefix?: string) => {
+export const save = async <T>(data: T, idPrefix?: string, id?: string) => {
   const now = new Date().toJSON();
   const result = await database.put({
-    _id: `${idPrefix ? idPrefix + '_' : ''}${now}`,
+    _id: `${idPrefix ? idPrefix + '#' : ''}${id || now}`,
     ...data,
     createdAt: now,
     updatedAt: now,
   });
-  const doc = await database.get(result.id);
+  const doc: T = await database.get(result.id);
   return doc;
 };
 
@@ -35,12 +35,12 @@ export const update = async <T>(id: string, data: T) => {
   return doc;
 };
 
-export const getById = async (id: string) => {
+export const getById = async <T>(id: string) => {
   if (!id) {
     throw new Error('Id cannot be empty');
   }
 
-  const doc = await database.get(id);
+  const doc: T = await database.get(id);
 
   if (!doc) {
     throw new Error(`Data not found with this id: ${id}`);

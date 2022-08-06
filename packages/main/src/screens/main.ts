@@ -1,13 +1,13 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, screen } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    minWidth: 1280,
-    minHeight: 720,
+    width: Math.round(0.8 * screen.getPrimaryDisplay().workArea.width),
+    height: Math.round(0.8 * screen.getPrimaryDisplay().workArea.height),
+    minWidth: Math.round(0.72 * screen.getPrimaryDisplay().workArea.width),
+    minHeight: Math.round(0.72 * screen.getPrimaryDisplay().workArea.height),
     show: false, // Use 'ready-to-show' event to show window
     webPreferences: {
       webviewTag: false, // The webview tag is not recommended. Consider alternatives like iframe or Electron's BrowserView. https://www.electronjs.org/docs/latest/api/webview-tag#warning

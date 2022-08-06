@@ -23,7 +23,7 @@ export const Pomodoro: React.FC = () => {
   React.useEffect(() => {
     let ignore = false;
     async function fetchData() {
-      const data = await window.db.getAll({ limit: 5 });
+      const data = await window.db.getAll({});
 
       if (!ignore) {
         console.log(data);
