@@ -1,5 +1,7 @@
 export interface IAppSettings {
-  activeTheme: string;
+  _id?: string;
+  _rev?: string;
+  theme: string;
   shouldOpenOnStart: boolean;
 }
 

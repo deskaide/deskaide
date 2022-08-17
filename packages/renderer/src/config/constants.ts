@@ -8,5 +8,6 @@ export const DB_ID_PREFIXES = {
 };
 
 export const APP_NAMES = {
+  app: 'app',
   pomodoro: 'pomodoro',
 };

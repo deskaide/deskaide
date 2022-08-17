@@ -1,15 +1,16 @@
 import { useContext, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { HashRouter as Router } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import * as themes from './styles/themes';
 import { ThemeContext } from './components/ThemeProvider';
 import { GlobalStyle } from './styles';
 import Routes from './routes';
 import type { RootState } from './store';
-import { useTimer } from './hooks';
+import { useAppDispatch, useTimer } from './hooks';
 import { setCurrentFocusTime, setTimerType } from './store/timerSlice';
+import { getAllSettings } from './store/settingsSlice';
 import { sendNotification, showBreakWindow } from './utils';
 import { A_MINUTE } from './config';
 import { IpcEventTypes, TimerType } from '../../../types';
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   const { pomodoroSettings } = useSelector(
     (state: RootState) => state.settings
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
     initialTime: 0,
@@ -63,6 +64,7 @@ const App: React.FC = () => {
   }, [pomodoroSettings.remindBefore, time]);
 
   useEffect(() => {
+    dispatch(getAllSettings());
     if (window.manageTimer) {
       window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
         dispatch(setTimerType(value));

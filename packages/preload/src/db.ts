@@ -23,7 +23,7 @@ export const update = async <T>(id: string, data: T) => {
     throw new Error('Id cannot be empty');
   }
 
-  let doc = await database.get(id);
+  let doc: T = await database.get(id);
 
   if (!doc) {
     throw new Error(`Data not found with this id: ${id}`);
