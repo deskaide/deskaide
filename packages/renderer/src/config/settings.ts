@@ -1,7 +1,7 @@
 import type { IAppSettings, IPomodoroSettings } from '../types/Settings';
 
 export const defaultAppSettings: IAppSettings = {
-  activeTheme: 'dark',
+  theme: 'dark',
   shouldOpenOnStart: false,
 };
 
