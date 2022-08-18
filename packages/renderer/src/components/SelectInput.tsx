@@ -17,9 +17,9 @@ const InputContainer = styled.div`
   select {
     background: none;
     outline: none;
-    border: 1px solid ${({ theme }) => theme.colors.dark[2]};
+    border: 1px solid var(--color-dark-2);
     border-radius: 4px;
-    color: #f6f6f9;
+    color: var(--color-text-1);
     width: 100%;
     font-size: 18px;
     padding: 8px 8px;

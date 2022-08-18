@@ -12,8 +12,10 @@ import {
   defaultAppSettings,
   defaultPomodoroSettings,
 } from '../config';
+import { baseTheme as theme } from '../styles/themes';
 
 const initialState: SettingsState = {
+  isSettingsLoading: false,
   appSettings: { ...defaultAppSettings },
   pomodoroSettings: { ...defaultPomodoroSettings },
 };
@@ -41,9 +43,47 @@ export const saveAppSettings = createAsyncThunk(
   'settings/saveAppSettings',
   async (data: IAppSettings, { rejectWithValue }) => {
     try {
+      const root = window.document.documentElement;
+      if (data.theme === 'dark') {
+        theme.colors.light.forEach((color, index) => {
+          const cssVarName = `--color-text-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.dark.forEach((color, index) => {
+          const cssVarName = `--color-bg-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.primary.forEach((color, index) => {
+          const cssVarName = `--color-accent-${
+            theme.colors.primary.length - (index + 1)
+          }`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+      } else {
+        theme.colors.light.forEach((color, index) => {
+          const cssVarName = `--color-bg-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.dark.forEach((color, index) => {
+          const cssVarName = `--color-text-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.primary.forEach((color, index) => {
+          const cssVarName = `--color-accent-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+      }
+
       if (data._id) {
         return await window.db.update(data._id, data);
       }
+
       return await window.db.save(data, DB_ID_PREFIXES.settings, APP_NAMES.app);
     } catch (error) {
       return rejectWithValue(error);
@@ -57,6 +97,44 @@ export const getAppSettings = createAsyncThunk(
     try {
       const id = `${DB_ID_PREFIXES.settings}#${APP_NAMES.app}`;
       const result = await window.db.getById<IAppSettings>(id);
+      const root = window.document.documentElement;
+
+      if (result.theme === 'dark') {
+        theme.colors.light.forEach((color, index) => {
+          const cssVarName = `--color-text-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.dark.forEach((color, index) => {
+          const cssVarName = `--color-bg-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.primary.forEach((color, index) => {
+          const cssVarName = `--color-accent-${
+            theme.colors.primary.length - (index + 1)
+          }`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+      } else {
+        theme.colors.light.forEach((color, index) => {
+          const cssVarName = `--color-bg-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.dark.forEach((color, index) => {
+          const cssVarName = `--color-text-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+        theme.colors.primary.forEach((color, index) => {
+          const cssVarName = `--color-accent-${index}`;
+
+          root.style.setProperty(cssVarName, color);
+        });
+      }
+
       return result;
     } catch (error) {
       return rejectWithValue(error);
@@ -107,8 +185,12 @@ export const settingsSlice = createSlice({
     builder.addCase(saveAppSettings.fulfilled, (state, action) => {
       state.appSettings = action.payload;
     });
+    builder.addCase(getAppSettings.pending, (state) => {
+      state.isSettingsLoading = true;
+    });
     builder.addCase(getAppSettings.fulfilled, (state, action) => {
       state.appSettings = action.payload;
+      state.isSettingsLoading = false;
     });
   },
 });
