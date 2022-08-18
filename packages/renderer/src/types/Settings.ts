@@ -15,6 +15,7 @@ export interface IPomodoroSettings {
 }
 
 export interface SettingsState {
+  isSettingsLoading: boolean;
   appSettings: IAppSettings;
   pomodoroSettings: IPomodoroSettings;
 }

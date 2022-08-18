@@ -1,22 +1,19 @@
 import * as React from 'react';
-import { useState, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { SEO } from './SEO';
 import { baseTheme as theme } from '../styles/themes';
-
-export const ThemeContext = React.createContext<{
-  colorMode: string | undefined;
-  setColorMode: (newValue: string) => void;
-} | null>(null);
+import type { RootState } from '../store';
 
 const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [colorMode, rawSetColorMode] = useState<string | undefined>(undefined);
+  const { appSettings } = useSelector((state: RootState) => state.settings);
 
   useLayoutEffect(() => {
     const root = document.documentElement;
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const prefersDarkFromMQ = mql.matches;
-    const persistedPreference = localStorage.getItem('color-mode');
+    const persistedPreference = appSettings.theme;
 
     let initialColorMode = 'light';
 
@@ -75,70 +72,13 @@ const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         root.style.setProperty(cssVarName, color);
       });
     }
-
-    rawSetColorMode(initialColorMode);
   }, []);
 
-  const contextValue = React.useMemo(() => {
-    function setColorMode(newValue: string) {
-      const root = window.document.documentElement;
-
-      localStorage.setItem('color-mode', newValue);
-
-      if (newValue === 'dark') {
-        theme.colors.light.forEach((color, index) => {
-          const cssVarName = `--color-text-${index}`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-        theme.colors.dark.forEach((color, index) => {
-          const cssVarName = `--color-bg-${index}`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-        theme.colors.primary.forEach((color, index) => {
-          const cssVarName = `--color-accent-${
-            theme.colors.primary.length - (index + 1)
-          }`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-      } else {
-        theme.colors.light.forEach((color, index) => {
-          const cssVarName = `--color-bg-${index}`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-        theme.colors.dark.forEach((color, index) => {
-          const cssVarName = `--color-text-${index}`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-        theme.colors.primary.forEach((color, index) => {
-          const cssVarName = `--color-accent-${index}`;
-
-          root.style.setProperty(cssVarName, color);
-        });
-      }
-
-      rawSetColorMode(newValue);
-    }
-
-    return {
-      colorMode,
-      setColorMode,
-    };
-  }, [colorMode, rawSetColorMode]);
-
   return (
-    <ThemeContext.Provider
-      value={{
-        ...contextValue,
-      }}
-    >
+    <>
       <SEO title="Deskaide" />
       {children}
-    </ThemeContext.Provider>
+    </>
   );
 };
 
