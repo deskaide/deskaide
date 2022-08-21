@@ -20,7 +20,8 @@ const Wrapper = styled(Box)`
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
-    padding-top: ${({ theme }) => theme.space[2]}px;
+    padding-top: 0;
+    overflow-y: auto;
 
     .cm-focused {
       outline: none;

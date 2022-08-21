@@ -12,10 +12,12 @@ import {
 
 export const Diary: React.FC = () => {
   const [doc, setDoc] = useState<string>(
-    '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n```bash\n npm i\n```'
+    '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n```js\n console.log("Hello World!")\n```\nReprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\nNisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n```js\n console.log("Hello World!")\n```\n'
   );
   const [isEditing, setIsEditing] = useState<boolean>(true);
+
   const handleDocChange = useCallback((newDoc: any) => setDoc(newDoc), []);
+
   const handleOnBlur = useCallback((e: any) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       setIsEditing(false);
@@ -41,10 +43,11 @@ export const Diary: React.FC = () => {
           <Text
             m={0}
             p={4}
-            pb={0}
             bg="bg1"
             variant="blockquote"
             border="none"
+            borderBottom="1px solid var(--color-bg-2)"
+            borderRadius="0"
             borderTopRightRadius={4}
             borderTopLeftRadius={4}
           >
