@@ -43,9 +43,8 @@ export const Diary: React.FC = () => {
             p={4}
             pb={0}
             bg="bg1"
-            variant="h5"
-            fontStyle="italic"
-            color="bg2"
+            variant="blockquote"
+            border="none"
             borderTopRightRadius={4}
             borderTopLeftRadius={4}
           >

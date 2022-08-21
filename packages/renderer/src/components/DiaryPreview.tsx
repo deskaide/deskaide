@@ -20,7 +20,7 @@ const Wrapper = styled(Box)`
 
   .diary-preview {
     overflow-y: auto;
-    background: ${({ theme }) => theme.colors.dark[1]};
+    background: var(--color-bg-1);
     border-radius: 4px;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
@@ -28,7 +28,7 @@ const Wrapper = styled(Box)`
     padding-top: 0;
 
     pre {
-      background: rgba(28, 31, 35, 0.45);
+      background: var(--color-bg-2);
       overflow: auto;
       white-space: pre-wrap;
       padding: ${({ theme }) => theme.space[4]}px;

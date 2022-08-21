@@ -320,10 +320,10 @@
     "@codemirror/language" "^6.0.0"
     "@lezer/java" "^1.0.0"
 
-"@codemirror/lang-javascript@^6.0.0":
-  "integrity" "sha512-IQLfR+pgydwLxP3AQYOhjGfLWlAZz5SEH+M1tnUXVvp2+KZhn3iDTQX/7HZgoJ3w0oySKOxPjdq6jmkTCW6/sg=="
-  "resolved" "https://registry.npmjs.org/@codemirror/lang-javascript/-/lang-javascript-6.0.0.tgz"
-  "version" "6.0.0"
+"@codemirror/lang-javascript@^6.0.0", "@codemirror/lang-javascript@^6.0.2":
+  "integrity" "sha512-BZRJ9u/zl16hLkSpDAWm73mrfIR7HJrr0lvnhoSOCQVea5BglguWI/slxexhvUb0CB5cXgKWuo2bM+N9EhIaZw=="
+  "resolved" "https://registry.npmjs.org/@codemirror/lang-javascript/-/lang-javascript-6.0.2.tgz"
+  "version" "6.0.2"
   dependencies:
     "@codemirror/autocomplete" "^6.0.0"
     "@codemirror/language" "^6.0.0"
@@ -341,10 +341,10 @@
     "@codemirror/language" "^6.0.0"
     "@lezer/json" "^1.0.0"
 
-"@codemirror/lang-markdown@^6.0.0":
-  "integrity" "sha512-ozJaO1W4WgGlwWOoYCSYzbVhhM0YM/4lAWLrNsBbmhh5Ztpl0qm4CgEQRl3t8/YcylTZYBIXiskui8sHNGd4dg=="
-  "resolved" "https://registry.npmjs.org/@codemirror/lang-markdown/-/lang-markdown-6.0.0.tgz"
-  "version" "6.0.0"
+"@codemirror/lang-markdown@^6.0.0", "@codemirror/lang-markdown@^6.0.1":
+  "integrity" "sha512-pHPQuRwf9cUrmkmsTHRjtS9ZnGu3fA9YzAdh2++d+L9wbfnC2XbKh0Xvm/0YiUjdCnoCx9wDFEoCuAnkqKWLIw=="
+  "resolved" "https://registry.npmjs.org/@codemirror/lang-markdown/-/lang-markdown-6.0.1.tgz"
+  "version" "6.0.1"
   dependencies:
     "@codemirror/lang-html" "^6.0.0"
     "@codemirror/language" "^6.0.0"

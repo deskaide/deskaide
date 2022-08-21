@@ -40,7 +40,8 @@ export function useCodeMirror(props: UseCodeMirror) {
   const defaultLightThemeOption = EditorView.theme(
     {
       '&': {
-        backgroundColor: '#27283F',
+        backgroundColor: 'var(--color-bg-1)',
+        color: 'var(--color-text-1)',
       },
     },
     {
