@@ -15,12 +15,13 @@ const Wrapper = styled(Box)`
 
   .diary-editor {
     width: 100%;
-    background: ${({ theme }) => theme.colors.dark[1]};
+    background: var(--color-bg-1);
     border-radius: 4px;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
-    padding-top: ${({ theme }) => theme.space[2]}px;
+    padding-top: 0;
+    overflow-y: auto;
 
     .cm-focused {
       outline: none;

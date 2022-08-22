@@ -90,7 +90,7 @@ const variants = {
   blockquote: {
     fontSize: 'h5',
     lineHeight: 'body',
-    fontWeight: 'medium',
+    fontWeight: 'normal',
   },
 };
 
