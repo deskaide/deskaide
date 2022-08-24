@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Wrapper = styled(Box)`
-  height: calc(100vh - 188px);
+  height: calc(100vh - 228px);
 
   .diary-preview {
     overflow-y: auto;
