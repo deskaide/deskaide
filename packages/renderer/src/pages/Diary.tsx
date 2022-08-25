@@ -6,7 +6,7 @@ import {
   Box,
   DiaryEditor,
   DiaryPreview,
-  PomodoroSettings,
+  DiaryCalendar,
   Text,
 } from '../components';
 
@@ -35,7 +35,7 @@ export const Diary: React.FC = () => {
         sidebarTitle="Pomodoro Settings"
         sidebar={
           <Box padding={4}>
-            <PomodoroSettings />
+            <DiaryCalendar />
           </Box>
         }
       >
