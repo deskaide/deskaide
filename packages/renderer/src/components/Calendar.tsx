@@ -45,7 +45,16 @@ const Wrapper = styled.div`
       }
     }
 
-    .react-calendar__tile--active {
+    .react-calendar__tile {
+      &:enabled {
+        &:hover {
+          background: var(--color-bg-2);
+        }
+      }
+    }
+
+    .react-calendar__tile--active,
+    .react-calendar__navigation button {
       &:enabled {
         &:focus {
           background: var(--color-bg-2);
@@ -59,8 +68,10 @@ const Wrapper = styled.div`
 
     .react-calendar__tile {
       border-radius: 4px;
+      color: var(--color-text-1);
 
       &:disabled {
+        color: var(--color-bg-2);
         background: var(--color-bg-0);
         cursor: not-allowed;
       }
