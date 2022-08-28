@@ -21,6 +21,7 @@ const App: React.FC = () => {
   );
   const selectedTheme = appSettings?.theme as keyof typeof themes;
   const dispatch = useAppDispatch();
+
   const { time, start, reset } = useTimer({
     type: 'DECREMENTAL',
     initialTime: 0,
@@ -30,6 +31,20 @@ const App: React.FC = () => {
       showBreakWindow();
     },
   });
+
+  useEffect(() => {
+    if (window.location.hash.includes('break')) {
+      dispatch(setTimerType(TimerType.BreakTimer));
+    }
+
+    dispatch(getAllSettings());
+
+    if (window.manageTimer) {
+      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
+        dispatch(setTimerType(value));
+      });
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
@@ -60,15 +75,6 @@ const App: React.FC = () => {
       });
     }
   }, [pomodoroSettings.remindBefore, time]);
-
-  useEffect(() => {
-    dispatch(getAllSettings());
-    if (window.manageTimer) {
-      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
-        dispatch(setTimerType(value));
-      });
-    }
-  }, [dispatch]);
 
   return (
     <>

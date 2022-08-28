@@ -8,7 +8,7 @@ import { setTimerType } from '../store/timerSlice';
 import { useTimer } from '../hooks';
 import { getFormattedTime, hideBreakWindow } from '../utils';
 import { A_MINUTE } from '../config';
-import { IpcEventTypes, TimerType } from '../../../../types';
+import { TimerType } from '../../../../types';
 
 export const Break: React.FC = () => {
   const { timerType } = useSelector((state: RootState) => state.timer);
@@ -37,14 +37,6 @@ export const Break: React.FC = () => {
       reset();
     };
   }, [pomodoroSettings.shortBreakTime, reset, start, timerType]);
-
-  useEffect(() => {
-    if (window.manageTimer) {
-      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
-        dispatch(setTimerType(value));
-      });
-    }
-  }, [dispatch]);
 
   const handleSkipBreak = () => {
     dispatch(setTimerType(TimerType.PomodoroTimer));
