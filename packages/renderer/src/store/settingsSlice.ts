@@ -192,6 +192,9 @@ export const settingsSlice = createSlice({
       state.appSettings = action.payload;
       state.isSettingsLoading = false;
     });
+    builder.addCase(getAppSettings.rejected, (state) => {
+      state.isSettingsLoading = false;
+    });
   },
 });
 
