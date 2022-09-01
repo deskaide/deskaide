@@ -2,13 +2,7 @@ import * as React from 'react';
 import { useState, useCallback } from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import {
-  Box,
-  DiaryEditor,
-  DiaryPreview,
-  DiaryCalendar,
-  Text,
-} from '../components';
+import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
 
 export const Diary: React.FC = () => {
   const [doc, setDoc] = useState<string>(
@@ -35,24 +29,42 @@ export const Diary: React.FC = () => {
         sidebarTitle="Pomodoro Settings"
         sidebar={
           <Box padding={4}>
-            <DiaryCalendar />
+            <Calendar
+              activeDates={[
+                new Date('2022-07-12'),
+                new Date('2022-08-10'),
+                new Date('2022-08-21'),
+              ]}
+            />
           </Box>
         }
       >
         <Box height="100vh" p={5}>
-          <Text
-            m={0}
-            p={4}
-            bg="bg1"
-            variant="blockquote"
-            border="none"
-            borderBottom="1px solid var(--color-bg-2)"
-            borderRadius="0"
-            borderTopRightRadius={4}
-            borderTopLeftRadius={4}
-          >
-            Staurday, May 14, 2022
-          </Text>
+          <Box>
+            <Text
+              m={0}
+              p={4}
+              bg="bg1"
+              variant="blockquote"
+              border="none"
+              borderBottom="1px solid var(--color-bg-2)"
+              borderRadius="0"
+              borderTopRightRadius={4}
+              borderTopLeftRadius={4}
+            >
+              Staurday, May 14, 2022
+              <Text
+                display="inline-block"
+                mx={3}
+                variant="label1"
+                bg="bg2"
+                p={2}
+                borderRadius={4}
+              >
+                3042 words
+              </Text>
+            </Text>
+          </Box>
           {isEditing && (
             <DiaryEditor
               onChange={handleDocChange}
