@@ -70,7 +70,10 @@ export const PomodoroClock = ({
         isRotateOn={time > 0}
       />
       <span>
-        <Text variant="h2">{`${hours}:${minutes}:${seconds}`}</Text>
+        <Text
+          variant="h2"
+          color="light.1"
+        >{`${hours}:${minutes}:${seconds}`}</Text>
       </span>
     </Wrapper>
   );
