@@ -102,6 +102,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@styled-icons/boxicons-regular": "^10.38.0",
     "assert": "^2.0.0",
+    "date-fns": "^2.29.2",
     "electron-updater": "^5.0.1",
     "formik": "^2.2.9",
     "github-markdown-css": "^5.1.0",

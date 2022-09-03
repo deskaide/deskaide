@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import Calendar from 'react-calendar';
+import ReactCalendar from 'react-calendar';
+import { isSameDay } from 'date-fns';
+
 import 'react-calendar/dist/Calendar.css';
 
 const Wrapper = styled.div`
@@ -43,12 +45,19 @@ const Wrapper = styled.div`
       button.react-calendar__month-view__days__day--neighboringMonth {
         color: var(--color-bg-2);
       }
+      button.react-calendar__tile--active {
+        color: var(--color-text-1);
+      }
     }
 
     .react-calendar__tile {
       &:enabled {
         &:hover {
           background: var(--color-bg-2);
+        }
+
+        &:focus {
+          background: var(--color-bg-0);
         }
       }
     }
@@ -91,6 +100,7 @@ const Wrapper = styled.div`
 
     .react-calendar__tile--active {
       background: var(--color-bg-2);
+      color: var(--color-text-1);
     }
 
     .react-calendar__month-view__weekdays {
@@ -101,14 +111,49 @@ const Wrapper = styled.div`
   }
 `;
 
-export const DiaryCalendar: React.FC = () => {
-  const [value, onChange] = useState(new Date());
+const dateAlreadyClicked = (dates: Date[], date: Date) =>
+  dates.some((d) => isSameDay(date, d));
+
+const datesExcept = (dates: Date[], date: Date) =>
+  dates.filter((d) => !isSameDay(date, d));
+
+type CalendarProps = {
+  activeDates?: Date[];
+  defaultSelectedDate?: Date;
+};
+
+export const Calendar: React.FC<CalendarProps> = ({
+  activeDates = [],
+  defaultSelectedDate = new Date(),
+}) => {
+  const [dates, setDates] = useState(activeDates);
+  const [selectedDate, setSelectedDate] = useState(defaultSelectedDate);
+
+  const onClickDay = (date: Date) => {
+    if (dateAlreadyClicked(dates, date)) {
+      setDates(datesExcept(dates, date));
+      setSelectedDate(defaultSelectedDate);
+    } else {
+      setDates([...dates, date]);
+      setSelectedDate(date);
+      console.log(selectedDate.toJSON());
+    }
+  };
+
+  const tileClassName = ({ date }: { date: Date }) => {
+    const classNames = ['react-calendar__tile'];
+
+    if (dateAlreadyClicked(dates, date))
+      return ['react-calendar__tile--active', ...classNames];
+    return classNames;
+  };
 
   return (
     <Wrapper>
-      <Calendar
-        onChange={onChange}
-        value={value}
+      <ReactCalendar
+        tileClassName={tileClassName}
+        onClickDay={onClickDay}
+        value={selectedDate}
         formatShortWeekday={(locale, date) =>
           date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
         }
