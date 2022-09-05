@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
+import { useMarkdownCounts } from '../hooks';
 
 export const Diary: React.FC = () => {
   const [doc, setDoc] = useState<string>(
@@ -22,6 +23,8 @@ export const Diary: React.FC = () => {
       setIsEditing(true);
     }
   }, []);
+
+  const counts = useMarkdownCounts(doc);
 
   return (
     <DefaultLayout>
@@ -61,7 +64,7 @@ export const Diary: React.FC = () => {
                 p={2}
                 borderRadius={4}
               >
-                3042 words
+                {counts.words} words
               </Text>
             </Text>
           </Box>
