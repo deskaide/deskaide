@@ -4,6 +4,7 @@ import { indentWithTab } from '@codemirror/commands';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
 import { syntaxHighlighting } from '@codemirror/language';
 
 import { oneDark } from '@codemirror/theme-one-dark';
@@ -105,8 +106,9 @@ export function useCodeMirror(props: UseCodeMirror) {
   }
   getExtensions = getExtensions.concat(extensions);
   getExtensions = getExtensions.concat([
-    markdown({ base: markdownLanguage }),
+    markdown({ base: markdownLanguage, codeLanguages: languages }),
     syntaxHighlighting(markdownHighlighting),
+    EditorView.lineWrapping,
   ]);
 
   useEffect(() => {
