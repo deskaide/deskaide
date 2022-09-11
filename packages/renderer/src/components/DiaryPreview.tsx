@@ -1,14 +1,17 @@
-import { createElement } from 'react';
 import styled from 'styled-components';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
+import rehypeFormat from 'rehype-format';
+import rehypePrismPlus from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
-import remarkReact from 'remark-react';
-import { defaultSchema } from 'hast-util-sanitize';
+import rehypeStringify from 'rehype-stringify';
 
-import 'github-markdown-css/github-markdown.css';
+import 'prism-themes/themes/prism-one-dark.css';
 
 import { Box } from './Box';
+import { Text } from './Text';
 
 interface Props {
   doc: string;
@@ -28,38 +31,36 @@ const Wrapper = styled(Box)`
     padding-top: 0;
 
     pre {
-      background: var(--color-bg-2);
+      background: var(--color-bg-0);
       overflow: auto;
       white-space: pre-wrap;
       padding: ${({ theme }) => theme.space[4]}px;
       margin: ${({ theme }) => theme.space[4]}px 0;
       word-break: break-all;
     }
+
+    .code-highlight,
+    pre[class*='language-'] {
+      background: var(--color-bg-0);
+    }
   }
 `;
-
-const schema = {
-  ...defaultSchema,
-  attributes: {
-    ...defaultSchema.attributes,
-    code: [...(defaultSchema.attributes?.code || []), 'className'],
-  },
-};
 
 export const DiaryPreview: React.FC<Props> = (props) => {
   const md = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    // @ts-expect-error: yeah it’s not okay per react types, but it works fine.
-    .use(remarkReact, {
-      createElement,
-      sanitize: schema,
-    })
-    .processSync(props.doc).result as React.ReactNode;
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypePrismPlus)
+    .use(rehypeRaw)
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .processSync(props.doc);
+
   return (
     <Wrapper>
       <Box height="100%" className="diary-preview" onClick={props.onClick}>
-        {md}
+        <Text variant="raw" html={String(md)}></Text>
       </Box>
     </Wrapper>
   );

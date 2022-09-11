@@ -34,6 +34,14 @@ const Wrapper = styled(Box)`
     .cm-line {
       white-space: pre-wrap;
     }
+
+    .cm-editor {
+      background: var(--color-bg-1);
+    }
+
+    .cm-scroller {
+      font-family: ${({ theme }) => theme.fonts.code};
+    }
   }
 `;
 
@@ -48,6 +56,7 @@ export const DiaryEditor: React.FC<Props> = (props) => {
     container: editor.current,
     onChange: handleChange,
     value: initialDoc,
+    theme: 'dark',
     basicSetup: {
       lineNumbers: false,
       highlightActiveLine: false,
