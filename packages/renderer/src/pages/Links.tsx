@@ -4,6 +4,8 @@ import { DefaultLayout } from '../layouts';
 import { Box, Logo, Text } from '../components';
 
 export const Links: React.FC = () => {
+  console.log('Links');
+
   return (
     <DefaultLayout>
       <Box

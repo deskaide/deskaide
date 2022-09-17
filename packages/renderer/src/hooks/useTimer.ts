@@ -8,7 +8,9 @@ interface TimerConfig {
   step?: number;
   type?: TimerType;
   endTime?: number;
+  notificationTime?: number;
   onTimeOver?: () => void;
+  onShowNotification?: () => void;
 }
 
 export const useTimer = (config: TimerConfig) => {
@@ -19,14 +21,18 @@ export const useTimer = (config: TimerConfig) => {
     type = 'INCREMENTAL',
     endTime = 0,
     onTimeOver,
+    notificationTime = 30,
+    onShowNotification,
   } = config;
   const [time, setTime] = useState(initialTime);
   const [isRunning, setIsRunning] = useState(false);
   const [isTimeOver, setIsTimeOver] = useState(false);
+  const [hasNotificationShown, setHasNotificationShown] = useState(false);
 
   const reset = useCallback(() => {
     setIsRunning(false);
     setIsTimeOver(false);
+    setHasNotificationShown(false);
     setTime(initialTime);
   }, [initialTime]);
 
@@ -48,6 +54,19 @@ export const useTimer = (config: TimerConfig) => {
   }, []);
 
   useEffect(() => {
+    if (isRunning && time === notificationTime) {
+      if (typeof onShowNotification === 'function') {
+        if (!hasNotificationShown) {
+          onShowNotification();
+          setHasNotificationShown(true);
+        }
+      }
+    }
+
+    if (isRunning && time !== notificationTime && hasNotificationShown) {
+      setHasNotificationShown(false);
+    }
+
     if (isRunning && time === endTime) {
       setIsRunning(false);
       setIsTimeOver(true);
@@ -56,7 +75,15 @@ export const useTimer = (config: TimerConfig) => {
         onTimeOver();
       }
     }
-  }, [endTime, onTimeOver, time, isRunning]);
+  }, [
+    endTime,
+    onTimeOver,
+    time,
+    isRunning,
+    notificationTime,
+    hasNotificationShown,
+    onShowNotification,
+  ]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
