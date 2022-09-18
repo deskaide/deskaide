@@ -29,7 +29,7 @@ export const Diary: React.FC = () => {
   return (
     <DefaultLayout>
       <WithSidebarLayout
-        sidebarTitle="Pomodoro Settings"
+        sidebarTitle="Diary"
         sidebar={
           <Box padding={4}>
             <Calendar

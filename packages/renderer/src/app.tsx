@@ -22,13 +22,20 @@ const App: React.FC = () => {
   const selectedTheme = appSettings?.theme as keyof typeof themes;
   const dispatch = useAppDispatch();
 
-  const { time, start, reset } = useTimer({
+  const { currentTime, start, reset } = useTimer({
     type: 'DECREMENTAL',
-    initialTime: 0,
+    duration: 0,
+    notificationTime: pomodoroSettings.remindBefore,
     onTimeOver: () => {
       dispatch(setTimerType(TimerType.BreakTimer));
       reset();
       showBreakWindow();
+    },
+    onShowNotification: () => {
+      sendNotification({
+        title: 'Break Time!',
+        body: 'Hey Buddy! A short break will start soon !!!',
+      });
     },
   });
 
@@ -49,6 +56,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
       start(pomodoroSettings.focusTime * A_MINUTE);
+      // start(Math.floor(pomodoroSettings.focusTime * A_MINUTE * 0.025));
     }
     return () => {
       reset();
@@ -57,7 +65,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
-      dispatch(setCurrentFocusTime(time));
+      dispatch(setCurrentFocusTime(currentTime));
     } else {
       reset();
       dispatch(setCurrentFocusTime(0));
@@ -65,16 +73,7 @@ const App: React.FC = () => {
     return () => {
       dispatch(setCurrentFocusTime(0));
     };
-  }, [dispatch, timerType, time, reset]);
-
-  useEffect(() => {
-    if (pomodoroSettings.remindBefore === time) {
-      sendNotification({
-        title: 'Break Time!',
-        body: 'Hey Buddy! A short break will start soon !!!',
-      });
-    }
-  }, [pomodoroSettings.remindBefore, time]);
+  }, [dispatch, timerType, currentTime, reset]);
 
   return (
     <>
