@@ -16,16 +16,16 @@ export const Break: React.FC = () => {
     (state: RootState) => state.settings
   );
   const dispatch = useDispatch();
-  const { time, start, reset } = useTimer({
+  const { currentTime, start, reset } = useTimer({
     type: 'DECREMENTAL',
-    initialTime: 0,
+    duration: 0,
     onTimeOver: () => {
       dispatch(setTimerType(TimerType.PomodoroTimer));
       reset();
       hideBreakWindow();
     },
   });
-  const { minutes, seconds } = getFormattedTime(time);
+  const { minutes, seconds } = getFormattedTime(currentTime);
 
   useEffect(() => {
     if (timerType === TimerType.BreakTimer) {

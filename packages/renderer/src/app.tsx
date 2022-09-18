@@ -22,9 +22,9 @@ const App: React.FC = () => {
   const selectedTheme = appSettings?.theme as keyof typeof themes;
   const dispatch = useAppDispatch();
 
-  const { time, start, reset } = useTimer({
+  const { currentTime, start, reset } = useTimer({
     type: 'DECREMENTAL',
-    initialTime: 0,
+    duration: 0,
     notificationTime: pomodoroSettings.remindBefore,
     onTimeOver: () => {
       dispatch(setTimerType(TimerType.BreakTimer));
@@ -55,7 +55,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
-      start(Math.floor(pomodoroSettings.focusTime * 0.025 * A_MINUTE));
+      start(pomodoroSettings.focusTime * A_MINUTE);
+      // start(Math.floor(pomodoroSettings.focusTime * A_MINUTE * 0.025));
     }
     return () => {
       reset();
@@ -64,7 +65,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (timerType === TimerType.PomodoroTimer) {
-      dispatch(setCurrentFocusTime(time));
+      dispatch(setCurrentFocusTime(currentTime));
     } else {
       reset();
       dispatch(setCurrentFocusTime(0));
@@ -72,7 +73,7 @@ const App: React.FC = () => {
     return () => {
       dispatch(setCurrentFocusTime(0));
     };
-  }, [dispatch, timerType, time, reset]);
+  }, [dispatch, timerType, currentTime, reset]);
 
   return (
     <>
