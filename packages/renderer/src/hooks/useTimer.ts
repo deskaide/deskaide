@@ -24,13 +24,11 @@ export const useTimer = (config: TimerConfig) => {
   const [startTime, setStartTime] = useState(Date.now());
   const [isRunning, setIsRunning] = useState(false);
   const [isTimeOver, setIsTimeOver] = useState(false);
-  const [hasNotificationShown, setHasNotificationShown] = useState(false);
 
   const reset = useCallback(() => {
     setStartTime(Date.now());
     setIsRunning(false);
     setIsTimeOver(false);
-    setHasNotificationShown(false);
     setCurrentTime(duration);
     setTime(duration);
   }, [duration]);
@@ -56,23 +54,23 @@ export const useTimer = (config: TimerConfig) => {
   }, []);
 
   useEffect(() => {
-    if (isRunning && currentTime === notificationTime) {
-      if (typeof onShowNotification === 'function') {
-        if (!hasNotificationShown) {
-          onShowNotification();
-          setHasNotificationShown(true);
-        }
-      }
-    }
+    let shouldShowNotification = true;
 
-    if (isRunning && currentTime !== notificationTime && hasNotificationShown) {
-      setHasNotificationShown(false);
+    if (
+      isRunning &&
+      currentTime === notificationTime &&
+      shouldShowNotification
+    ) {
+      if (typeof onShowNotification === 'function') {
+        shouldShowNotification = false;
+        onShowNotification();
+      }
     }
 
     if (
       isRunning &&
-      ((type === 'DECREMENTAL' && currentTime === 0) ||
-        (type === 'INCREMENTAL' && currentTime === time))
+      ((type === 'DECREMENTAL' && currentTime <= 0) ||
+        (type === 'INCREMENTAL' && currentTime >= time))
     ) {
       setIsRunning(false);
       setIsTimeOver(true);
@@ -81,15 +79,18 @@ export const useTimer = (config: TimerConfig) => {
         onTimeOver();
       }
     }
+
+    return () => {
+      shouldShowNotification = true;
+    };
   }, [
     onTimeOver,
     currentTime,
     isRunning,
-    notificationTime,
-    hasNotificationShown,
-    onShowNotification,
     type,
     time,
+    notificationTime,
+    onShowNotification,
   ]);
 
   useEffect(() => {
