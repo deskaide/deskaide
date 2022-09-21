@@ -30,6 +30,7 @@ export const Break: React.FC = () => {
   useEffect(() => {
     if (timerType === TimerType.BreakTimer) {
       start(pomodoroSettings.shortBreakTime * A_MINUTE);
+      // start(pomodoroSettings.shortBreakTime * A_MINUTE * 0.1);
     } else {
       reset();
     }
