@@ -1,6 +1,3 @@
-import { exposeInMainWorld } from './exposeInMainWorld';
-
-// Export for types in contracts.d.ts
 export const versions = process.versions;
 export const info = {
   name: 'Deskaide',
@@ -9,5 +6,3 @@ export const info = {
     ...versions,
   },
 };
-
-exposeInMainWorld('info', info);

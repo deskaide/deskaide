@@ -1,11 +1,8 @@
+import { manageWindow } from '#preload';
 export const showBreakWindow = () => {
-  if (window && window.manageWindow) {
-    window.manageWindow.showBreakWindow();
-  }
+  manageWindow.showBreakWindow();
 };
 
 export const hideBreakWindow = () => {
-  if (window && window.manageWindow) {
-    window.manageWindow.hideBreakWindow();
-  }
+  manageWindow.hideBreakWindow();
 };

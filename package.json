@@ -33,7 +33,7 @@
     "test:main": "vitest run -r packages/main --passWithNoTests",
     "test:preload": "vitest run -r packages/preload --passWithNoTests",
     "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
-    "start": "node scripts/watch.js",
+    "start": "node scripts/watch.mjs",
     "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
     "lint:fix": "eslint . --ext js,ts,jsx,tsx --fix --ignore-path .gitignore",
     "lint:main": "eslint packages/main --ext js,ts,jsx,tsx",
@@ -44,7 +44,8 @@
     "tsc:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "tsc:renderer": "tsc --noEmit -p packages/renderer/tsconfig.json",
     "validate": "npm run lint && npm run tsc && npm run test",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "postinstall": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.2",
@@ -82,6 +83,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.54.9",
     "typescript": "4.8.3",
+    "unplugin-auto-expose": "^0.0.3",
     "vite": "^3.1.0",
     "vitest": "^0.23.1"
   },

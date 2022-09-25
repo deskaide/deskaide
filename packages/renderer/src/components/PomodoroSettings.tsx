@@ -23,7 +23,12 @@ export const PomodoroSettings: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const handleReset = () => {
-    dispatch(savePomodoroSettings(defaultPomodoroSettings));
+    dispatch(
+      savePomodoroSettings({
+        ...pomodoroSettings,
+        ...defaultPomodoroSettings,
+      })
+    );
     setIsModalOpen(false);
   };
 

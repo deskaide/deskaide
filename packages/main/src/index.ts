@@ -6,9 +6,8 @@ import {
   restoreOrCreateMainWindow,
   restoreOrCreateBreakWindow,
 } from './screens';
-import { notify } from './utils';
-import type { NotificationMessage } from '../../../types';
 import { TimerType, IpcEventTypes } from '../../../types';
+import { initEventSubscriptions } from './utils/events';
 
 /**
  * Prevent multiple instances
@@ -59,12 +58,7 @@ app
   })
   .catch((e) => console.error('Failed create main window:', e));
 
-ipcMain.on(
-  IpcEventTypes.ShowNotification,
-  (_e, message: NotificationMessage) => {
-    notify(message);
-  }
-);
+initEventSubscriptions();
 
 ipcMain.on(IpcEventTypes.ShowBreakWindow, async () => {
   breakWindow = await restoreOrCreateBreakWindow();

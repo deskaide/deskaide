@@ -1,7 +1,5 @@
-import { defineConfig } from 'vite';
 import { node } from '../../.electron-vendors.cache.json';
 import { join } from 'path';
-import { builtinModules } from 'module';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -9,7 +7,7 @@ const PACKAGE_ROOT = __dirname;
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-export default defineConfig(() => ({
+const config = {
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   envDir: process.cwd(),
@@ -19,6 +17,7 @@ export default defineConfig(() => ({
     },
   },
   build: {
+    ssr: true,
     sourcemap: 'inline',
     target: `node${node}`,
     outDir: 'dist',
@@ -29,17 +28,13 @@ export default defineConfig(() => ({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: [
-        'electron',
-        'electron-devtools-installer',
-        'uiohook-napi',
-        ...builtinModules.flatMap((p) => [p, `node:${p}`]),
-      ],
       output: {
         entryFileNames: '[name].cjs',
       },
     },
     emptyOutDir: true,
-    brotliSize: false,
+    reportCompressedSize: false,
   },
-}));
+};
+
+export default config;

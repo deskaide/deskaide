@@ -133,7 +133,6 @@ export function useCodeMirror(props: UseCodeMirror) {
         setView(undefined);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [container, state]);
 
   useEffect(
@@ -156,7 +155,6 @@ export function useCodeMirror(props: UseCodeMirror) {
     if (view) {
       view.dispatch({ effects: StateEffect.reconfigure.of(getExtensions) });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     theme,
     extensions,

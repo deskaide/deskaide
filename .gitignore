@@ -55,3 +55,5 @@ types/env.d.ts
 # Editor-based Rest Client
 .idea/httpRequests
 /.idea/csv-plugin.xml
+
+data

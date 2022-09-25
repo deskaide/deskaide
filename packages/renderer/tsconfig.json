@@ -1,33 +1,29 @@
 {
-  "extends": "../../tsconfig.base.json",
-
   "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": false,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "types": ["node"],
     "baseUrl": ".",
-
     "paths": {
+      "#preload": ["../preload/src/index"],
       "/@/*": ["./src/*"]
     },
-
     "lib": ["ESNext", "dom", "dom.iterable"],
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
-
   "include": [
-    "src/**/*.js",
+    "src/**/*.vue",
     "src/**/*.ts",
-    "src/**/*.jsx",
     "src/**/*.tsx",
     "types/**/*.d.ts",
-    "../../types/**/*.d.ts",
-    "../../types/**/*.ts",
-    "../preload/contracts.d.ts"
+    "../../types/**/*.d.ts"
   ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "*.config.js",
-    "dist"
-  ]
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

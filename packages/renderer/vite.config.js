@@ -1,10 +1,9 @@
 /* eslint-env node */
 
-import { defineConfig } from 'vite';
 import { chrome } from '../../.electron-vendors.cache.json';
 import { join } from 'path';
-import { builtinModules } from 'module';
 import react from '@vitejs/plugin-react';
+import { renderer } from 'unplugin-auto-expose';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -12,7 +11,7 @@ const PACKAGE_ROOT = __dirname;
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-export default defineConfig(() => ({
+const config = {
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   resolve: {
@@ -20,7 +19,6 @@ export default defineConfig(() => ({
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
     },
   },
-  plugins: [react()],
   base: '',
   server: {
     fs: {
@@ -31,15 +29,22 @@ export default defineConfig(() => ({
     sourcemap: true,
     target: `chrome${chrome}`,
     outDir: 'dist',
-    assetsDir: 'public',
+    assetsDir: '.',
     rollupOptions: {
       input: join(PACKAGE_ROOT, 'index.html'),
-      external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],
     },
     emptyOutDir: true,
-    brotliSize: false,
+    reportCompressedSize: false,
   },
   test: {
     environment: 'happy-dom',
   },
-}));
+  plugins: [
+    react(),
+    renderer.vite({
+      preloadEntry: join(PACKAGE_ROOT, '../preload/src/index.ts'),
+    }),
+  ],
+};
+
+export default config;
