@@ -130,7 +130,6 @@ export const CodeMirror = React.forwardRef<CodeMirrorRef, CodeMirrorProps>(
     ]);
     useEffect(() => {
       setContainer(editor.current);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // check type of value

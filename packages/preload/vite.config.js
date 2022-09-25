@@ -1,6 +1,5 @@
-import { defineConfig } from 'vite';
 import { chrome } from '../../.electron-vendors.cache.json';
-import { builtinModules } from 'module';
+import { preload } from 'unplugin-auto-expose';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -8,11 +7,12 @@ const PACKAGE_ROOT = __dirname;
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
  */
-export default defineConfig(() => ({
+const config = {
   mode: process.env.MODE,
   root: PACKAGE_ROOT,
   envDir: process.cwd(),
   build: {
+    ssr: true,
     sourcemap: 'inline',
     target: `chrome${chrome}`,
     outDir: 'dist',
@@ -23,15 +23,14 @@ export default defineConfig(() => ({
       formats: ['cjs'],
     },
     rollupOptions: {
-      external: [
-        'electron',
-        ...builtinModules.flatMap((p) => [p, `node:${p}`]),
-      ],
       output: {
         entryFileNames: '[name].cjs',
       },
     },
     emptyOutDir: true,
-    brotliSize: false,
+    reportCompressedSize: false,
   },
-}));
+  plugins: [preload.vite()],
+};
+
+export default config;

@@ -66,7 +66,6 @@ export const DiaryEditor: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setContainer(editor.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

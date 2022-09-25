@@ -1,5 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { db } from '#preload';
 
 import type {
   IAppSettings,
@@ -25,14 +26,10 @@ export const savePomodoroSettings = createAsyncThunk(
   async (data: IPomodoroSettings, { rejectWithValue }) => {
     try {
       if (data._id) {
-        return await window.db.update(data._id, data);
+        return await db.update(data._id, data);
       }
 
-      return await window.db.save(
-        data,
-        DB_ID_PREFIXES.settings,
-        APP_NAMES.pomodoro
-      );
+      return await db.save(data, DB_ID_PREFIXES.settings, APP_NAMES.pomodoro);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -81,10 +78,10 @@ export const saveAppSettings = createAsyncThunk(
       }
 
       if (data._id) {
-        return await window.db.update(data._id, data);
+        return await db.update(data._id, data);
       }
 
-      return await window.db.save(data, DB_ID_PREFIXES.settings, APP_NAMES.app);
+      return await db.save(data, DB_ID_PREFIXES.settings, APP_NAMES.app);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -96,7 +93,7 @@ export const getAppSettings = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const id = `${DB_ID_PREFIXES.settings}#${APP_NAMES.app}`;
-      const result = await window.db.getById<IAppSettings>(id);
+      const result = await db.getById<IAppSettings>(id);
       const root = window.document.documentElement;
 
       if (result.theme === 'dark') {
@@ -147,7 +144,7 @@ export const getPomodoroSettings = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const id = `${DB_ID_PREFIXES.settings}#${APP_NAMES.pomodoro}`;
-      const result = await window.db.getById<IPomodoroSettings>(id);
+      const result = await db.getById<IPomodoroSettings>(id);
       return result;
     } catch (error) {
       return rejectWithValue(error);

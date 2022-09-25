@@ -1,14 +1,20 @@
 {
-  "extends": "../../tsconfig.base.json",
-
   "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": false,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "types": ["node"],
     "baseUrl": ".",
-
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "paths": {
       "/@/*": ["./src/*"]
     }
   },
-
-  "include": ["src/**/*.ts", "types/**/*.d.ts", "../../types/**/*.ts"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.config.js", "dist"]
+  "include": ["src/**/*.ts", "../../types/**/*.d.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }

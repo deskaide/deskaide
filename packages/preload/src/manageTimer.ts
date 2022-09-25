@@ -1,8 +1,6 @@
 import { ipcRenderer } from 'electron';
 import type { IpcEventTypes, TimerType } from '../../../types';
 
-import { exposeInMainWorld } from './exposeInMainWorld';
-
 function toggleTimerType(
   event: IpcEventTypes,
   callback: (data: TimerType) => void
@@ -11,5 +9,3 @@ function toggleTimerType(
 }
 
 export const manageTimer = toggleTimerType;
-
-exposeInMainWorld('manageTimer', manageTimer);

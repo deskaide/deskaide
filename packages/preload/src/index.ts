@@ -1,9 +1,5 @@
-/**
- * @module preload
- */
-
-import './db';
-import './info';
-import './notification';
-import './manageWindow';
-import './manageTimer';
+export { db } from './db';
+export { info } from './info';
+export { notification } from './notification';
+export { manageWindow } from './manageWindow';
+export { manageTimer } from './manageTimer';

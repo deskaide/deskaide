@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { db } from '#preload';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, PomodoroClock, Button } from '../components';
@@ -23,7 +24,7 @@ export const Pomodoro: React.FC = () => {
   React.useEffect(() => {
     let ignore = false;
     async function fetchData() {
-      const data = await window.db.getAll({});
+      const data = await db.getAll({});
 
       if (!ignore) {
         console.log(data);

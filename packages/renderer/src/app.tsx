@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { HashRouter as Router } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { manageTimer } from '#preload';
 
 import * as themes from './styles/themes';
 import { GlobalStyle } from './styles';
@@ -46,8 +47,8 @@ const App: React.FC = () => {
 
     dispatch(getAllSettings());
 
-    if (window.manageTimer) {
-      window.manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
+    if (manageTimer) {
+      manageTimer(IpcEventTypes.ToggleTimerType, (value) => {
         dispatch(setTimerType(value));
       });
     }

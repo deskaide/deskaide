@@ -2,8 +2,6 @@ import type { ElectronApplication } from 'playwright';
 import { _electron as electron } from 'playwright';
 import { afterAll, beforeAll, expect, test } from 'vitest';
 
-import '../packages/preload/contracts.d';
-
 let electronApp: ElectronApplication;
 
 beforeAll(async () => {
@@ -45,14 +43,19 @@ test('Main window state', async () => {
 
 test('Main window web content', async () => {
   const page = await electronApp.firstWindow();
-  const element = await page.$('#app', { strict: true });
+  const element = await page.$('#root', { strict: true });
   expect(element, "Can't find root element").toBeDefined();
-  // expect((await element.innerHTML()).trim(), 'Window content was empty').not.equal('');
+  expect(
+    (await element?.innerHTML())?.trim(),
+    'Window content was empty'
+  ).not.equal('');
 });
 
 test('Preload versions', async () => {
   const page = await electronApp.firstWindow();
-  const exposedInfo = await page.evaluate(() => globalThis.info);
+  const exposedInfo = await page.evaluate(
+    () => globalThis.__electron_preload__info
+  );
   const expectedVersions = await electronApp.evaluate(() => process.versions);
   const expectedInfo = {
     name: 'Deskaide',
@@ -69,7 +72,7 @@ test('Preload notification', async () => {
   const page = await electronApp.firstWindow();
 
   const exposedNotification = await page.evaluate(
-    () => globalThis.notification
+    () => globalThis.__electron_preload__notification
   );
   expect(exposedNotification).toHaveProperty('send');
 });
