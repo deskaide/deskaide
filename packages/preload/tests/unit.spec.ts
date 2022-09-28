@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { version } from '../../../package.json';
 
 import { info, notification } from '../src';
 
@@ -6,7 +7,7 @@ test('info', async () => {
   expect(info).toStrictEqual({
     name: 'Deskaide',
     versions: {
-      app: '1.0.0',
+      app: version,
       ...process.versions,
     },
   });

@@ -2,6 +2,8 @@ import type { ElectronApplication } from 'playwright';
 import { _electron as electron } from 'playwright';
 import { afterAll, beforeAll, expect, test } from 'vitest';
 
+import { version } from '../package.json';
+
 let electronApp: ElectronApplication;
 
 beforeAll(async () => {
@@ -60,7 +62,7 @@ test('Preload versions', async () => {
   const expectedInfo = {
     name: 'Deskaide',
     versions: {
-      app: '1.0.0',
+      app: version,
       ...expectedVersions,
     },
   };

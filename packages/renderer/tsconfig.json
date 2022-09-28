@@ -8,6 +8,7 @@
     "strict": true,
     "isolatedModules": true,
     "types": ["node"],
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
       "#preload": ["../preload/src/index"],
