@@ -54,15 +54,10 @@ export const useTimer = (config: TimerConfig) => {
   }, []);
 
   useEffect(() => {
-    let shouldShowNotification = true;
+    let ignoreNotification = false;
 
-    if (
-      isRunning &&
-      currentTime === notificationTime &&
-      shouldShowNotification
-    ) {
+    if (isRunning && currentTime === notificationTime && !ignoreNotification) {
       if (typeof onShowNotification === 'function') {
-        shouldShowNotification = false;
         onShowNotification();
       }
     }
@@ -81,7 +76,7 @@ export const useTimer = (config: TimerConfig) => {
     }
 
     return () => {
-      shouldShowNotification = true;
+      ignoreNotification = true;
     };
   }, [
     onTimeOver,
