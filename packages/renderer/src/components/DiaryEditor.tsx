@@ -15,6 +15,7 @@ const Wrapper = styled(Box)`
 
   .diary-editor {
     width: 100%;
+    color: var(--color-text-1);
     background: var(--color-bg-1);
     border-radius: 4px;
     border-top-right-radius: 0;
@@ -36,6 +37,7 @@ const Wrapper = styled(Box)`
     }
 
     .cm-editor {
+      color: var(--color-text-1);
       background: var(--color-bg-1);
     }
 
