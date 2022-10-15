@@ -6,6 +6,7 @@ import { useCodeMirror } from '../hooks';
 
 interface Props {
   initialDoc: string;
+  placeholder?: string;
   onChange: (doc: string) => void;
   onBlur: (e: unknown) => void;
 }
@@ -39,6 +40,15 @@ const Wrapper = styled(Box)`
     .cm-editor {
       color: var(--color-text-1);
       background: var(--color-bg-1);
+      padding-top: 1rem;
+
+      .cm-line {
+        padding: 0;
+
+        &:first-child span {
+          margin-top: 0;
+        }
+      }
     }
 
     .cm-scroller {
@@ -48,7 +58,7 @@ const Wrapper = styled(Box)`
 `;
 
 export const DiaryEditor: React.FC<Props> = (props) => {
-  const { initialDoc, onChange } = props;
+  const { initialDoc, placeholder = 'Start typing...', onChange } = props;
   const handleChange = useCallback(
     (state: string) => onChange(state),
     [onChange]
@@ -58,6 +68,7 @@ export const DiaryEditor: React.FC<Props> = (props) => {
     container: editor.current,
     onChange: handleChange,
     value: initialDoc,
+    placeholder: placeholder,
     theme: 'dark',
     basicSetup: {
       lineNumbers: false,
@@ -74,6 +85,7 @@ export const DiaryEditor: React.FC<Props> = (props) => {
     <Wrapper>
       <Box
         className="diary-editor"
+        paddingTop={placeholder ? '1rem' : 0}
         height="100%"
         ref={editor}
         onBlur={props.onBlur}

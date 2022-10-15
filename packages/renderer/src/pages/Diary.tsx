@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
-import { useMarkdownCounts } from '../hooks';
+import { useDebounce, useMarkdownCounts } from '../hooks';
 
 export const Diary: React.FC = () => {
-  const [doc, setDoc] = useState<string>(
-    '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\n```js\n console.log("Hello World!");\n```\n\nReprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\nNisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\n```js\n console.log("Welcome to Deskaide app :)");\n```\n'
-  );
+  const [doc, setDoc] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(true);
 
-  const handleDocChange = useCallback((newDoc: any) => setDoc(newDoc), []);
+  const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
 
   const handleOnBlur = useCallback((e: any) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
@@ -24,7 +22,19 @@ export const Diary: React.FC = () => {
     }
   }, []);
 
-  const counts = useMarkdownCounts(doc);
+  const debouncedDoc = useDebounce(doc, 500);
+  const counts = useMarkdownCounts(debouncedDoc);
+
+  useEffect(() => {
+    let hasSaved = false;
+    if (!hasSaved) {
+      console.log(debouncedDoc);
+    }
+
+    return () => {
+      hasSaved = true;
+    };
+  }, [debouncedDoc]);
 
   return (
     <DefaultLayout>
@@ -55,17 +65,19 @@ export const Diary: React.FC = () => {
               borderTopRightRadius={4}
               borderTopLeftRadius={4}
             >
-              Staurday, May 14, 2022
-              <Text
-                display="inline-block"
-                mx={3}
-                variant="label1"
-                bg="bg2"
-                p={2}
-                borderRadius={4}
-              >
-                {counts.words} words
-              </Text>
+              <span>Staurday, May 14, 2022</span>
+              {counts.words && (
+                <Text
+                  display="inline-block"
+                  mx={3}
+                  variant="label1"
+                  bg="bg2"
+                  p={2}
+                  borderRadius={4}
+                >
+                  {counts.words} words
+                </Text>
+              )}
             </Text>
           </Box>
           {isEditing && (
@@ -78,9 +90,6 @@ export const Diary: React.FC = () => {
           {!isEditing && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
           )}
-          {/* {!isEditing && (
-            <DiaryEditor onChange={handleDocChange} onBlur={handleOnBlur} initialDoc={doc} />
-          )} */}
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>

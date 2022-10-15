@@ -9,7 +9,6 @@ export const markdownHighlighting = HighlightStyle.define([
     fontFamily: baseTheme.fonts.body,
     fontSize: baseTheme.fontSizes.body,
     lineHeight: baseTheme.lineHeights.body,
-    margin: '1rem 0 2rem 0',
   },
   {
     tag: tags.heading1,
