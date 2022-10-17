@@ -13,6 +13,7 @@ if (import.meta.env.DEV) {
 const database = new Pouchdb(dbPath);
 
 export const save = async <T>(data: T, idPrefix?: string, id?: string) => {
+  console.log({ data, idPrefix, id });
   const now = new Date().toJSON();
   const result = await database.put({
     _id: `${idPrefix ? idPrefix + '#' : ''}${id || now}`,

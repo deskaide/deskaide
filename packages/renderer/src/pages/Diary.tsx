@@ -1,13 +1,25 @@
 import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react';
+import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
 import { useDebounce, useMarkdownCounts } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import type { RootState } from '../store';
+import { saveDiaryPost, getDiaryPostById } from '../store/diarySlice';
+import { DB_ID_PREFIXES } from '../config';
 
 export const Diary: React.FC = () => {
-  const [doc, setDoc] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [isEditing, setIsEditing] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+
+  const { currentPost, currentPostState } = useAppSelector(
+    (state: RootState) => state.diary
+  );
+
+  const [doc, setDoc] = useState(currentPost?.body ?? '');
 
   const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
 
@@ -16,6 +28,7 @@ export const Diary: React.FC = () => {
       setIsEditing(false);
     }
   }, []);
+
   const handlePreviewClick = useCallback((e: any) => {
     if (e.detail === 2) {
       setIsEditing(true);
@@ -26,15 +39,50 @@ export const Diary: React.FC = () => {
   const counts = useMarkdownCounts(debouncedDoc);
 
   useEffect(() => {
+    let ignoreFtech = false;
+    if (!ignoreFtech && selectedDate) {
+      const id = `${DB_ID_PREFIXES.diaryPost}#${format(
+        selectedDate,
+        'yyyy-MM-dd'
+      )}`;
+      console.log(id);
+
+      dispatch(getDiaryPostById(id))
+        .unwrap()
+        .then((post) => {
+          setDoc(post.body);
+        })
+        .catch((_e) => {
+          setDoc('');
+        });
+    }
+
+    return () => {
+      ignoreFtech = true;
+    };
+  }, [selectedDate]);
+
+  useEffect(() => {
     let hasSaved = false;
-    if (!hasSaved) {
-      console.log(debouncedDoc);
+    if (!hasSaved && debouncedDoc && currentPost?.body !== debouncedDoc) {
+      console.log('-------CP');
+      console.log(currentPost);
+
+      dispatch(
+        saveDiaryPost({
+          ...currentPost,
+          body: debouncedDoc,
+          date: selectedDate,
+        })
+      );
+      console.log(currentPost);
+      console.log(currentPostState);
     }
 
     return () => {
       hasSaved = true;
     };
-  }, [debouncedDoc]);
+  }, [debouncedDoc, selectedDate, currentPost]);
 
   return (
     <DefaultLayout>
@@ -48,6 +96,7 @@ export const Diary: React.FC = () => {
                 new Date('2022-08-10'),
                 new Date('2022-08-21'),
               ]}
+              onClickDay={setSelectedDate}
             />
           </Box>
         }
@@ -65,7 +114,7 @@ export const Diary: React.FC = () => {
               borderTopRightRadius={4}
               borderTopLeftRadius={4}
             >
-              <span>Staurday, May 14, 2022</span>
+              <span>{format(selectedDate, 'EEEE, LLLL, d, Y')}</span>
               {counts.words && (
                 <Text
                   display="inline-block"

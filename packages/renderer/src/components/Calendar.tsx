@@ -120,23 +120,27 @@ const datesExcept = (dates: Date[], date: Date) =>
 type CalendarProps = {
   activeDates?: Date[];
   defaultSelectedDate?: Date;
+  onClickDay?: (date: Date) => void;
 };
 
 export const Calendar: React.FC<CalendarProps> = ({
   activeDates = [],
   defaultSelectedDate = new Date(),
+  onClickDay,
 }) => {
   const [dates, setDates] = useState(activeDates);
   const [selectedDate, setSelectedDate] = useState(defaultSelectedDate);
 
-  const onClickDay = (date: Date) => {
+  const handleClickDay = (date: Date) => {
     if (dateAlreadyClicked(dates, date)) {
       setDates(datesExcept(dates, date));
       setSelectedDate(defaultSelectedDate);
     } else {
       setDates([...dates, date]);
       setSelectedDate(date);
-      console.log(selectedDate.toJSON());
+      if (onClickDay) {
+        onClickDay(date);
+      }
     }
   };
 
@@ -152,7 +156,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     <Wrapper>
       <ReactCalendar
         tileClassName={tileClassName}
-        onClickDay={onClickDay}
+        onClickDay={handleClickDay}
         value={selectedDate}
         formatShortWeekday={(locale, date) =>
           date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
