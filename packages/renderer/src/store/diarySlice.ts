@@ -18,12 +18,6 @@ export enum States {
   isError = 'error',
 }
 
-const _c: Partial<Record<ApiStates, States>> = {
-  [ApiStates.fulfilled]: States.isSuccess,
-  [ApiStates.rejected]: States.isError,
-  // [ApiStates.pending]: States.isLoading,
-};
-
 export type StateTransition = Record<
   States,
   Partial<Record<ApiStates, States>>
@@ -61,18 +55,36 @@ export const saveDiaryPost = createAsyncThunk(
   'diary/saveDiaryPost',
   async (data: IDiaryPost, { rejectWithValue }) => {
     try {
-      if (data._id) {
-        const existingData = await db.getById<IDiaryPost>(data._id);
-        return await db.update(data._id, { _rev: existingData._rev, ...data });
-      }
-
-      const id = format(data.date, 'yyyy-MM-dd');
+      const date = format(new Date(data.date), 'yyyy-MM-dd');
+      const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
 
       console.log(id);
+      try {
+        const existingData = await db.getById<IDiaryPost>(id);
 
-      return await db.save(data, DB_ID_PREFIXES.diaryPost, id);
+        console.log('----------> Start');
+        console.log(existingData);
+        console.log('----------> End');
+
+        if (existingData?._id) {
+          return await db.update(existingData._id, {
+            ...existingData,
+            ...data,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      console.log('After error ------>');
+
+      console.log({ ...data, idPrefix: DB_ID_PREFIXES.diaryPost, id: date });
+
+      return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
     } catch (error) {
-      return rejectWithValue(error);
+      console.log(error);
+
+      return rejectWithValue('Failed to save diary post');
     }
   }
 );
@@ -87,7 +99,7 @@ export const getDiaryPostById = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      return rejectWithValue(error);
+      return rejectWithValue(`Diary post not found with this id: ${id}`);
     }
   }
 );
@@ -130,7 +142,7 @@ export const diarySlice = createSlice({
       );
     });
     builder.addCase(getDiaryPostById.rejected, (state) => {
-      state.currentPost = { body: '', date: new Date() };
+      state.currentPost = { body: '', date: new Date().toJSON() };
       state.currentPostState = transition(
         state.currentPostState,
         ApiStates.rejected

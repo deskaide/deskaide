@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
-import { useDebounce, useMarkdownCounts } from '../hooks';
+import { useAutoSave, useMarkdownCounts } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import type { RootState } from '../store';
 import { saveDiaryPost, getDiaryPostById } from '../store/diarySlice';
@@ -15,9 +15,7 @@ export const Diary: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
-  const { currentPost, currentPostState } = useAppSelector(
-    (state: RootState) => state.diary
-  );
+  const { currentPost } = useAppSelector((state: RootState) => state.diary);
 
   const [doc, setDoc] = useState(currentPost?.body ?? '');
 
@@ -35,17 +33,28 @@ export const Diary: React.FC = () => {
     }
   }, []);
 
-  const debouncedDoc = useDebounce(doc, 500);
-  const counts = useMarkdownCounts(debouncedDoc);
+  const handleDocSave: <T>(data: T) => void = (data) => {
+    if (data) {
+      dispatch(
+        saveDiaryPost({
+          body: data as string,
+          date: selectedDate.toJSON(),
+        })
+      );
+    }
+  };
+
+  const counts = useMarkdownCounts(doc);
+  useAutoSave(doc, 500, handleDocSave);
 
   useEffect(() => {
     let ignoreFtech = false;
     if (!ignoreFtech && selectedDate) {
+      setDoc('');
       const id = `${DB_ID_PREFIXES.diaryPost}#${format(
         selectedDate,
         'yyyy-MM-dd'
       )}`;
-      console.log(id);
 
       dispatch(getDiaryPostById(id))
         .unwrap()
@@ -62,27 +71,22 @@ export const Diary: React.FC = () => {
     };
   }, [selectedDate]);
 
-  useEffect(() => {
-    let hasSaved = false;
-    if (!hasSaved && debouncedDoc && currentPost?.body !== debouncedDoc) {
-      console.log('-------CP');
-      console.log(currentPost);
-
-      dispatch(
-        saveDiaryPost({
-          ...currentPost,
-          body: debouncedDoc,
-          date: selectedDate,
-        })
-      );
-      console.log(currentPost);
-      console.log(currentPostState);
-    }
-
-    return () => {
-      hasSaved = true;
-    };
-  }, [debouncedDoc, selectedDate, currentPost]);
+  // useEffect(() => {
+  //   let hasSaved = false;
+  //   if (!hasSaved && debouncedDoc && currentPost?.body !== debouncedDoc) {
+  //     dispatch(
+  //       saveDiaryPost({
+  //         ...currentPost,
+  //         body: debouncedDoc,
+  //         date: selectedDate.toJSON(),
+  //       })
+  //     );
+  //   }
+  //
+  //   return () => {
+  //     hasSaved = true;
+  //   };
+  // }, [debouncedDoc, selectedDate, currentPost]);
 
   return (
     <DefaultLayout>
@@ -92,8 +96,8 @@ export const Diary: React.FC = () => {
           <Box padding={4}>
             <Calendar
               activeDates={[
-                new Date('2022-07-12'),
-                new Date('2022-08-10'),
+                new Date('2022-10-12'),
+                new Date('2022-10-10'),
                 new Date('2022-08-21'),
               ]}
               onClickDay={setSelectedDate}
@@ -129,14 +133,14 @@ export const Diary: React.FC = () => {
               )}
             </Text>
           </Box>
-          {isEditing && (
+          {(isEditing || !doc) && (
             <DiaryEditor
               onChange={handleDocChange}
               onBlur={handleOnBlur}
               initialDoc={doc}
             />
           )}
-          {!isEditing && (
+          {!isEditing && doc && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
           )}
         </Box>
