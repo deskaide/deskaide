@@ -8,7 +8,7 @@ interface Props {
   initialDoc: string;
   placeholder?: string;
   onChange: (doc: string) => void;
-  onBlur: (e: unknown) => void;
+  onBlur: React.FocusEventHandler;
 }
 
 const Wrapper = styled(Box)`

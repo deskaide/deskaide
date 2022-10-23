@@ -118,12 +118,14 @@ type CalendarProps = {
   activeDates?: Date[];
   defaultSelectedDate?: Date;
   onClickDay?: (date: Date) => void;
+  onClickMonth?: (date: Date) => void;
 };
 
 export const Calendar: React.FC<CalendarProps> = ({
   activeDates = [],
   defaultSelectedDate = new Date(),
   onClickDay,
+  onClickMonth,
 }) => {
   const [dates, setDates] = useState(activeDates);
   const [selectedDate, setSelectedDate] = useState(defaultSelectedDate);
@@ -167,6 +169,11 @@ export const Calendar: React.FC<CalendarProps> = ({
         prev2Label={null}
         next2Label={null}
         maxDate={new Date()}
+        onActiveStartDateChange={({ activeStartDate }) => {
+          if (onClickMonth) {
+            onClickMonth(activeStartDate);
+          }
+        }}
       />
     </Wrapper>
   );

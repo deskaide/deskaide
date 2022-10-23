@@ -69,12 +69,12 @@ export const getAll = async ({
   };
   const result = await database.allDocs(options);
   const data = result?.rows
-    ? startKey
-      ? result.rows.slice(1)
+    ? limit && limit < result.rows.length
+      ? result.rows.slice(0, -1)
       : result.rows
     : [];
   const response = {
-    totalCount: result?.total_rows ?? 0,
+    totalCount: result?.rows.length ?? 0,
     data,
     ...(limit &&
       data.length >= limit && {

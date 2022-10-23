@@ -47,8 +47,16 @@ function transition(currentState: States, action: ApiStates) {
 const initialState: {
   currentPost?: IDiaryPost;
   currentPostState: States;
+  allDiaryPosts: {
+    data: any[];
+    totalCount: number;
+  };
 } = {
   currentPostState: States.idle,
+  allDiaryPosts: {
+    data: [],
+    totalCount: 0,
+  },
 };
 
 export const saveDiaryPost = createAsyncThunk(
@@ -58,13 +66,8 @@ export const saveDiaryPost = createAsyncThunk(
       const date = format(new Date(data.date), 'yyyy-MM-dd');
       const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
 
-      console.log(id);
       try {
         const existingData = await db.getById<IDiaryPost>(id);
-
-        console.log('----------> Start');
-        console.log(existingData);
-        console.log('----------> End');
 
         if (existingData?._id) {
           return await db.update(existingData._id, {
@@ -75,10 +78,6 @@ export const saveDiaryPost = createAsyncThunk(
       } catch (error) {
         console.log(error);
       }
-
-      console.log('After error ------>');
-
-      console.log({ ...data, idPrefix: DB_ID_PREFIXES.diaryPost, id: date });
 
       return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
     } catch (error) {
@@ -97,9 +96,28 @@ export const getDiaryPostById = createAsyncThunk(
 
       return result;
     } catch (error) {
+      return rejectWithValue(`Diary post not found with this id: ${id}`);
+    }
+  }
+);
+
+export const getAllDiaryPosts = createAsyncThunk(
+  'diary/getAllDiaryPosts',
+  async (month: string, { rejectWithValue }) => {
+    try {
+      console.log(month);
+      const startKey = `${DB_ID_PREFIXES.diaryPost}#${month}`;
+
+      const result = await db.getAll({
+        startKey,
+        endKey: `${startKey}\uffff`,
+      });
+
+      return result;
+    } catch (error) {
       console.log(error);
 
-      return rejectWithValue(`Diary post not found with this id: ${id}`);
+      return rejectWithValue(`Diary post not found for this month: ${month}`);
     }
   }
 );
@@ -147,6 +165,17 @@ export const diarySlice = createSlice({
         state.currentPostState,
         ApiStates.rejected
       );
+    });
+    builder.addCase(getAllDiaryPosts.pending, (state) => {
+      state.allDiaryPosts = { data: [], totalCount: 0 };
+    });
+    builder.addCase(getAllDiaryPosts.fulfilled, (state, action) => {
+      console.log(action.payload);
+
+      state.allDiaryPosts = action.payload;
+    });
+    builder.addCase(getAllDiaryPosts.rejected, (state) => {
+      state.allDiaryPosts = { data: [], totalCount: 0 };
     });
   },
 });
