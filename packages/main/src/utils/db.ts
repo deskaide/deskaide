@@ -13,6 +13,7 @@ if (import.meta.env.DEV) {
 const database = new Pouchdb(dbPath);
 
 export const save = async <T>(data: T, idPrefix?: string, id?: string) => {
+  console.log({ data, idPrefix, id });
   const now = new Date().toJSON();
   const result = await database.put({
     _id: `${idPrefix ? idPrefix + '#' : ''}${id || now}`,
@@ -68,12 +69,12 @@ export const getAll = async ({
   };
   const result = await database.allDocs(options);
   const data = result?.rows
-    ? startKey
-      ? result.rows.slice(1)
+    ? limit && limit < result.rows.length
+      ? result.rows.slice(0, -1)
       : result.rows
     : [];
   const response = {
-    totalCount: result?.total_rows ?? 0,
+    totalCount: result?.rows.length ?? 0,
     data,
     ...(limit &&
       data.length >= limit && {

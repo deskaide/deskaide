@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactCalendar from 'react-calendar';
 import { isSameDay } from 'date-fns';
@@ -114,31 +114,40 @@ const Wrapper = styled.div`
 const dateAlreadyClicked = (dates: Date[], date: Date) =>
   dates.some((d) => isSameDay(date, d));
 
-const datesExcept = (dates: Date[], date: Date) =>
-  dates.filter((d) => !isSameDay(date, d));
-
 type CalendarProps = {
   activeDates?: Date[];
   defaultSelectedDate?: Date;
+  onClickDay?: (date: Date) => void;
+  onClickMonth?: (date: Date) => void;
 };
 
 export const Calendar: React.FC<CalendarProps> = ({
   activeDates = [],
   defaultSelectedDate = new Date(),
+  onClickDay,
+  onClickMonth,
 }) => {
   const [dates, setDates] = useState(activeDates);
   const [selectedDate, setSelectedDate] = useState(defaultSelectedDate);
 
-  const onClickDay = (date: Date) => {
-    if (dateAlreadyClicked(dates, date)) {
-      setDates(datesExcept(dates, date));
-      setSelectedDate(defaultSelectedDate);
-    } else {
-      setDates([...dates, date]);
-      setSelectedDate(date);
-      console.log(selectedDate.toJSON());
+  const handleClickDay = (date: Date) => {
+    setSelectedDate(date);
+
+    if (onClickDay) {
+      onClickDay(date);
     }
   };
+
+  useEffect(() => {
+    let ignoreSetActive = false;
+    if (!ignoreSetActive) {
+      setDates(activeDates);
+    }
+
+    return () => {
+      ignoreSetActive = true;
+    };
+  }, [activeDates]);
 
   const tileClassName = ({ date }: { date: Date }) => {
     const classNames = ['react-calendar__tile'];
@@ -152,7 +161,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     <Wrapper>
       <ReactCalendar
         tileClassName={tileClassName}
-        onClickDay={onClickDay}
+        onClickDay={handleClickDay}
         value={selectedDate}
         formatShortWeekday={(locale, date) =>
           date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
@@ -160,6 +169,11 @@ export const Calendar: React.FC<CalendarProps> = ({
         prev2Label={null}
         next2Label={null}
         maxDate={new Date()}
+        onActiveStartDateChange={({ activeStartDate }) => {
+          if (onClickMonth) {
+            onClickMonth(activeStartDate);
+          }
+        }}
       />
     </Wrapper>
   );

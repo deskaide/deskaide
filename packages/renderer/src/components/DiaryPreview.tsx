@@ -15,7 +15,7 @@ import { Text } from './Text';
 
 interface Props {
   doc: string;
-  onClick: (e: unknown) => void;
+  onClick: React.MouseEventHandler;
 }
 
 const Wrapper = styled(Box)`

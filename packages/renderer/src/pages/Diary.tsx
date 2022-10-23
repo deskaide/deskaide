@@ -1,30 +1,100 @@
 import * as React from 'react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
 import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
-import { useMarkdownCounts } from '../hooks';
+import { useAutoSave, useMarkdownCounts } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import type { RootState } from '../store';
+import {
+  saveDiaryPost,
+  getDiaryPostById,
+  getAllDiaryPosts,
+} from '../store/diarySlice';
+import { DB_ID_PREFIXES } from '../config';
 
 export const Diary: React.FC = () => {
-  const [doc, setDoc] = useState<string>(
-    '# Hello World!\nLorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\n```js\n console.log("Hello World!");\n```\n\nReprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\nNisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.\n\n```js\n console.log("Welcome to Deskaide app :)");\n```\n'
-  );
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isEditing, setIsEditing] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
 
-  const handleDocChange = useCallback((newDoc: any) => setDoc(newDoc), []);
+  const { currentPost, allDiaryPosts } = useAppSelector(
+    (state: RootState) => state.diary
+  );
 
-  const handleOnBlur = useCallback((e: any) => {
-    if (!e.currentTarget.contains(e.relatedTarget)) {
-      setIsEditing(false);
+  const [doc, setDoc] = useState(currentPost?.body ?? '');
+
+  const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
+
+  const handleOnBlur: React.FocusEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        setIsEditing(false);
+      }
+    },
+    []
+  );
+
+  const handlePreviewClick: React.MouseEventHandler<HTMLDivElement> =
+    useCallback((e) => {
+      if (e.detail === 2) {
+        setIsEditing(true);
+      }
+    }, []);
+
+  const handleDocSave: <T>(data: T) => void = (data) => {
+    if (data) {
+      dispatch(
+        saveDiaryPost({
+          body: data as string,
+          date: selectedDate.toJSON(),
+        })
+      );
     }
-  }, []);
-  const handlePreviewClick = useCallback((e: any) => {
-    if (e.detail === 2) {
-      setIsEditing(true);
-    }
-  }, []);
+  };
 
   const counts = useMarkdownCounts(doc);
+  useAutoSave(doc, 500, handleDocSave);
+
+  useEffect(() => {
+    let ignoreFtech = false;
+    if (!ignoreFtech && selectedDate) {
+      setDoc('');
+      const id = `${DB_ID_PREFIXES.diaryPost}#${format(
+        selectedDate,
+        'yyyy-MM-dd'
+      )}`;
+
+      dispatch(getDiaryPostById(id))
+        .unwrap()
+        .then((post) => {
+          setDoc(post.body);
+        })
+        .catch((_e) => {
+          setDoc('');
+        });
+    }
+
+    return () => {
+      ignoreFtech = true;
+    };
+  }, [selectedDate]);
+
+  const selectedMonth = React.useMemo(() => {
+    return format(currentMonth, 'yyyy-MM');
+  }, [currentMonth]);
+
+  useEffect(() => {
+    dispatch(getAllDiaryPosts(selectedMonth));
+  }, [selectedMonth]);
+
+  const activeDates = React.useMemo(() => {
+    return allDiaryPosts.totalCount > 0
+      ? allDiaryPosts.data.map((post) => new Date(post.doc.date))
+      : [];
+  }, [allDiaryPosts]);
 
   return (
     <DefaultLayout>
@@ -33,11 +103,9 @@ export const Diary: React.FC = () => {
         sidebar={
           <Box padding={4}>
             <Calendar
-              activeDates={[
-                new Date('2022-07-12'),
-                new Date('2022-08-10'),
-                new Date('2022-08-21'),
-              ]}
+              activeDates={activeDates}
+              onClickDay={setSelectedDate}
+              onClickMonth={setCurrentMonth}
             />
           </Box>
         }
@@ -55,32 +123,31 @@ export const Diary: React.FC = () => {
               borderTopRightRadius={4}
               borderTopLeftRadius={4}
             >
-              Staurday, May 14, 2022
-              <Text
-                display="inline-block"
-                mx={3}
-                variant="label1"
-                bg="bg2"
-                p={2}
-                borderRadius={4}
-              >
-                {counts.words} words
-              </Text>
+              <span>{format(selectedDate, 'EEEE, LLLL, d, Y')}</span>
+              {counts.words && (
+                <Text
+                  display="inline-block"
+                  mx={3}
+                  variant="label1"
+                  bg="bg2"
+                  p={2}
+                  borderRadius={4}
+                >
+                  {counts.words} words
+                </Text>
+              )}
             </Text>
           </Box>
-          {isEditing && (
+          {(isEditing || !doc) && (
             <DiaryEditor
               onChange={handleDocChange}
               onBlur={handleOnBlur}
               initialDoc={doc}
             />
           )}
-          {!isEditing && (
+          {!isEditing && doc && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
           )}
-          {/* {!isEditing && (
-            <DiaryEditor onChange={handleDocChange} onBlur={handleOnBlur} initialDoc={doc} />
-          )} */}
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>

@@ -24,7 +24,10 @@ export const Pomodoro: React.FC = () => {
   React.useEffect(() => {
     let ignore = false;
     async function fetchData() {
-      const data = await db.getAll({});
+      const data = await db.getAll({
+        // startKey: 'diary_post#2022-10',
+        // endKey: 'diary_post#2022-10\uffff',
+      });
 
       if (!ignore) {
         console.log(data);
