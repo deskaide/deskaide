@@ -1,15 +1,5 @@
 name: Release
-on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '**.md'
-      - '**.spec.js'
-      - '.idea'
-      - '.gitignore'
-      - '.github/**'
-      - '!.github/workflows/release.yml'
+on: [workflow_call, workflow_dispatch]
 
 concurrency:
   group: release-${{ github.ref }}
@@ -27,11 +17,11 @@ jobs:
       version: ${{ steps.version.outputs.build-version }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
 
@@ -50,14 +40,7 @@ jobs:
 
       - name: Get version from current date
         id: version
-        run: echo "VITE_APP_VERSION=$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_ENV
-
-      - name: Waiting on All checks
-        uses: lewagon/wait-on-check-action@v0.2
-        with:
-          ref: ${{ github.ref }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          running-workflow-name: 'draft'
+        run: echo "::set-output name=build-version::$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')"
 
       - name: Delete outdated drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0
@@ -78,27 +61,25 @@ jobs:
   upload_artifacts:
     needs: [draft]
 
-    # Skip compile and release if commit message contains "[skip]" or "skip cd" or "cd skip"
-    if: ${{ !contains(github.event.head_commit.message, '[skip]') && !contains(github.event.head_commit.message, 'skip cd') && !contains(github.event.head_commit.message, 'cd skip') }}
-
     strategy:
       matrix:
-        # To compile the application for different platforms, change the array
-        # Options: macos-latest, ubuntu-latest, windows-latest
         os: [windows-latest]
+    #    To compile the application for different platforms, use:
+    #    os: [ macos-latest, ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 16 # Need for npm >=7.7
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
 
       # The easiest way to transfer release notes to a compiled application is create `release-notes.md` in the build resources.
       # See https://github.com/electron-userland/electron-builder/issues/1511#issuecomment-310160119
@@ -107,31 +88,11 @@ jobs:
           RELEASE_NOTE: ${{ needs.draft.outputs.release-note }}
         run: echo "$RELEASE_NOTE" >> ./buildResources/release-notes.md
 
-      # If building a release for macos, need to do notarization.
-      # - name: Prepare for app notarization
-      #   if: startsWith(matrix.os, 'macos')
-      #   # Import Apple API key for app notarization on macOS
-      #   run: |
-      #     mkdir -p ~/private_keys/
-      #     echo '${{ secrets.apple_api_key }}' > ~/private_keys/AuthKey_${{ secrets.api_key_id }}.p8
-
-      # If releasing Linux app to Snapcraft, install and sign in.
-      # - name: Install Snapcraft
-      #   uses: samuelmeuli/action-snapcraft@v1
-      #   # Only install Snapcraft on Ubuntu
-      #   if: startsWith(matrix.os, 'ubuntu')
-      #   with:
-      #     # Log in to Snap Store
-      #     snapcraft_token: ${{ secrets.snapcraft_token }}
-
       # Compile app and upload artifacts
       - name: Compile & release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
-          # macOS notarization API key
-          # API_KEY_ID: ${{ secrets.apple_api_key_id }}
-          # API_KEY_ISSUER_ID: ${{ secrets.apple_api_key_issuer_id }}
         with:
           build_script_name: build
           args: --config .electron-builder.config.js
@@ -151,13 +112,13 @@ jobs:
           # Code Signing params
 
           # Base64-encoded code signing certificate for Windows
-          # windows_certs: ${{ secrets.windows_certs }}
+          # windows_certs: ''
 
           # Password for decrypting `windows_certs`
-          # windows_certs_password: ${{ secrets.windows_certs_password }}
+          # windows_certs_password: ''
 
           # Base64-encoded code signing certificate for macOS
-          # mac_certs: ${{ secrets.mac_certs }}
+          # mac_certs: ''
 
           # Password for decrypting `mac_certs`
-          # mac_certs_password: ${{ secrets.mac_certs_password }}
+          # mac_certs_password: ''
