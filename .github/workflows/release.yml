@@ -40,11 +40,11 @@ jobs:
 
       - name: Set version using semantic-release
         id: setVersion
-        run: echo "VITE_APP_VERSION=$(npm run release:dry | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_ENV
+        run: echo "VITE_APP_VERSION=$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_ENV
 
       - name: Get version using semantic-release
         id: version
-        run: echo "build-version=$(npm run release:dry | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_OUTPUT
+        run: echo "build-version=$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_OUTPUT
 
       - name: Delete outdated drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0
