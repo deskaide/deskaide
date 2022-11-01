@@ -39,7 +39,7 @@ jobs:
           include-abbreviated-commit: true
 
       - name: Set version using semantic-release
-        id: version
+        id: setVersion
         run: echo "VITE_APP_VERSION=$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_ENV
 
       - name: Get version using semantic-release
