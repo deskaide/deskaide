@@ -3,12 +3,15 @@ import { EditorState, StateEffect } from '@codemirror/state';
 import { indentWithTab } from '@codemirror/commands';
 import type { ViewUpdate } from '@codemirror/view';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
+import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
+import { languages } from '@codemirror/language-data';
+import { syntaxHighlighting } from '@codemirror/language';
 
 import { oneDark } from '@codemirror/theme-one-dark';
-import { basicSetup } from '../components/basicSetup';
-import type { ReactCodeMirrorProps } from '../components/CodeMirror';
+import type { CodeMirrorProps } from '../components/CodeMirror';
+import { markdownHighlighting } from '../config';
 
-export interface UseCodeMirror extends ReactCodeMirrorProps {
+export interface UseCodeMirror extends CodeMirrorProps {
   container?: HTMLDivElement | null;
 }
 
@@ -31,7 +34,6 @@ export function useCodeMirror(props: UseCodeMirror) {
     editable = true,
     readOnly = false,
     indentWithTab: defaultIndentWithTab = true,
-    basicSetup: defaultBasicSetup = true,
     root,
   } = props;
   const [container, setContainer] = useState(props.container);
@@ -40,7 +42,12 @@ export function useCodeMirror(props: UseCodeMirror) {
   const defaultLightThemeOption = EditorView.theme(
     {
       '&': {
-        backgroundColor: '#27283F',
+        backgroundColor: 'var(--color-bg-1)',
+        color: 'var(--color-text-1)',
+        caretColor: 'var(--color-text-1)',
+      },
+      '.cm-content': {
+        caretColor: 'var(--color-text-1)',
       },
     },
     {
@@ -70,13 +77,6 @@ export function useCodeMirror(props: UseCodeMirror) {
   if (defaultIndentWithTab) {
     getExtensions.unshift(keymap.of([indentWithTab]));
   }
-  if (defaultBasicSetup) {
-    if (typeof defaultBasicSetup === 'boolean') {
-      getExtensions.unshift(basicSetup());
-    } else {
-      getExtensions.unshift(basicSetup(defaultBasicSetup));
-    }
-  }
 
   if (placeholderStr) {
     getExtensions.unshift(placeholder(placeholderStr));
@@ -105,6 +105,11 @@ export function useCodeMirror(props: UseCodeMirror) {
     getExtensions.push(EditorView.updateListener.of(onUpdate));
   }
   getExtensions = getExtensions.concat(extensions);
+  getExtensions = getExtensions.concat([
+    markdown({ base: markdownLanguage, codeLanguages: languages }),
+    syntaxHighlighting(markdownHighlighting),
+    EditorView.lineWrapping,
+  ]);
 
   useEffect(() => {
     if (container && !state) {
@@ -128,7 +133,6 @@ export function useCodeMirror(props: UseCodeMirror) {
         setView(undefined);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [container, state]);
 
   useEffect(
@@ -151,7 +155,6 @@ export function useCodeMirror(props: UseCodeMirror) {
     if (view) {
       view.dispatch({ effects: StateEffect.reconfigure.of(getExtensions) });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     theme,
     extensions,
@@ -165,7 +168,6 @@ export function useCodeMirror(props: UseCodeMirror) {
     editable,
     readOnly,
     defaultIndentWithTab,
-    defaultBasicSetup,
     onChange,
     onUpdate,
   ]);

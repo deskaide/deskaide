@@ -50,7 +50,7 @@ jobs:
 
       - name: Get version from current date
         id: version
-        run: echo "::set-output name=build-version::$(node -e "try{console.log(require('./.electron-builder.config.js').extraMetadata.version)}catch(e){console.error(e);process.exit(1)}")"
+        run: echo "VITE_APP_VERSION=$(npx semantic-release --dry-run --branches main | grep -oE 'next release version is [1234567890\.]+' | grep -oE '[1234567890\.]+')" >> $GITHUB_ENV
 
       - name: Waiting on All checks
         uses: lewagon/wait-on-check-action@v0.2

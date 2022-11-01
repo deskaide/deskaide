@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import styled from 'styled-components';
 
-import Text from './Text';
+import { Text } from './Text';
 
 const InputContainer = styled.div`
   margin-bottom: ${({ theme }) => theme.space.lg}px;
@@ -36,7 +36,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const Input: React.FC<
+export const Input: React.FC<
   React.InputHTMLAttributes<HTMLInputElement> & {
     label?: string;
   }
@@ -60,5 +60,3 @@ const Input: React.FC<
     </InputContainer>
   );
 };
-
-export default Input;

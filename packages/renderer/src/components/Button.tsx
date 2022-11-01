@@ -14,9 +14,14 @@ import type {
   LayoutProps,
 } from 'styled-system';
 
-type ButtonVariant = 'default' | 'primary' | 'secondary' | 'destructive';
+type ButtonVariant =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'warning'
+  | 'destructive';
 
-const circleGrow = keyframes`
+export const circleGrow = keyframes`
   0% {
     transform: scale(0);
     opacity: 0;
@@ -38,6 +43,10 @@ const variants = {
   secondary: {
     backgroundColor: 'text1',
     color: 'bg1',
+  },
+  warning: {
+    backgroundColor: 'warning.1',
+    color: 'light.1',
   },
   destructive: {
     backgroundColor: 'error.1',
@@ -141,7 +150,7 @@ const ButtonBase = styled.button<ButtonProps>`
   ${layout};
 `;
 
-const Button: React.FC<
+export const Button: React.FC<
   ButtonProps & {
     variant?: ButtonVariant;
     icon?: React.ReactNode;
@@ -177,5 +186,3 @@ const Button: React.FC<
     </ButtonBase>
   );
 };
-
-export default Button;

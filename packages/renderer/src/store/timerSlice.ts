@@ -1,27 +1,23 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-
-export enum TimerType {
-  'POMODORO_TIMER',
-  'BREAK_TIMER',
-}
+import { TimerType } from '../../../../types';
 
 export interface TimerState {
-  currentTime: number;
+  currentFocusTime: number;
   timerType: TimerType;
 }
 
 const initialState: TimerState = {
-  currentTime: 0,
-  timerType: TimerType.POMODORO_TIMER,
+  currentFocusTime: 0,
+  timerType: TimerType.PomodoroTimer,
 };
 
 export const timerSlice = createSlice({
   name: 'timer',
   initialState,
   reducers: {
-    setTime: (state, action: PayloadAction<number>) => {
-      state.currentTime = action.payload;
+    setCurrentFocusTime: (state, action: PayloadAction<number>) => {
+      state.currentFocusTime = action.payload;
     },
     setTimerType: (state, action: PayloadAction<TimerType>) => {
       state.timerType = action.payload;
@@ -30,6 +26,6 @@ export const timerSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setTime, setTimerType } = timerSlice.actions;
+export const { setCurrentFocusTime, setTimerType } = timerSlice.actions;
 
 export default timerSlice.reducer;

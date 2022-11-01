@@ -1,52 +1,107 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { DefaultLayout } from '../layouts';
-import { Box, Button, Input, RangeInput } from '../components';
+import {
+  Box,
+  Button,
+  Text,
+  SelectInput,
+  Modal,
+  ModalActions,
+} from '../components';
+import { defaultAppSettings } from '../config';
+import { saveAppSettings } from '../store/settingsSlice';
+import type { RootState } from '../store';
+import { useAppDispatch, useAppSelector } from '../hooks';
 
 export const Settings: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const appSettings = useAppSelector(
+    (state: RootState) => state.settings.appSettings
+  );
+  const dispatch = useAppDispatch();
+
+  const handleReset = () => {
+    dispatch(saveAppSettings({ ...appSettings, ...defaultAppSettings }));
+    setIsModalOpen(false);
+  };
+
   return (
     <DefaultLayout>
       <Box m={4}>
         <Formik
-          initialValues={{ firstName: '', lastName: '' }}
+          initialValues={{ ...appSettings }}
+          enableReinitialize={true}
           validationSchema={Yup.object({
-            firstName: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .required('Required'),
-            lastName: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .required('Required'),
-            shortBreakTime: Yup.number()
-              .min(5, 'Must be at least 5 minutes')
-              .required('Required'),
+            theme: Yup.string().required('Required'),
           })}
           onSubmit={(values, { setSubmitting }) => {
+            dispatch(saveAppSettings({ ...appSettings, ...values }));
+            setSubmitting(false);
+            setSuccessModal(true);
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+              setSuccessModal(false);
+            }, 1500);
           }}
         >
           <Form>
-            <Input
-              name="firstName"
-              type="text"
-              label="First Name"
-              placeholder="john"
+            <Text>App Settings</Text>
+            <SelectInput
+              name="theme"
+              options={[
+                { label: 'Light', value: 'light' },
+                { label: 'Dark', value: 'dark' },
+              ]}
+              label="Theme"
             />
-            <Input name="lastName" type="text" label="Last Name" />
-            <RangeInput
-              min={0}
-              max={25}
-              unit="min"
-              name="shortBreakTime"
-              label="Range input"
-            />
-            <Button type="submit">Save Settings</Button>
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="flex-end"
+              mx={-3}
+              mt={4}
+            >
+              <Box p={3} width={1 / 4}>
+                <Button
+                  type="button"
+                  width="100%"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Reset
+                </Button>
+              </Box>
+              <Box p={3} width={1 / 4} textAlign="right">
+                <Button type="submit" variant="primary" width="100%">
+                  Save
+                </Button>
+              </Box>
+            </Box>
           </Form>
         </Formik>
+        <Modal isOpen={isModalOpen} onClose={setIsModalOpen} p={32}>
+          <Text mt={0} variant="h5">
+            Do you really want to reset settings?
+          </Text>
+          <ModalActions mt={4}>
+            <Button
+              onClick={() => setIsModalOpen(false)}
+              mr={3}
+              variant="secondary"
+            >
+              No
+            </Button>
+            <Button onClick={handleReset} variant="warning">
+              Yes
+            </Button>
+          </ModalActions>
+        </Modal>
+        <Modal isOpen={successModal} onClose={setSuccessModal} p={32}>
+          <Text variant="h5">Settings saved successfully!</Text>
+        </Modal>
       </Box>
     </DefaultLayout>
   );

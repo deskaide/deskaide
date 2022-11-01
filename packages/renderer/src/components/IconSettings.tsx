@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const IconSettings = ({
+export const IconSettings = ({
   pathFillColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & {
@@ -28,5 +28,3 @@ const IconSettings = ({
     </svg>
   );
 };
-
-export default IconSettings;

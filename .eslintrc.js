@@ -5,64 +5,43 @@ module.exports = {
     node: true,
     browser: false,
   },
+  extends: [
+    'eslint:recommended',
+    /** @see https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#recommended-configs */
+    'plugin:@typescript-eslint/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-      useJSXTextNode: true,
-    },
-    ecmaVersion: 2021,
+    ecmaVersion: 12,
     sourceType: 'module',
-    project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
   },
-  extends: [
-    'airbnb-typescript',
-    'airbnb/hooks',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:import/recommended',
-  ],
-  plugins: ['react', 'react-hooks', 'jsx-a11y', '@typescript-eslint'],
+  plugins: ['@typescript-eslint'],
+  ignorePatterns: ['node_modules/**', '**/dist/**'],
   rules: {
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/consistent-type-imports': 'error',
-
-    'linebreak-style': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    'prettier/prettier': [
-      'error',
+    /**
+     * Having a semicolon helps the optimizer interpret your code correctly.
+     * This avoids rare errors in optimized code.
+     * @see https://twitter.com/alex_kozack/status/1364210394328408066
+     */
+    semi: ['error', 'always'],
+    /**
+     * Just for beauty
+     */
+    quotes: [
+      'warn',
+      'single',
       {
-        endOfLine: 'auto',
+        avoidEscape: true,
       },
     ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        mjs: 'never',
-        ts: 'never',
-        tsx: 'never',
-        '': 'never',
-      },
-    ],
-    'react/function-component-definition': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'import/namespace': ['error', { allowComputed: true }],
   },
-  settings: {
-    'import/extensions': ['.js', '.mjs', '.jsx', '.ts', '.tsx'],
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-      },
-      typescript: {
-        project: ['./tsconfig.eslint.json', './packages/*/tsconfig.json'],
-      },
-    },
-  },
-  ignorePatterns: ['node_modules', 'packages/**/dist', 'dist'],
 };

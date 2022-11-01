@@ -1,16 +1,28 @@
-import { app } from 'electron';
+import type { BrowserWindow } from 'electron';
+import { powerMonitor, powerSaveBlocker, app, ipcMain } from 'electron';
+
 import './security-restrictions';
-import { restoreOrCreateWindow } from './mainWindow';
+import {
+  restoreOrCreateMainWindow,
+  restoreOrCreateBreakWindow,
+} from './screens';
+import { TimerType, IpcEventTypes } from '../../../types';
+import { initEventSubscriptions } from './utils/events';
 
 /**
  * Prevent multiple instances
  */
 const isSingleInstance = app.requestSingleInstanceLock();
+let mainWindow: BrowserWindow;
+let breakWindow: BrowserWindow;
+
 if (!isSingleInstance) {
   app.quit();
   process.exit(0);
 }
-app.on('second-instance', restoreOrCreateWindow);
+app.on('second-instance', async () => {
+  mainWindow = await restoreOrCreateMainWindow();
+});
 
 /**
  * Disable Hardware Acceleration for more power-save
@@ -29,16 +41,46 @@ app.on('window-all-closed', () => {
 /**
  * @see https://www.electronjs.org/docs/v14-x-y/api/app#event-activate-macos Event: 'activate'
  */
-app.on('activate', restoreOrCreateWindow);
+app.on('activate', async () => {
+  mainWindow = await restoreOrCreateMainWindow();
+});
 
 /**
  * Create app window when background process will be ready
  */
 app
   .whenReady()
-  .then(restoreOrCreateWindow)
-  .catch((e) => console.error('Failed create window:', e));
+  .then(async () => {
+    mainWindow = await restoreOrCreateMainWindow();
+    powerMonitor.on('suspend', () => {
+      powerSaveBlocker.start('prevent-app-suspension');
+    });
+  })
+  .catch((e) => console.error('Failed create main window:', e));
 
+initEventSubscriptions();
+
+ipcMain.on(IpcEventTypes.ShowBreakWindow, async () => {
+  breakWindow = await restoreOrCreateBreakWindow();
+  if (breakWindow) {
+    breakWindow.webContents.send(
+      IpcEventTypes.ToggleTimerType,
+      TimerType.BreakTimer
+    );
+  }
+});
+
+ipcMain.on(IpcEventTypes.HideBreakWindow, () => {
+  if (mainWindow) {
+    mainWindow.webContents.send(
+      IpcEventTypes.ToggleTimerType,
+      TimerType.PomodoroTimer
+    );
+  }
+  if (breakWindow) {
+    breakWindow.close();
+  }
+});
 /**
  * Install React devtools in development mode only
  */

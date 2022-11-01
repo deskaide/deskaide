@@ -1,38 +1,44 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { db } from '#preload';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, PomodoroClock } from '../components';
-import { useTimer } from '../hooks';
-import PomodoroSettings from '../components/PomodoroSettings';
+import { Box, PomodoroClock, Button } from '../components';
+import { PomodoroSettings } from '../components/PomodoroSettings';
 import type { RootState } from '../store';
-import { setTimerType, TimerType } from '../store/timerSlice';
-import { sendNotification } from '../utils';
+import { setTimerType } from '../store/timerSlice';
+import { showBreakWindow } from '../utils';
+import { TimerType } from '../../../../types';
 
 export const Pomodoro: React.FC = () => {
-  const timerType = useSelector((state: RootState) => state.timer.timerType);
+  const currentFocusTime = useSelector(
+    (state: RootState) => state.timer.currentFocusTime
+  );
   const dispatch = useDispatch();
-  const { time, start, reset } = useTimer({
-    type: 'DECREMENTAL',
-    initialTime: 0,
-    onTimeOver: () => {
-      console.log('done');
-      sendNotification({
-        title: 'Time completed!',
-        body: 'Horray! A new notification!',
-      });
-      reset();
-    },
-  });
 
-  useEffect(() => {
-    dispatch(setTimerType(TimerType.POMODORO_TIMER));
-    start(timerType === TimerType.POMODORO_TIMER ? 25 * 60 : 5);
+  const handleSkipToBreak = () => {
+    dispatch(setTimerType(TimerType.BreakTimer));
+    showBreakWindow();
+  };
+
+  React.useEffect(() => {
+    let ignore = false;
+    async function fetchData() {
+      const data = await db.getAll({
+        // startKey: 'diary_post#2022-10',
+        // endKey: 'diary_post#2022-10\uffff',
+      });
+
+      if (!ignore) {
+        console.log(data);
+      }
+    }
+    fetchData();
+
     return () => {
-      reset();
+      ignore = true;
     };
-  }, [dispatch, reset, start, timerType]);
+  }, []);
 
   return (
     <DefaultLayout>
@@ -54,7 +60,10 @@ export const Pomodoro: React.FC = () => {
           maxWidth="36vw"
           margin="0 auto"
         >
-          <PomodoroClock seconds={time} />
+          <PomodoroClock time={currentFocusTime} />
+          <Button mt={4} onClick={handleSkipToBreak}>
+            Skip to Break
+          </Button>
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>

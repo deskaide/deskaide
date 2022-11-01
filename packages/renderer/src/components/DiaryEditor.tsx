@@ -1,26 +1,29 @@
 import { useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import Box from './Box';
+import { Box } from './Box';
 import { useCodeMirror } from '../hooks';
 
 interface Props {
   initialDoc: string;
+  placeholder?: string;
   onChange: (doc: string) => void;
-  onBlur: (e: any) => void;
+  onBlur: React.FocusEventHandler;
 }
 
 const Wrapper = styled(Box)`
-  height: calc(100vh - 188px);
+  height: calc(100vh - 228px);
 
   .diary-editor {
     width: 100%;
-    background: ${({ theme }) => theme.colors.dark[1]};
+    color: var(--color-text-1);
+    background: var(--color-bg-1);
     border-radius: 4px;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
-    padding-top: ${({ theme }) => theme.space[2]}px;
+    padding-top: 0;
+    overflow-y: auto;
 
     .cm-focused {
       outline: none;
@@ -33,19 +36,40 @@ const Wrapper = styled(Box)`
     .cm-line {
       white-space: pre-wrap;
     }
+
+    .cm-editor {
+      color: var(--color-text-1);
+      background: var(--color-bg-1);
+      padding-top: 1rem;
+
+      .cm-line {
+        padding: 0;
+
+        &:first-child span {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .cm-scroller {
+      font-family: ${({ theme }) => theme.fonts.code};
+    }
   }
 `;
 
-const DiaryEditor: React.FC<Props> = (props) => {
-  console.log(props);
-
-  const { initialDoc, onChange } = props;
-  const handleChange = useCallback((state: any) => onChange(state), [onChange]);
+export const DiaryEditor: React.FC<Props> = (props) => {
+  const { initialDoc, placeholder = 'Start typing...', onChange } = props;
+  const handleChange = useCallback(
+    (state: string) => onChange(state),
+    [onChange]
+  );
   const editor = useRef<HTMLDivElement>(null);
   const { setContainer } = useCodeMirror({
     container: editor.current,
     onChange: handleChange,
     value: initialDoc,
+    placeholder: placeholder,
+    theme: 'dark',
     basicSetup: {
       lineNumbers: false,
       highlightActiveLine: false,
@@ -55,13 +79,13 @@ const DiaryEditor: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setContainer(editor.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Wrapper>
       <Box
         className="diary-editor"
+        paddingTop={placeholder ? '1rem' : 0}
         height="100%"
         ref={editor}
         onBlur={props.onBlur}
@@ -69,5 +93,3 @@ const DiaryEditor: React.FC<Props> = (props) => {
     </Wrapper>
   );
 };
-
-export default DiaryEditor;

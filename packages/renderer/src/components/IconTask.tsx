@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const IconTask = ({
+export const IconTask = ({
   pathFillColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & {
@@ -28,5 +28,3 @@ const IconTask = ({
     </svg>
   );
 };
-
-export default IconTask;

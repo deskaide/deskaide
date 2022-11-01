@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="doc/deskaide-logo.png" height="120">
+  <img src="buildResources/icon.png" height="120">
   <h1>Deskaide</h1>
   <strong>An aide to your desk life!</strong>
 </div>
@@ -14,6 +14,7 @@
 - TypeScript - A typed JavaScript
 - [CodeMirror 6](https://codemirror.net/6/) - An extensible code editor for the web
 - [Remark](https://remark.js.org/) - An extensible Markdown processor
+- [pouchdb](https://pouchdb.com/) - The Database that Syncs!
 
 ## Get started
 
@@ -104,7 +105,7 @@ When running building, environment variables are loaded from the following files
 
 ## Author
 
-Takuya Matsuyama ([@craftzdog](https://github.com/craftzdog))
+Shahidul Islam Majumder ([@sh4hids](https://github.com/sh4hids))
 
 [vite]: https://github.com/vitejs/vite/
 [electron]: https://github.com/electron/electron

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const IconJournal = ({
+export const IconJournal = ({
   pathFillColor,
   ...props
 }: React.SVGProps<SVGSVGElement> & {
@@ -32,5 +32,3 @@ const IconJournal = ({
     </svg>
   );
 };
-
-export default IconJournal;

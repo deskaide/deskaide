@@ -1,7 +1,8 @@
-import * as React from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import PomodoroClockBG from './PomodoroClockBG';
-import Text from './Text';
+
+import { PomodoroClockBG } from './PomodoroClockBG';
+import { Text } from './Text';
+import { getFormattedTime } from '../utils';
 
 const animateHeart = keyframes`
    0% {
@@ -14,13 +15,29 @@ const animateHeart = keyframes`
 `;
 
 const Wrapper = styled.div<{ isAnimationOn: boolean }>`
+  display: inline-block;
   position: relative;
+  width: 36vw;
+  padding-bottom: calc((480 / 471) * 36vw);
+  vertical-align: middle;
+  overflow: hidden;
+
+  #pomodoro-clock {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   span {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+      font-size: 3vw;
+    }
   }
 
   ${({ isAnimationOn }) =>
@@ -34,32 +51,30 @@ interface Props {
   bgBottomFill?: string;
   bgMiddleFill?: string;
   bgTopFill?: string;
-  seconds?: number;
+  time?: number;
 }
 
-const PomodoroClock = ({
+export const PomodoroClock = ({
   bgBottomFill,
   bgMiddleFill,
   bgTopFill,
-  seconds = 0,
+  time = 0,
 }: Props) => {
-  const paddedHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
-  const paddedMinutes = `0${Math.floor((seconds % 3600) / 60)}`.slice(-2);
-  const paddedSeconds = `0${Math.floor((seconds % 3600) % 60)}`.slice(-2);
-
+  const { hours, minutes, seconds } = getFormattedTime(time);
   return (
-    <Wrapper isAnimationOn={seconds > 0}>
+    <Wrapper isAnimationOn={time > 0}>
       <PomodoroClockBG
         bgBottomFill={bgBottomFill}
         bgMiddleFill={bgMiddleFill}
         bgTopFill={bgTopFill}
-        isRotateOn={seconds > 0}
+        isRotateOn={time > 0}
       />
       <span>
-        <Text variant="h2">{`${paddedHours}:${paddedMinutes}:${paddedSeconds}`}</Text>
+        <Text
+          variant="h2"
+          color="light.1"
+        >{`${hours}:${minutes}:${seconds}`}</Text>
       </span>
     </Wrapper>
   );
 };
-
-export default PomodoroClock;

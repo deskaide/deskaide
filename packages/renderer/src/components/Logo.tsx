@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components';
 
-const Logo = ({
+export const Logo = ({
   logoUpperFill,
   logoLowerFill,
   ...props
@@ -33,5 +33,3 @@ const Logo = ({
     </svg>
   );
 };
-
-export default Logo;

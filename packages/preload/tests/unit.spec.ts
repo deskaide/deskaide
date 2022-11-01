@@ -1,29 +1,18 @@
-import { afterEach, expect, test, vi } from 'vitest';
+import { expect, test } from 'vitest';
+import { version } from '../../../package.json';
 
-const exposeInMainWorldMock = vi.fn();
-vi.mock('electron', () => ({
-  contextBridge: { exposeInMainWorld: exposeInMainWorldMock },
-}));
-
-afterEach(() => {
-  vi.clearAllMocks();
-});
+import { info, notification } from '../src';
 
 test('info', async () => {
-  await import('../src/info');
-  expect(exposeInMainWorldMock).toBeCalledTimes(1);
-  expect(exposeInMainWorldMock).lastCalledWith('info', {
+  expect(info).toStrictEqual({
     name: 'Deskaide',
     versions: {
-      app: '1.0.0',
+      app: version,
       ...process.versions,
     },
   });
 });
 
 test('notification', async () => {
-  await import('../src/notification');
-  expect(exposeInMainWorldMock).toBeCalledTimes(1);
-  expect(exposeInMainWorldMock.mock.calls[0][0]).toBe('notification');
-  expect(exposeInMainWorldMock.mock.calls[0][1]).toHaveProperty('send');
+  expect(notification).toHaveProperty('send');
 });

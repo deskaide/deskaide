@@ -1,10 +1,16 @@
 {
-  "extends": "../../tsconfig.base.json",
-
   "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "sourceMap": false,
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "types": ["node"],
+    "resolveJsonModule": true,
     "baseUrl": "."
   },
-
-  "include": ["src/**/*.ts", "contracts.d.ts", "../../types/**/*.d.ts"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.config.js", "dist"]
+  "include": ["src/**/*.ts", "../../types/**/*.d.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
