@@ -29,7 +29,7 @@ jobs:
 
       - name: Get last git tag
         id: tag
-        run: echo "::set-output name=last-tag::$(git describe --tags --abbrev=0 || git rev-list --max-parents=0 ${{github.ref}})"
+        run: echo "last-tag=$(git describe --tags --abbrev=0 || git rev-list --max-parents=0 ${{github.ref}})" >> $GITHUB_OUTPUT
 
       - name: Generate release notes
         uses: ./.github/actions/release-notes
@@ -102,6 +102,9 @@ jobs:
 
       - name: Update and push version tag
         run: npm run updateVersion
+
+      - name: Show version
+        run: echo "EnvVersion = $VITE_APP_VERSION & OutputVersion = ${{ needs.draft.outputs.version }}"
 
       - name: Compile & release Electron app
         env:
