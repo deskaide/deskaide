@@ -26,13 +26,16 @@ const config = {
     hardenedRuntime: true,
     category: 'public.app-category.utilities',
     target: ['dmg'],
+    publish: 'github',
   },
   linux: {
     category: 'Utility',
     target: ['deb', 'AppImage'],
+    publish: 'github',
   },
   win: {
     target: ['nsis'],
+    publish: 'github',
   },
   afterSign: 'electron-builder-notarize',
 };

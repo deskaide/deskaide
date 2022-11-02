@@ -47,8 +47,9 @@
     "lint-staged": "lint-staged",
     "postinstall": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
     "commit": "cz",
-    "release": "semantic-release",
-    "release:dry": "semantic-release --dry-run"
+    "release": "electron-builder --publish always",
+    "release:dry": "semantic-release --dry-run",
+    "updateVersion": "semantic-release"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
