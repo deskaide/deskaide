@@ -100,10 +100,10 @@ jobs:
           MODE: 'production'
         run: npm run build
 
-      - name: Compile & release Electron app
-        env:
-          VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
-        run: npm run release
-
       - name: Update and push version tag
         run: npm run updateVersion
+
+      - name: Compile & release Electron app
+        env:
+          VITE_APP_VERSION: ${{ env.VITE_APP_VERSION }}
+        run: npm run release
