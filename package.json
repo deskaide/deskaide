@@ -47,7 +47,7 @@
     "lint-staged": "lint-staged",
     "postinstall": "cross-env ELECTRON_RUN_AS_NODE=1 electron scripts/update-electron-vendors.mjs",
     "commit": "cz",
-    "release": "electron-builder --publish always",
+    "release": "electron-builder --config .electron-builder.config.js --dir --config.asar=false --publish always",
     "release:dry": "semantic-release --dry-run",
     "updateVersion": "semantic-release"
   },
