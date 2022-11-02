@@ -95,6 +95,11 @@ jobs:
         run: echo "$RELEASE_NOTE" >> ./buildResources/release-notes.md
 
       # Compile app and upload artifacts
+      - name: Build the app
+        env:
+          MODE: 'production'
+        run: npm run build
+
       - name: Compile & release Electron app
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
