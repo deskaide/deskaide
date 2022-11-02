@@ -9,22 +9,22 @@ const space: CustomNumberArrayType = [
 ] as CustomNumberArrayType;
 
 const fontSizes: CustomStringArrayType = [
-  `13px`,
-  `15px`,
-  `18px`,
-  `22px`,
-  `26px`,
-  `31px`,
-  `37px`,
-  `45px`,
-  `54px`,
-  `65px`,
+  '13px',
+  '15px',
+  '18px',
+  '22px',
+  '26px',
+  '31px',
+  '37px',
+  '45px',
+  '54px',
+  '65px',
 ] as CustomStringArrayType;
 
 const fonts = {
-  body: `'Fira Sans', sans-serif`,
-  heading: `'PT Sans', sans-serif`,
-  code: `'Fira Code', monospace`,
+  body: "'Fira Sans', sans-serif",
+  heading: "'PT Sans', sans-serif",
+  code: "'Fira Code', monospace",
 };
 
 const breakpoints = ['240px', '480px', '768px', '1024px', '1224px'];
@@ -54,9 +54,9 @@ const colors = {
 };
 
 const elevations = [
-  `0px 0px 1px rgba(39, 40, 63, 0.08), 0px 0.4px 2px rgba(83, 85, 110, 0.16)`,
-  `0px 0px 1px rgba(39, 40, 63, 0.08), 0px 2px 4px rgba(25, 25, 36, 0.16)`,
-  `0px 2px 8px rgba(39, 40, 63, 0.08), 0px 16px 32px rgba(25, 25, 36, 0.16)`,
+  '0px 0px 1px rgba(39, 40, 63, 0.08), 0px 0.4px 2px rgba(83, 85, 110, 0.16)',
+  '0px 0px 1px rgba(39, 40, 63, 0.08), 0px 2px 4px rgba(25, 25, 36, 0.16)',
+  '0px 2px 8px rgba(39, 40, 63, 0.08), 0px 16px 32px rgba(25, 25, 36, 0.16)',
 ];
 
 space.sm = space[1];
