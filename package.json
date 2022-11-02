@@ -140,7 +140,6 @@
     "retext-english": "^4.1.0",
     "styled-components": "^5.3.6",
     "styled-system": "^5.1.5",
-    "uiohook-napi": "^1.5.0",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1",
     "yup": "^0.32.11"
