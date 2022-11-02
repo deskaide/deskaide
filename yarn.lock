@@ -6862,11 +6862,6 @@
   "resolved" "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.1.1.tgz"
   "version" "4.1.1"
 
-"node-gyp-build@4.x.x":
-  "integrity" "sha512-amJnQCcgtRVw9SvoebO3BKGESClrfXGCUTX9hSn1OuGQTQBOZmVd0Z0OlecpuRksKvbsUqALE8jls/ErClAPuQ=="
-  "resolved" "https://registry.npmjs.org/node-gyp-build/-/node-gyp-build-4.4.0.tgz"
-  "version" "4.4.0"
-
 "node-gyp@^9.0.0", "node-gyp@^9.1.0":
   "version" "9.1.0"
   dependencies:
@@ -9309,13 +9304,6 @@
   "integrity" "sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g=="
   "resolved" "https://registry.npmjs.org/uglify-js/-/uglify-js-3.17.4.tgz"
   "version" "3.17.4"
-
-"uiohook-napi@^1.5.0":
-  "integrity" "sha512-/bqSKDCfPxgUyFPPOqf6yTBCF4g8KjRihdpJLnQgFF0RTYVVG3w1KVCVpdDJSN5is8jqKUjjYKEiPZaYiuca9g=="
-  "resolved" "https://registry.npmjs.org/uiohook-napi/-/uiohook-napi-1.5.0.tgz"
-  "version" "1.5.0"
-  dependencies:
-    "node-gyp-build" "4.x.x"
 
 "unbox-primitive@^1.0.2":
   "integrity" "sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw=="
