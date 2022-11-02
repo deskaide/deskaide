@@ -15,7 +15,7 @@ const ModalBackdrop = styled.div<ModalBackdropProp>`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  display: ${({ isOpen = true }) => (isOpen ? `block` : `none`)};
+  display: ${({ isOpen = true }) => (isOpen ? 'block' : 'none')};
   z-index: 999;
 `;
 

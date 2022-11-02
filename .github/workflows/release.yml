@@ -104,9 +104,9 @@ jobs:
         run: npm run updateVersion
 
       - name: Show version
-        run: echo "EnvVersion = $VITE_APP_VERSION & OutputVersion = ${{ needs.draft.outputs.version }}"
+        run: echo "Next Version is ${{ needs.draft.outputs.version }}"
 
       - name: Compile & release Electron app
         env:
-          VITE_APP_VERSION: ${{ env.VITE_APP_VERSION }}
+          VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
         run: npm run release
