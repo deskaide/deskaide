@@ -2,6 +2,21 @@
 # yarn lockfile v1
 
 
+"@actions/core@^1.10.0":
+  "integrity" "sha512-2aZDDa3zrrZbP5ZYg159sNoLRb61nQ7awl5pSvIq5Qpj81vwDzdMRKzkWJGJuwVvWpvZKx7vspJALyvaaIQyug=="
+  "resolved" "https://registry.npmjs.org/@actions/core/-/core-1.10.0.tgz"
+  "version" "1.10.0"
+  dependencies:
+    "@actions/http-client" "^2.0.1"
+    "uuid" "^8.3.2"
+
+"@actions/http-client@^2.0.1":
+  "integrity" "sha512-PIXiMVtz6VvyaRsGY268qvj57hXQEpsYogYOu2nrQhlf+XCGmZstmuZBbAybUl1nQGnvS1k1eEsQ69ZoD7xlSw=="
+  "resolved" "https://registry.npmjs.org/@actions/http-client/-/http-client-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "tunnel" "^0.0.6"
+
 "@ampproject/remapping@^2.1.0":
   "integrity" "sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w=="
   "resolved" "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
@@ -8398,7 +8413,14 @@
   dependencies:
     "loose-envify" "^1.1.0"
 
-"semantic-release@^19.0.5", "semantic-release@>=18.0.0", "semantic-release@>=18.0.0-beta.1", "semantic-release@>=19.0.0":
+"semantic-release-export-data@^1.0.1":
+  "integrity" "sha512-6vlgrrzzcMi/REhQd65Bh4dfSKmgwXOJ/Q2RVlT9WsU4Ya1T2qGpkSrMfG/n6oFRrqBdbDlyZgxNd94ziW+vSg=="
+  "resolved" "https://registry.npmjs.org/semantic-release-export-data/-/semantic-release-export-data-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "@actions/core" "^1.10.0"
+
+"semantic-release@^19.0.5", "semantic-release@>=18", "semantic-release@>=18.0.0", "semantic-release@>=18.0.0-beta.1", "semantic-release@>=19.0.0":
   "integrity" "sha512-NMPKdfpXTnPn49FDogMBi36SiBfXkSOJqCkk0E4iWOY1tusvvgBwqUmxTX1kmlT6kIYed9YwNKD1sfPpqa5yaA=="
   "resolved" "https://registry.npmjs.org/semantic-release/-/semantic-release-19.0.5.tgz"
   "version" "19.0.5"
@@ -9560,7 +9582,7 @@
     "safe-buffer" "^5.1.2"
     "which-typed-array" "^1.1.2"
 
-"uuid@8.3.2":
+"uuid@^8.3.2", "uuid@8.3.2":
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
   "version" "8.3.2"
