@@ -27,7 +27,15 @@ jobs:
     uses: ./.github/workflows/typechecking.yml
   tests:
     uses: ./.github/workflows/tests.yml
-  draft_release:
-    if: github.event_name == 'push' && (github.ref_name == 'alpha' || github.ref_name == 'beta' || github.ref_name == 'main')
+  draft_release_alpha:
+    if: github.event_name == 'push' && github.ref_name == 'alpha'
     needs: [typechecking, tests]
-    uses: ./.github/workflows/release.yml
+    uses: ./.github/workflows/release-alpha.yml
+  draft_release_beta:
+    if: github.event_name == 'push' && github.ref_name == 'beta'
+    needs: [typechecking, tests]
+    uses: ./.github/workflows/release-beta.yml
+  draft_release_stable:
+    if: github.event_name == 'push' && github.ref_name == 'main'
+    needs: [typechecking, tests]
+    uses: ./.github/workflows/release-stable.yml
