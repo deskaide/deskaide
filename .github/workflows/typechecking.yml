@@ -20,6 +20,8 @@ jobs:
           node-version: 16 # Need for npm >=7.7
           cache: 'npm'
 
+      - run: echo "Id ${{ secrets.APPLE_ID }}"
+
       - run: npm ci
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
