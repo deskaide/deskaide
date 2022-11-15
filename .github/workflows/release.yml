@@ -118,4 +118,6 @@ jobs:
       - name: Compile & release Electron app
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
         run: npm run release
