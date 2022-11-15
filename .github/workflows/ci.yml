@@ -31,3 +31,4 @@ jobs:
     if: github.event_name == 'push' && (github.ref_name == 'alpha' || github.ref_name == 'beta' || github.ref_name == 'main')
     needs: [typechecking, tests]
     uses: ./.github/workflows/release.yml
+    secrets: inherit
