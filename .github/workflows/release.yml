@@ -29,8 +29,8 @@ jobs:
       new-release-version: ${{ steps.get-next-version.outputs.new-release-version }}
 
   draft:
+    needs: [next-version]
     runs-on: ubuntu-latest
-    needs: next-version
     if: needs.get-next-version.outputs.new-release-published == 'true'
     steps:
       - uses: actions/checkout@v3
