@@ -20,7 +20,10 @@ jobs:
           node-version: 16 # Need for npm >=7.7
           cache: 'npm'
 
-      - run: echo "Id ${{ secrets.APPLE_ID }}"
+      - name: Test secret
+        env:
+          TEST_ENV: ${{ secrets.APPLE_ID }}
+        run: echo "Id $TEST_ENV"
 
       - run: npm ci
         env:
