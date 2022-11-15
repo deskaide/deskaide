@@ -20,19 +20,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
 
       - name: Install Packages
         run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+
+      - name: Check release script
+        run: npm run release:dry
+
+      - name: Set version using semantic-release
+        run: echo "VITE_APP_VERSION=$(npm run release:dry | grep -oE 'next release version is (0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?' | grep -oE '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?')" >> $GITHUB_ENV
 
       - name: Get version using semantic-release
         id: version
-        run: echo "build-version=$(npm run release:dry | grep -oE 'next release version is (0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?' | grep -oE '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?')" >> $GITHUB_OUTPUT
+        run: echo "build-version=$VITE_APP_VERSION" >> $GITHUB_OUTPUT
 
       - name: Show version
         run: echo "Next Version is $VITE_APP_VERSION (${{ github.ref_name }})"
@@ -98,9 +104,6 @@ jobs:
           MODE: 'production'
         run: npm run build
 
-      - name: Set version using semantic-release
-        run: echo "VITE_APP_VERSION=$(npm run release:dry | grep -oE 'next release version is (0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?' | grep -oE '(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?')" >> $GITHUB_ENV
-
       - name: Show version
         run: echo "Next Version is $VITE_APP_VERSION (${{ github.ref_name }})"
 
@@ -111,6 +114,4 @@ jobs:
         run: echo "Next Version is ${{ needs.draft.outputs.version }}"
 
       - name: Compile & release Electron app
-        env:
-          VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
         run: npm run release
