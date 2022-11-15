@@ -23,6 +23,7 @@ jobs:
       - name: Test secret
         env:
           TEST_ENV: ${{ secrets.APPLE_ID }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: echo "Id $TEST_ENV"
 
       - run: npm ci
