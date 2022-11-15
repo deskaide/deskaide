@@ -24,6 +24,8 @@ const config = {
   },
   mac: {
     hardenedRuntime: true,
+    entitlements:
+      './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
     category: 'public.app-category.utilities',
     target: ['dmg'],
     publish: 'github',
