@@ -24,7 +24,9 @@ const config = {
   },
   mac: {
     hardenedRuntime: true,
-    entitlements: './buildResources/entitlements.mac.inherit.plist',
+    gatekeeperAssess: false,
+    entitlements: 'buildResources/entitlements.mac.inherit.plist',
+    entitlementsInherit: 'buildResources/entitlements.mac.inherit.plist',
     category: 'public.app-category.utilities',
     target: ['dmg'],
     publish: 'github',
@@ -37,6 +39,9 @@ const config = {
   win: {
     target: ['nsis'],
     publish: 'github',
+  },
+  dmg: {
+    sign: false,
   },
   afterSign: 'scripts/notarize.js',
 };

@@ -8,6 +8,8 @@ concurrency:
 defaults:
   run:
     shell: 'bash'
+env:
+  GH_TOKEN: ${{ secrets.github_token }}
 
 jobs:
   get-next-version:
@@ -116,6 +118,4 @@ jobs:
       - name: Compile & release Electron app
         env:
           VITE_APP_VERSION: ${{ needs.draft.outputs.version }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
         run: npm run release
