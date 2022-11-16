@@ -8,8 +8,6 @@ concurrency:
 defaults:
   run:
     shell: 'bash'
-env:
-  GH_TOKEN: ${{ secrets.github_token }}
 
 jobs:
   get-next-version:
