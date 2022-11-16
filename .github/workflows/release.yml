@@ -103,17 +103,16 @@ jobs:
           RELEASE_NOTE: ${{ needs.draft.outputs.release-note }}
         run: echo "$RELEASE_NOTE" >> ./buildResources/release-notes.md
 
-      # Compile app and upload artifacts
-      - name: Build the app
-        env:
-          MODE: 'production'
-        run: npm run build
-
       - name: Show version
         run: echo "Next Version is ${{ needs.draft.outputs.version }} (${{ github.ref_name }})"
 
       - name: Update and push version tag
         run: npm run updateVersion
+
+      - name: Build the app
+        env:
+          MODE: 'production'
+        run: npm run build
 
       - name: Compile & release Electron app
         env:
