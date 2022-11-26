@@ -43,6 +43,20 @@ const Wrapper = styled(Box)`
     pre[class*='language-'] {
       background: var(--color-bg-0);
     }
+
+    .contains-task-list {
+      margin: ${({ theme }) => theme.space[4]}px 0;
+
+      .task-list-item {
+        p {
+          margin: 0;
+        }
+
+        &::before {
+          content: none;
+        }
+      }
+    }
   }
 `;
 

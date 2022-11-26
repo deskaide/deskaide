@@ -109,6 +109,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  ol {
+      margin-left: ${({ theme }) => theme.space.lg}px;
+    }
+
   .post-body {
     word-break: break-word;
     
