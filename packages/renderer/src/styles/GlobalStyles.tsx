@@ -143,6 +143,18 @@ export const GlobalStyle = createGlobalStyle`
     height: 4px;
   }
 
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  th, td {
+    padding: ${({ theme }) => theme.space.md}px;
+    text-align: left;
+    border: 1px solid var(--color-dark-2);
+  }
+
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;
