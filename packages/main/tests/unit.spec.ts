@@ -33,8 +33,10 @@ vi.mock('electron', () => {
     },
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sc.getPrimaryDisplay = vi.fn<any>(() => ({ workArea: {} }));
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   im.on = vi.fn<any>();
 
   return { BrowserWindow: bw, app, ipcMain: im, screen: sc };

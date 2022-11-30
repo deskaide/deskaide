@@ -1,10 +1,33 @@
 import { useEffect } from 'react';
 
-export const useOnClickOutside = (ref: any, handler: (e: any) => void) => {
+const MOUSEDOWN = 'mousedown';
+const TOUCHSTART = 'touchstart';
+
+type HandledEvents = [typeof MOUSEDOWN, typeof TOUCHSTART];
+type HandledEventsType = HandledEvents[number];
+type PossibleEvent = {
+  [Type in HandledEventsType]: HTMLElementEventMap[Type];
+}[HandledEventsType];
+type Handler = (event: PossibleEvent) => void;
+
+const currentDocument = typeof document !== 'undefined' ? document : undefined;
+export const useOnClickOutside = (
+  ref: React.RefObject<HTMLElement>,
+  handler: Handler | null,
+  { document = currentDocument } = {}
+) => {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   useEffect(() => {
-    const listener = (event: { target: any }) => {
+    if (!handler) {
+      return;
+    }
+
+    const listener = (event: PossibleEvent) => {
       // Do nothing if clicking ref's element or descendent elements
-      if (!ref.current || ref.current.contains(event.target)) {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
         return;
       }
 

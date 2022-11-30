@@ -37,6 +37,17 @@ export const Diary: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    function handleEscapeKey(event: KeyboardEvent) {
+      if (event.code === 'Escape') {
+        setIsEditing(false);
+      }
+    }
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  });
+
   const handlePreviewClick: React.MouseEventHandler<HTMLDivElement> =
     useCallback((e) => {
       if (e.detail === 2) {
