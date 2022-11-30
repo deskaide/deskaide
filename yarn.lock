@@ -3527,9 +3527,9 @@
     "typed-emitter" "^2.1.0"
 
 "electron@^21.2.0":
-  "integrity" "sha512-oKV4fo8l6jlOZ1cYZ4RpZz02ZxLuBo3SO7DH+FrJ8uDyCirP+eVJ/qlzu23odtNe0P7S/mYAZbC6abZHWoqtLg=="
-  "resolved" "https://registry.npmjs.org/electron/-/electron-21.2.0.tgz"
-  "version" "21.2.0"
+  "integrity" "sha512-Ik/I9oFHA1h32JRtRm6GMgYdUctFpF/tPnHyATg4r3LXBTUT6habGh3GxSdmmTa5JgtA7uJUEm8EjjZItk7T3g=="
+  "resolved" "https://registry.npmjs.org/electron/-/electron-21.3.1.tgz"
+  "version" "21.3.1"
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
