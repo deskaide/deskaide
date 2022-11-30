@@ -70,4 +70,10 @@ export const markdownHighlighting = HighlightStyle.define([
     lineHeight: baseTheme.lineHeights.body,
     display: 'inline-block',
   },
+  {
+    tag: tags.list,
+    fontFamily: baseTheme.fonts.body,
+    fontSize: baseTheme.fontSizes.body,
+    lineHeight: baseTheme.lineHeights.body,
+  },
 ]);

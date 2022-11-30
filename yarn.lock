@@ -8006,6 +8006,11 @@
   dependencies:
     "picomatch" "^2.2.1"
 
+"reading-time@^2.0.0-1":
+  "integrity" "sha512-5Eoo17ZGqH2L0jmMZUNKARiGAX3NCC0LR+mDHTX+nMPqFSRwMQrsxhI9NOSEfzH8E1W5vGAKFcyQAk3Rla1WuA=="
+  "resolved" "https://registry.npmjs.org/reading-time/-/reading-time-2.0.0-1.tgz"
+  "version" "2.0.0-1"
+
 "redent@^3.0.0":
   "integrity" "sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg=="
   "resolved" "https://registry.npmjs.org/redent/-/redent-3.0.0.tgz"

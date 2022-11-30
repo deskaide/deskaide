@@ -19,7 +19,7 @@ const ModalBackdrop = styled.div<ModalBackdropProp>`
   z-index: 999;
 `;
 
-const ModalContainer = styled.div<{ ref: any }>`
+const ModalContainer = styled.div`
   position: fixed;
   background: ${({ theme }) => theme.colors.bg1};
   color: ${({ theme }) => theme.colors.text1};
@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   ...props
 }) => {
-  const modalRef = useRef();
+  const modalRef = useRef(null);
   useOnClickOutside(modalRef, () => onClose(false));
 
   const content = (

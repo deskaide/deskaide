@@ -23,6 +23,15 @@ export type StateTransition = Record<
   Partial<Record<ApiStates, States>>
 >;
 
+export interface GetAllPostItemType<T> {
+  doc: T;
+  id: string;
+  key: string;
+  value: {
+    rev: string;
+  };
+}
+
 const transitions: StateTransition = {
   [States.idle]: {
     [ApiStates.pending]: States.isLoading,
@@ -48,7 +57,7 @@ const initialState: {
   currentPost?: IDiaryPost;
   currentPostState: States;
   allDiaryPosts: {
-    data: any[];
+    data: GetAllPostItemType<IDiaryPost>[];
     totalCount: number;
   };
 } = {
@@ -105,7 +114,6 @@ export const getAllDiaryPosts = createAsyncThunk(
   'diary/getAllDiaryPosts',
   async (month: string, { rejectWithValue }) => {
     try {
-      console.log(month);
       const startKey = `${DB_ID_PREFIXES.diaryPost}#${month}`;
 
       const result = await db.getAll({
