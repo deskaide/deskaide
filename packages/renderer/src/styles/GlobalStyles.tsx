@@ -109,6 +109,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  ol {
+      margin-left: ${({ theme }) => theme.space.lg}px;
+    }
+
   .post-body {
     word-break: break-word;
     
@@ -137,6 +141,18 @@ export const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  th, td {
+    padding: ${({ theme }) => theme.space.md}px;
+    text-align: left;
+    border: 1px solid var(--color-dark-2);
   }
 
 

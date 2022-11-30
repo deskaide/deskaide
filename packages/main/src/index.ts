@@ -1,4 +1,5 @@
 import type { BrowserWindow } from 'electron';
+import { shell } from 'electron';
 import { powerMonitor, powerSaveBlocker, app, ipcMain } from 'electron';
 
 import './security-restrictions';
@@ -54,6 +55,11 @@ app
     mainWindow = await restoreOrCreateMainWindow();
     powerMonitor.on('suspend', () => {
       powerSaveBlocker.start('prevent-app-suspension');
+    });
+
+    mainWindow.webContents.on('will-navigate', (e, url) => {
+      e.preventDefault();
+      shell.openExternal(url);
     });
   })
   .catch((e) => console.error('Failed create main window:', e));

@@ -38,19 +38,21 @@ const InputContainer = styled.div`
   }
 `;
 
-type Option = {
+type Option<T> = {
   label: string;
-  value: any;
+  value: T;
 };
 
-type Props = {
+type Props<T> = {
   label?: string;
-  options: Option[];
+  options: Option<T>[];
 };
 
-export const SelectInput: React.FC<
-  React.InputHTMLAttributes<HTMLInputElement> & Props
-> = ({ label, options, ...props }) => {
+export const SelectInput = <T extends string | number>({
+  label,
+  options,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement> & Props<T>) => {
   return (
     <InputContainer>
       {label && (
@@ -67,7 +69,7 @@ export const SelectInput: React.FC<
         as="select"
         aria-label={props.name}
       >
-        {options.map((option: Option) => (
+        {options.map((option: Option<T>) => (
           <option value={option.value} key={option.label}>
             {option.label}
           </option>
