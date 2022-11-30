@@ -141,13 +141,10 @@
     "remark-parse": "^10.0.1",
     "remark-react": "^9.0.1",
     "remark-rehype": "^10.1.0",
-    "remark-retext": "^5.0.1",
     "remark-stringify": "^10.0.2",
-    "retext-english": "^4.1.0",
     "styled-components": "^5.3.6",
     "styled-system": "^5.1.5",
     "unified": "^10.1.2",
-    "unist-util-visit": "^4.1.1",
     "yup": "^0.32.11"
   },
   "config": {
