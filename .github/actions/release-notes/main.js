@@ -123,7 +123,7 @@ function getCommits() {
 
   const logs = String(
     execSync(
-      `git --no-pager log ${START_FROM}..${END_TO} --pretty=format:"${format}" --reverse`
+      `git --no-pager --no-merges log ${START_FROM}..${END_TO} --pretty=format:"${format}" --reverse`
     )
   );
 
