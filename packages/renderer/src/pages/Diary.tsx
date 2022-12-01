@@ -20,11 +20,9 @@ export const Diary: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
-  const { currentPost, allDiaryPosts } = useAppSelector(
-    (state: RootState) => state.diary
-  );
+  const { allDiaryPosts } = useAppSelector((state: RootState) => state.diary);
 
-  const [doc, setDoc] = useState(currentPost?.body ?? '');
+  const [doc, setDoc] = useState('');
 
   const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
 
@@ -69,16 +67,17 @@ export const Diary: React.FC = () => {
   const counts = useMarkdownCounts(doc);
   useAutoSave(doc, 500, handleDocSave);
 
+  const postId = React.useMemo(() => {
+    return `${DB_ID_PREFIXES.diaryPost}#${format(selectedDate, 'yyyy-MM-dd')}`;
+  }, [selectedDate]);
+
   useEffect(() => {
     let ignoreFtech = false;
-    if (!ignoreFtech && selectedDate) {
+    if (!ignoreFtech && postId) {
       setDoc('');
-      const id = `${DB_ID_PREFIXES.diaryPost}#${format(
-        selectedDate,
-        'yyyy-MM-dd'
-      )}`;
+      console.log('hello', postId);
 
-      dispatch(getDiaryPostById(id))
+      dispatch(getDiaryPostById(postId))
         .unwrap()
         .then((post) => {
           setDoc(post.body);
@@ -91,13 +90,16 @@ export const Diary: React.FC = () => {
     return () => {
       ignoreFtech = true;
     };
-  }, [selectedDate]);
+  }, [postId]);
 
   const selectedMonth = React.useMemo(() => {
     return format(currentMonth, 'yyyy-MM');
   }, [currentMonth]);
 
   useEffect(() => {
+    setDoc('');
+    setSelectedDate(new Date(`${selectedMonth}-01`));
+
     dispatch(getAllDiaryPosts(selectedMonth));
   }, [selectedMonth]);
 
