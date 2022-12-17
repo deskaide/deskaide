@@ -91,6 +91,14 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.code};
   }
 
+  .deskaide-highlight {
+    display: grid;
+
+    pre {
+      white-space: pre-wrap;
+    }
+  }
+
   ul {
     list-style: none;
     margin: 0;

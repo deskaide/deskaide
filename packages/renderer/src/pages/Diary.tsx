@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
@@ -8,19 +8,21 @@ import { useAutoSave, useMarkdownCounts } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import type { RootState } from '../store';
 import {
-  saveDiaryPost,
-  getDiaryPostById,
   getAllDiaryPosts,
+  getDiaryPostById,
+  saveDiaryPost,
+  setSelectedDate,
+  setSelectedMonth,
 } from '../store/diarySlice';
 import { DB_ID_PREFIXES } from '../config';
 
 export const Diary: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
-  const { allDiaryPosts } = useAppSelector((state: RootState) => state.diary);
+  const { allDiaryPosts, selectedDate, selectedMonth } = useAppSelector(
+    (state: RootState) => state.diary
+  );
 
   const [doc, setDoc] = useState('');
 
@@ -54,11 +56,11 @@ export const Diary: React.FC = () => {
     }, []);
 
   const handleDocSave: <T>(data: T) => void = (data) => {
-    if (data) {
+    if (data && isEditing) {
       dispatch(
         saveDiaryPost({
           body: data as string,
-          date: selectedDate.toJSON(),
+          date: selectedDate,
         })
       );
     }
@@ -67,15 +69,18 @@ export const Diary: React.FC = () => {
   const counts = useMarkdownCounts(doc);
   useAutoSave(doc, 500, handleDocSave);
 
-  const postId = React.useMemo(() => {
-    return `${DB_ID_PREFIXES.diaryPost}#${format(selectedDate, 'yyyy-MM-dd')}`;
+  const postId = useMemo(() => {
+    return `${DB_ID_PREFIXES.diaryPost}#${format(
+      new Date(selectedDate),
+      'yyyy-MM-dd'
+    )}`;
   }, [selectedDate]);
 
   useEffect(() => {
     let ignoreFtech = false;
     if (!ignoreFtech && postId) {
       setDoc('');
-      console.log('hello', postId);
+      setIsEditing(false);
 
       dispatch(getDiaryPostById(postId))
         .unwrap()
@@ -92,15 +97,12 @@ export const Diary: React.FC = () => {
     };
   }, [postId]);
 
-  const selectedMonth = React.useMemo(() => {
-    return format(currentMonth, 'yyyy-MM');
-  }, [currentMonth]);
+  const month = React.useMemo(() => {
+    return format(new Date(selectedMonth), 'yyyy-MM');
+  }, [selectedMonth]);
 
   useEffect(() => {
-    setDoc('');
-    setSelectedDate(new Date(`${selectedMonth}-01`));
-
-    dispatch(getAllDiaryPosts(selectedMonth));
+    dispatch(getAllDiaryPosts(month));
   }, [selectedMonth]);
 
   const activeDates = React.useMemo(() => {
@@ -117,8 +119,9 @@ export const Diary: React.FC = () => {
           <Box padding={4}>
             <Calendar
               activeDates={activeDates}
-              onClickDay={setSelectedDate}
-              onClickMonth={setCurrentMonth}
+              onClickDay={(date) => dispatch(setSelectedDate(date.toJSON()))}
+              onClickMonth={(date) => dispatch(setSelectedMonth(date.toJSON()))}
+              defaultSelectedDate={new Date(selectedDate)}
             />
           </Box>
         }
@@ -136,7 +139,7 @@ export const Diary: React.FC = () => {
               borderTopRightRadius={4}
               borderTopLeftRadius={4}
             >
-              <span>{format(selectedDate, 'EEEE, LLLL, d, Y')}</span>
+              <span>{format(new Date(selectedDate), 'EEEE, LLLL, d, Y')}</span>
               {counts.words && (
                 <Text
                   display="inline-block"
@@ -151,14 +154,14 @@ export const Diary: React.FC = () => {
               )}
             </Text>
           </Box>
-          {(isEditing || !doc) && (
+          {isEditing && (
             <DiaryEditor
               onChange={handleDocChange}
               onBlur={handleOnBlur}
               initialDoc={doc}
             />
           )}
-          {!isEditing && doc && (
+          {!isEditing && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
           )}
         </Box>

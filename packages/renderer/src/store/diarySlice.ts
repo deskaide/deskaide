@@ -1,5 +1,12 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { format } from 'date-fns';
+import {
+  format,
+  differenceInCalendarMonths,
+  addMonths,
+  subMonths,
+  isAfter,
+} from 'date-fns';
 import { db } from '#preload';
 
 import type { IDiaryPost } from '../types';
@@ -54,6 +61,8 @@ function transition(currentState: States, action: ApiStates) {
 }
 
 const initialState: {
+  selectedDate: string;
+  selectedMonth: string;
   currentPost?: IDiaryPost;
   currentPostState: States;
   allDiaryPosts: {
@@ -66,6 +75,8 @@ const initialState: {
     data: [],
     totalCount: 0,
   },
+  selectedDate: new Date().toJSON(),
+  selectedMonth: new Date().toJSON(),
 };
 
 export const saveDiaryPost = createAsyncThunk(
@@ -133,7 +144,36 @@ export const getAllDiaryPosts = createAsyncThunk(
 export const diarySlice = createSlice({
   name: 'diary',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedDate: (state, action: PayloadAction<string>) => {
+      state.selectedDate = action.payload;
+    },
+    setSelectedMonth: (state, action: PayloadAction<string>) => {
+      const currentDate = new Date();
+      const currentSelectedDate = new Date(state.selectedDate);
+      const selectedMonth = new Date(action.payload);
+
+      state.selectedMonth = action.payload;
+
+      const diffInMonths = differenceInCalendarMonths(
+        currentSelectedDate,
+        selectedMonth
+      );
+      if (diffInMonths < 0) {
+        const nextDate = addMonths(currentSelectedDate, diffInMonths * -1);
+
+        state.selectedDate = isAfter(currentDate, nextDate)
+          ? nextDate.toJSON()
+          : currentDate.toJSON();
+      }
+      if (diffInMonths > 0) {
+        state.selectedDate = subMonths(
+          currentSelectedDate,
+          diffInMonths
+        ).toJSON();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(saveDiaryPost.pending, (state) => {
       state.currentPostState = transition(
@@ -178,8 +218,6 @@ export const diarySlice = createSlice({
       state.allDiaryPosts = { data: [], totalCount: 0 };
     });
     builder.addCase(getAllDiaryPosts.fulfilled, (state, action) => {
-      console.log(action.payload);
-
       state.allDiaryPosts = action.payload;
     });
     builder.addCase(getAllDiaryPosts.rejected, (state) => {
@@ -187,5 +225,7 @@ export const diarySlice = createSlice({
     });
   },
 });
+
+export const { setSelectedDate, setSelectedMonth } = diarySlice.actions;
 
 export default diarySlice.reducer;

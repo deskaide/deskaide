@@ -43,10 +43,15 @@ const Wrapper = styled.div`
 
     .react-calendar__month-view__days {
       button.react-calendar__month-view__days__day--neighboringMonth {
-        color: var(--color-bg-2);
+        color: var(--color-text-2);
+
+        &:disabled {
+          color: var(--color-bg-2);
+        }
       }
       button.react-calendar__tile--active {
         color: var(--color-text-1);
+        font-weight: bold;
       }
     }
 
@@ -54,6 +59,7 @@ const Wrapper = styled.div`
       &:enabled {
         &:hover {
           background: var(--color-bg-2);
+          border-color: var(--color-text-1);
         }
 
         &:focus {
@@ -67,6 +73,7 @@ const Wrapper = styled.div`
       &:enabled {
         &:focus {
           background: var(--color-bg-2);
+          border-color: var(--color-text-1);
 
           &:hover {
             background: var(--color-bg-2);
@@ -78,12 +85,17 @@ const Wrapper = styled.div`
     .react-calendar__tile {
       border-radius: 4px;
       color: var(--color-text-1);
+      border: 2px solid var(--color-bg-0);
 
       &:disabled {
         color: var(--color-bg-2);
         background: var(--color-bg-0);
         cursor: not-allowed;
       }
+    }
+
+    .react-calendar__tile--active_selected {
+      border-color: var(--color-text-1);
     }
 
     .react-calendar__tile,
@@ -149,8 +161,23 @@ export const Calendar: React.FC<CalendarProps> = ({
     };
   }, [activeDates]);
 
+  useEffect(() => {
+    let ignoreSetDefaultDate = false;
+    if (!ignoreSetDefaultDate) {
+      setSelectedDate(defaultSelectedDate);
+    }
+
+    return () => {
+      ignoreSetDefaultDate = true;
+    };
+  }, [defaultSelectedDate]);
+
   const tileClassName = ({ date }: { date: Date }) => {
     const classNames = ['react-calendar__tile'];
+
+    if (isSameDay(date, selectedDate)) {
+      classNames.push('react-calendar__tile--active_selected');
+    }
 
     if (dateAlreadyClicked(dates, date))
       return ['react-calendar__tile--active', ...classNames];

@@ -123,8 +123,11 @@ const RawHTMLContainer = styled.div`
   ${border};
 `;
 
-const RawHTML = ({ html }: { html: string }) => (
-  <RawHTMLContainer dangerouslySetInnerHTML={{ __html: html }} />
+const RawHTML: React.FC<TextProps & { html: string }> = ({
+  html,
+  ...props
+}) => (
+  <RawHTMLContainer dangerouslySetInnerHTML={{ __html: html }} {...props} />
 );
 
 export const Text: React.FC<

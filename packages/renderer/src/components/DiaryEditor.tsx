@@ -58,13 +58,14 @@ const Wrapper = styled(Box)`
 `;
 
 export const DiaryEditor: React.FC<Props> = (props) => {
-  const { initialDoc, placeholder = 'Start typing...', onChange } = props;
+  const { initialDoc, placeholder = 'Write something...', onChange } = props;
   const handleChange = useCallback(
     (state: string) => onChange(state),
     [onChange]
   );
   const editor = useRef<HTMLDivElement>(null);
   const { setContainer } = useCodeMirror({
+    autoFocus: initialDoc === '',
     container: editor.current,
     onChange: handleChange,
     value: initialDoc,

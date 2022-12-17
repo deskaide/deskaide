@@ -7,11 +7,14 @@ import rehypeFormat from 'rehype-format';
 import rehypePrismPlus from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
+import rehypeRewrite from 'rehype-rewrite';
 
-import 'prism-themes/themes/prism-one-dark.css';
+import '../styles/themes/syntax-open-sourcerer.css';
+// import 'prism-themes/themes/prism-one-dark.css';
 
 import { Box } from './Box';
 import { Text } from './Text';
+import { useMemo } from 'react';
 
 interface Props {
   doc: string;
@@ -30,20 +33,6 @@ const Wrapper = styled(Box)`
     padding: ${({ theme }) => theme.space[4]}px;
     padding-top: 0;
 
-    pre {
-      background: var(--color-bg-0);
-      overflow: auto;
-      white-space: pre-wrap;
-      padding: ${({ theme }) => theme.space[4]}px;
-      margin: ${({ theme }) => theme.space[4]}px 0;
-      word-break: break-all;
-    }
-
-    .code-highlight,
-    pre[class*='language-'] {
-      background: var(--color-bg-0);
-    }
-
     .contains-task-list {
       margin: ${({ theme }) => theme.space[4]}px 0;
 
@@ -61,20 +50,50 @@ const Wrapper = styled(Box)`
 `;
 
 export const DiaryPreview: React.FC<Props> = (props) => {
-  const md = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypePrismPlus)
-    .use(rehypeRaw)
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-    .processSync(props.doc);
+  const md = useMemo(() => {
+    return unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkRehype, { allowDangerousHtml: true })
+      .use(rehypeRewrite, {
+        rewrite: (node, index, parent) => {
+          if (
+            index !== null &&
+            index >= 0 &&
+            parent?.children &&
+            node.type === 'element' &&
+            node.tagName === 'pre'
+          ) {
+            parent.children[index] = {
+              type: 'element',
+              tagName: 'div',
+              properties: { className: 'deskaide-highlight' },
+              children: [
+                {
+                  ...node,
+                },
+              ],
+            };
+          }
+        },
+      })
+      .use(rehypePrismPlus)
+      .use(rehypeRaw)
+      .use(rehypeFormat)
+      .use(rehypeStringify)
+      .processSync(props.doc);
+  }, [props.doc]);
 
   return (
     <Wrapper>
       <Box height="100%" className="diary-preview" onClick={props.onClick}>
-        <Text variant="raw" html={String(md)}></Text>
+        {props.doc ? (
+          <Text variant="raw" html={String(md)}></Text>
+        ) : (
+          <Text variant="p" color="text2" opacity={0.64} fontFamily="code">
+            Double click to start writing...
+          </Text>
+        )}
       </Box>
     </Wrapper>
   );
