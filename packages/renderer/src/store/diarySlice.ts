@@ -63,13 +63,14 @@ function transition(currentState: States, action: ApiStates) {
 const initialState: {
   selectedDate: string;
   selectedMonth: string;
-  currentPost?: IDiaryPost;
+  currentPost: IDiaryPost | null;
   currentPostState: States;
   allDiaryPosts: {
     data: GetAllPostItemType<IDiaryPost>[];
     totalCount: number;
   };
 } = {
+  currentPost: null,
   currentPostState: States.idle,
   allDiaryPosts: {
     data: [],
@@ -82,27 +83,24 @@ const initialState: {
 export const saveDiaryPost = createAsyncThunk(
   'diary/saveDiaryPost',
   async (data: IDiaryPost, { rejectWithValue }) => {
+    const date = format(new Date(data.date), 'yyyy-MM-dd');
+    const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
+
     try {
-      const date = format(new Date(data.date), 'yyyy-MM-dd');
-      const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
+      const existingData = await db.getById<IDiaryPost>(id);
 
-      try {
-        const existingData = await db.getById<IDiaryPost>(id);
-
-        if (existingData?._id) {
-          return await db.update(existingData._id, {
-            ...existingData,
-            ...data,
-          });
-        }
-      } catch (error) {
-        console.log(error);
+      if (existingData?._id && data.body !== existingData.body) {
+        return await db.update(existingData._id, {
+          ...existingData,
+          ...data,
+        });
       }
-
-      return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
+      return existingData;
     } catch (error) {
       console.log(error);
-
+      if (error instanceof Error && error.name === 'not_found') {
+        return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
+      }
       return rejectWithValue('Failed to save diary post');
     }
   }

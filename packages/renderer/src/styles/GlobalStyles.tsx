@@ -177,4 +177,9 @@ export const GlobalStyle = createGlobalStyle`
       background-color: var(--color-accent-2);
     }
   }
+
+  :: selection {
+    color: var(--color-bg-1);
+    background-color: var(--color-accent-0) !important;
+  }
 `;

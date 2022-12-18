@@ -18,13 +18,43 @@ import { DB_ID_PREFIXES } from '../config';
 
 export const Diary: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(true);
+  const [doc, setDoc] = useState('');
+  const [isDocLoaded, setIsDocLoaded] = useState(false);
   const dispatch = useAppDispatch();
 
   const { allDiaryPosts, selectedDate, selectedMonth } = useAppSelector(
     (state: RootState) => state.diary
   );
 
-  const [doc, setDoc] = useState('');
+  const postId = useMemo(() => {
+    return `${DB_ID_PREFIXES.diaryPost}#${format(
+      new Date(selectedDate),
+      'yyyy-MM-dd'
+    )}`;
+  }, [selectedDate]);
+
+  useEffect(() => {
+    let ignoreFtech = false;
+    if (!ignoreFtech && postId) {
+      setIsDocLoaded(false);
+      setIsEditing(false);
+      setDoc('');
+
+      dispatch(getDiaryPostById(postId))
+        .unwrap()
+        .then((post) => {
+          setIsDocLoaded(true);
+          setDoc(post.body);
+        })
+        .catch((_e) => {
+          setDoc('');
+        });
+    }
+
+    return () => {
+      ignoreFtech = true;
+    };
+  }, [postId]);
 
   const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
 
@@ -56,7 +86,7 @@ export const Diary: React.FC = () => {
     }, []);
 
   const handleDocSave: <T>(data: T) => void = (data) => {
-    if (data && isEditing) {
+    if (isDocLoaded && isEditing) {
       dispatch(
         saveDiaryPost({
           body: data as string,
@@ -68,34 +98,6 @@ export const Diary: React.FC = () => {
 
   const counts = useMarkdownCounts(doc);
   useAutoSave(doc, 500, handleDocSave);
-
-  const postId = useMemo(() => {
-    return `${DB_ID_PREFIXES.diaryPost}#${format(
-      new Date(selectedDate),
-      'yyyy-MM-dd'
-    )}`;
-  }, [selectedDate]);
-
-  useEffect(() => {
-    let ignoreFtech = false;
-    if (!ignoreFtech && postId) {
-      setDoc('');
-      setIsEditing(false);
-
-      dispatch(getDiaryPostById(postId))
-        .unwrap()
-        .then((post) => {
-          setDoc(post.body);
-        })
-        .catch((_e) => {
-          setDoc('');
-        });
-    }
-
-    return () => {
-      ignoreFtech = true;
-    };
-  }, [postId]);
 
   const month = React.useMemo(() => {
     return format(new Date(selectedMonth), 'yyyy-MM');

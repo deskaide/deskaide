@@ -54,6 +54,16 @@ const Wrapper = styled(Box)`
     .cm-scroller {
       font-family: ${({ theme }) => theme.fonts.code};
     }
+
+    .cm-selectionBackground {
+      background: var(--color-bg-1) !important;
+    }
+
+    .cm-content {
+      :: selection {
+        background: var(--color-bg-1) !important;
+      }
+    }
   }
 `;
 

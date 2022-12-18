@@ -8,6 +8,8 @@ export * from './IconJournal';
 export * from './IconLink';
 export * from './Input';
 export * from './Logo';
+export * from './MenuList';
+export * from './MenuListItem';
 export * from './Modal';
 export * from './ModalActions';
 export * from './PomodoroClock';

@@ -109,6 +109,9 @@ jobs:
       - name: Update and push version tag
         run: npm run updateVersion
 
+      - name: Write next version to meta.json
+        run: echo "{\"version\":\"${{ needs.draft.outputs.version }}\"}" >| ./buildResources/meta.json
+
       - name: Build the app
         env:
           MODE: 'production'
