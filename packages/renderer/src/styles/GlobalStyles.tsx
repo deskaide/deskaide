@@ -163,6 +163,15 @@ export const GlobalStyle = createGlobalStyle`
     border: 1px solid var(--color-dark-2);
   }
 
+  input[type='checkbox'] {
+      accent-color: var(--color-accent-1);
+
+      &[aria-disabled="true"] {
+        pointer-events: none;
+        accent-color: var(--color-accent-0);
+      }
+    }
+
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;

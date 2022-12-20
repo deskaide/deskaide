@@ -75,6 +75,22 @@ export const DiaryPreview: React.FC<Props> = (props) => {
               ],
             };
           }
+          if (
+            node.type === 'element' &&
+            node.tagName === 'input' &&
+            node?.properties?.type === 'checkbox' &&
+            node?.properties?.disabled
+          ) {
+            console.log(node);
+            delete node.properties.disabled;
+            node.properties['aria-disabled'] = 'true';
+            node = {
+              ...node,
+              properties: {
+                ...node.properties,
+              },
+            };
+          }
         },
       })
       .use(rehypePrismPlus)
