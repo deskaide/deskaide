@@ -2,6 +2,7 @@ export * from './Box';
 export * from './Button';
 export * from './Calendar';
 export * from './Divider';
+export * from './Editor';
 export * from './DiaryEditor';
 export * from './DiaryPreview';
 export * from './IconJournal';

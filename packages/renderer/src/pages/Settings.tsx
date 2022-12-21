@@ -26,9 +26,9 @@ export type MenuListItem = {
 };
 
 const menuItems: MenuListItem[] = [
-  { label: 'General', value: 0 },
-  { label: 'Appearance', value: 1 },
-  { label: 'Others', value: 3 },
+  // { label: 'General', value: 0 },
+  { label: 'Appearance', value: 0 },
+  { label: 'Others', value: 1 },
 ];
 
 export const Settings: React.FC = () => {
@@ -72,7 +72,7 @@ export const Settings: React.FC = () => {
         }
       >
         <Box m={4}>
-          {selectedMenuItem.value === 1 && (
+          {selectedMenuItem.value === 0 && (
             <Formik
               initialValues={{ ...appSettings }}
               enableReinitialize={true}
@@ -122,7 +122,7 @@ export const Settings: React.FC = () => {
               </Form>
             </Formik>
           )}
-          {selectedMenuItem.value === 3 && (
+          {selectedMenuItem.value === 1 && (
             <>
               <Text borderBottom="1px dotted var(--color-dark-2)" pb={2}>
                 Troubleshoot

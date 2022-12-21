@@ -172,6 +172,57 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .deskaide-md-editor {
+    width: 100%;
+    color: var(--color-text-1);
+    background: var(--color-bg-1);
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    padding: ${({ theme }) => theme.space[4]}px;
+    padding-top: 0;
+    overflow-y: auto;
+
+    .cm-gutters {
+      display: none;
+    }
+
+    .cm-line {
+      white-space: pre-wrap;
+    }
+
+    .cm-editor {
+      color: var(--color-text-1);
+      background: var(--color-bg-1);
+      padding-top: 1rem;
+
+      &.cm-focused {
+        outline: none;
+      }
+
+      .cm-line {
+        padding: 0;
+
+        &:first-child span {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .cm-scroller {
+      font-family: ${({ theme }) => theme.fonts.code};
+    }
+
+    .cm-selectionBackground {
+      background: var(--color-bg-1) !important;
+    }
+
+    .cm-content {
+      :: selection {
+        background: var(--color-bg-1) !important;
+      }
+    }
+  }
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;

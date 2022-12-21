@@ -92,6 +92,6 @@ export const markdownHighlighting = HighlightStyle.define([
   {
     tag: customTags.taskMarker,
     fontFamily: baseTheme.fonts.code,
-    color: 'var(--color-accent-2)',
+    color: '#d19a66',
   },
 ]);

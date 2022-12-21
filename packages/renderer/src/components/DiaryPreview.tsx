@@ -25,6 +25,7 @@ const Wrapper = styled(Box)`
   height: calc(100vh - 228px);
 
   .diary-preview {
+    border-bottom: 2px solid var(--color-bg-1);
     overflow-y: auto;
     background: var(--color-bg-1);
     border-radius: 4px;
@@ -81,7 +82,6 @@ export const DiaryPreview: React.FC<Props> = (props) => {
             node?.properties?.type === 'checkbox' &&
             node?.properties?.disabled
           ) {
-            console.log(node);
             delete node.properties.disabled;
             node.properties['aria-disabled'] = 'true';
             node = {

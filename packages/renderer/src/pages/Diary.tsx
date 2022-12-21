@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
+import { Box, DiaryPreview, Calendar, Text, Editor } from '../components';
 import { useAutoSave, useMarkdownCounts } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import type { RootState } from '../store';
@@ -110,7 +110,9 @@ export const Diary: React.FC = () => {
 
   const activeDates = React.useMemo(() => {
     return allDiaryPosts.totalCount > 0
-      ? allDiaryPosts.data.map((post) => new Date(post.doc.date))
+      ? allDiaryPosts.data
+          .filter((post) => post.doc.body)
+          .map((post) => new Date(post.doc.date))
       : [];
   }, [allDiaryPosts]);
 
@@ -158,11 +160,13 @@ export const Diary: React.FC = () => {
             </Text>
           </Box>
           {isEditing && (
-            <DiaryEditor
-              onChange={handleDocChange}
-              onBlur={handleOnBlur}
-              initialDoc={doc}
-            />
+            <Box height="calc(100vh - 228px)">
+              <Editor
+                onChange={handleDocChange}
+                onBlur={handleOnBlur}
+                initialDoc={doc}
+              />
+            </Box>
           )}
           {!isEditing && (
             <DiaryPreview doc={doc} onClick={handlePreviewClick} />
