@@ -843,10 +843,10 @@
   dependencies:
     "@lezer/common" "^1.0.0"
 
-"@lezer/markdown@^1.0.0":
-  "integrity" "sha512-zXPyB87LoEEGzwxtzfLaeiHOgxCgw/eEAD+meDmF8ldNggD4H22pEMCEwgKZKc8wV9dEeQGxYmuC+yW+LqAFew=="
-  "resolved" "https://registry.npmjs.org/@lezer/markdown/-/markdown-1.0.0.tgz"
-  "version" "1.0.0"
+"@lezer/markdown@^1.0.0", "@lezer/markdown@^1.0.2":
+  "integrity" "sha512-8CY0OoZ6V5EzPjSPeJ4KLVbtXdLBd8V6sRCooN5kHnO28ytreEGTyrtU/zUwo/XLRzGr/e1g44KlzKi3yWGB5A=="
+  "resolved" "https://registry.npmjs.org/@lezer/markdown/-/markdown-1.0.2.tgz"
+  "version" "1.0.2"
   dependencies:
     "@lezer/common" "^1.0.0"
     "@lezer/highlight" "^1.0.0"

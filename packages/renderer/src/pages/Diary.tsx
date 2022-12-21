@@ -47,6 +47,7 @@ export const Diary: React.FC = () => {
           setDoc(post.body);
         })
         .catch((_e) => {
+          setIsDocLoaded(true);
           setDoc('');
         });
     }

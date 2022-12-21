@@ -83,24 +83,27 @@ const initialState: {
 export const saveDiaryPost = createAsyncThunk(
   'diary/saveDiaryPost',
   async (data: IDiaryPost, { rejectWithValue }) => {
-    const date = format(new Date(data.date), 'yyyy-MM-dd');
-    const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
-
     try {
-      const existingData = await db.getById<IDiaryPost>(id);
+      const date = format(new Date(data.date), 'yyyy-MM-dd');
+      const id = `${DB_ID_PREFIXES.diaryPost}#${date}`;
 
-      if (existingData?._id && data.body !== existingData.body) {
-        return await db.update(existingData._id, {
-          ...existingData,
-          ...data,
-        });
+      try {
+        const existingData = await db.getById<IDiaryPost>(id);
+
+        if (existingData?._id) {
+          return await db.update(existingData._id, {
+            ...existingData,
+            ...data,
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
-      return existingData;
+
+      return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
     } catch (error) {
       console.log(error);
-      if (error instanceof Error && error.name === 'not_found') {
-        return await db.save(data, DB_ID_PREFIXES.diaryPost, date);
-      }
+
       return rejectWithValue('Failed to save diary post');
     }
   }

@@ -164,13 +164,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   input[type='checkbox'] {
-      accent-color: var(--color-accent-1);
+    accent-color: var(--color-accent-1);
 
-      &[aria-disabled="true"] {
-        pointer-events: none;
-        accent-color: var(--color-accent-0);
-      }
+    &[aria-disabled="true"] {
+      pointer-events: none;
+      accent-color: var(--color-accent-2);
     }
+  }
 
 
   ::-webkit-scrollbar-thumb {
