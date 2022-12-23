@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { version } from '../../../package.json';
+import { version } from '../../../buildResources/meta.json';
 
 import { info, notification } from '../src';
 
