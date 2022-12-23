@@ -2,7 +2,7 @@ import type { ElectronApplication } from 'playwright';
 import { _electron as electron } from 'playwright';
 import { afterAll, beforeAll, expect, test } from 'vitest';
 
-import { version } from '../package.json';
+import { version } from '../buildResources/meta.json';
 
 let electronApp: ElectronApplication;
 

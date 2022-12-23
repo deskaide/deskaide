@@ -9,7 +9,11 @@ export const WithSidebarLayout: React.FC<{
 }> = ({ children, sidebar, sidebarTitle }) => {
   return (
     <Box display="flex">
-      <Box width={1 / 3} borderRight="2px solid var(--color-dark-2)">
+      <Box
+        width={1 / 4}
+        minWidth={340}
+        borderRight="2px solid var(--color-dark-2)"
+      >
         {sidebarTitle && (
           <Box
             textAlign="center"
@@ -26,7 +30,7 @@ export const WithSidebarLayout: React.FC<{
           {sidebar}
         </Box>
       </Box>
-      <Box width={2 / 3} overflowY="auto" height="100vh">
+      <Box width={3 / 4} overflowY="auto" height="100vh">
         {children}
       </Box>
     </Box>

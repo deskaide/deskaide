@@ -63,13 +63,14 @@ function transition(currentState: States, action: ApiStates) {
 const initialState: {
   selectedDate: string;
   selectedMonth: string;
-  currentPost?: IDiaryPost;
+  currentPost: IDiaryPost | null;
   currentPostState: States;
   allDiaryPosts: {
     data: GetAllPostItemType<IDiaryPost>[];
     totalCount: number;
   };
 } = {
+  currentPost: null,
   currentPostState: States.idle,
   allDiaryPosts: {
     data: [],

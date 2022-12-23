@@ -114,6 +114,7 @@
     "@codemirror/theme-one-dark": "^6.1.0",
     "@codemirror/view": "^6.4.0",
     "@lezer/highlight": "^1.1.2",
+    "@lezer/markdown": "^1.0.2",
     "@reduxjs/toolkit": "^1.8.6",
     "@styled-icons/boxicons-regular": "^10.46.0",
     "assert": "^2.0.0",

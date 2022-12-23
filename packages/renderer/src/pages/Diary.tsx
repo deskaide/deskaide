@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, DiaryEditor, DiaryPreview, Calendar, Text } from '../components';
+import { Box, MarkdownPreview, Calendar, Text, Editor } from '../components';
 import { useAutoSave, useMarkdownCounts } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import type { RootState } from '../store';
@@ -18,13 +18,44 @@ import { DB_ID_PREFIXES } from '../config';
 
 export const Diary: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(true);
+  const [doc, setDoc] = useState('');
+  const [isDocLoaded, setIsDocLoaded] = useState(false);
   const dispatch = useAppDispatch();
 
   const { allDiaryPosts, selectedDate, selectedMonth } = useAppSelector(
     (state: RootState) => state.diary
   );
 
-  const [doc, setDoc] = useState('');
+  const postId = useMemo(() => {
+    return `${DB_ID_PREFIXES.diaryPost}#${format(
+      new Date(selectedDate),
+      'yyyy-MM-dd'
+    )}`;
+  }, [selectedDate]);
+
+  useEffect(() => {
+    let ignoreFtech = false;
+    if (!ignoreFtech && postId) {
+      setIsDocLoaded(false);
+      setIsEditing(false);
+      setDoc('');
+
+      dispatch(getDiaryPostById(postId))
+        .unwrap()
+        .then((post) => {
+          setIsDocLoaded(true);
+          setDoc(post.body);
+        })
+        .catch((_e) => {
+          setIsDocLoaded(true);
+          setDoc('');
+        });
+    }
+
+    return () => {
+      ignoreFtech = true;
+    };
+  }, [postId]);
 
   const handleDocChange = useCallback((newDoc: string) => setDoc(newDoc), []);
 
@@ -56,7 +87,7 @@ export const Diary: React.FC = () => {
     }, []);
 
   const handleDocSave: <T>(data: T) => void = (data) => {
-    if (data && isEditing) {
+    if (isDocLoaded && isEditing) {
       dispatch(
         saveDiaryPost({
           body: data as string,
@@ -69,34 +100,6 @@ export const Diary: React.FC = () => {
   const counts = useMarkdownCounts(doc);
   useAutoSave(doc, 500, handleDocSave);
 
-  const postId = useMemo(() => {
-    return `${DB_ID_PREFIXES.diaryPost}#${format(
-      new Date(selectedDate),
-      'yyyy-MM-dd'
-    )}`;
-  }, [selectedDate]);
-
-  useEffect(() => {
-    let ignoreFtech = false;
-    if (!ignoreFtech && postId) {
-      setDoc('');
-      setIsEditing(false);
-
-      dispatch(getDiaryPostById(postId))
-        .unwrap()
-        .then((post) => {
-          setDoc(post.body);
-        })
-        .catch((_e) => {
-          setDoc('');
-        });
-    }
-
-    return () => {
-      ignoreFtech = true;
-    };
-  }, [postId]);
-
   const month = React.useMemo(() => {
     return format(new Date(selectedMonth), 'yyyy-MM');
   }, [selectedMonth]);
@@ -107,7 +110,9 @@ export const Diary: React.FC = () => {
 
   const activeDates = React.useMemo(() => {
     return allDiaryPosts.totalCount > 0
-      ? allDiaryPosts.data.map((post) => new Date(post.doc.date))
+      ? allDiaryPosts.data
+          .filter((post) => post.doc.body)
+          .map((post) => new Date(post.doc.date))
       : [];
   }, [allDiaryPosts]);
 
@@ -155,14 +160,18 @@ export const Diary: React.FC = () => {
             </Text>
           </Box>
           {isEditing && (
-            <DiaryEditor
-              onChange={handleDocChange}
-              onBlur={handleOnBlur}
-              initialDoc={doc}
-            />
+            <Box height="calc(100vh - 228px)">
+              <Editor
+                onChange={handleDocChange}
+                onBlur={handleOnBlur}
+                initialDoc={doc}
+              />
+            </Box>
           )}
           {!isEditing && (
-            <DiaryPreview doc={doc} onClick={handlePreviewClick} />
+            <Box height="calc(100vh - 228px)">
+              <MarkdownPreview doc={doc} onClick={handlePreviewClick} />
+            </Box>
           )}
         </Box>
       </WithSidebarLayout>
