@@ -1,7 +1,20 @@
 import { HighlightStyle } from '@codemirror/language';
-import { tags } from '@lezer/highlight';
+import { styleTags, Tag, tags } from '@lezer/highlight';
+import type { MarkdownConfig } from '@lezer/markdown';
 
 import { baseTheme } from '../styles';
+
+const customTags = {
+  taskMarker: Tag.define(),
+};
+
+export const MarkStylingExtension: MarkdownConfig = {
+  props: [
+    styleTags({
+      TaskMarker: customTags.taskMarker,
+    }),
+  ],
+};
 
 export const markdownHighlighting = HighlightStyle.define([
   {
@@ -75,5 +88,10 @@ export const markdownHighlighting = HighlightStyle.define([
     fontFamily: baseTheme.fonts.body,
     fontSize: baseTheme.fontSizes.body,
     lineHeight: baseTheme.lineHeights.body,
+  },
+  {
+    tag: customTags.taskMarker,
+    fontFamily: baseTheme.fonts.code,
+    color: '#d19a66',
   },
 ]);

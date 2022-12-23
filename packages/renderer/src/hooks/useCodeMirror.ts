@@ -9,7 +9,7 @@ import { syntaxHighlighting } from '@codemirror/language';
 
 import { oneDark } from '@codemirror/theme-one-dark';
 import type { CodeMirrorProps } from '../components/CodeMirror';
-import { markdownHighlighting } from '../config';
+import { markdownHighlighting, MarkStylingExtension } from '../config';
 
 export interface UseCodeMirror extends CodeMirrorProps {
   container?: HTMLDivElement | null;
@@ -106,7 +106,11 @@ export function useCodeMirror(props: UseCodeMirror) {
   }
   getExtensions = getExtensions.concat(extensions);
   getExtensions = getExtensions.concat([
-    markdown({ base: markdownLanguage, codeLanguages: languages }),
+    markdown({
+      base: markdownLanguage,
+      codeLanguages: languages,
+      extensions: [MarkStylingExtension],
+    }),
     syntaxHighlighting(markdownHighlighting),
     EditorView.lineWrapping,
   ]);
