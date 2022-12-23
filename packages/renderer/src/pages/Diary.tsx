@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { format } from 'date-fns';
 
 import { DefaultLayout, WithSidebarLayout } from '../layouts';
-import { Box, DiaryPreview, Calendar, Text, Editor } from '../components';
+import { Box, MarkdownPreview, Calendar, Text, Editor } from '../components';
 import { useAutoSave, useMarkdownCounts } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import type { RootState } from '../store';
@@ -169,7 +169,9 @@ export const Diary: React.FC = () => {
             </Box>
           )}
           {!isEditing && (
-            <DiaryPreview doc={doc} onClick={handlePreviewClick} />
+            <Box height="calc(100vh - 228px)">
+              <MarkdownPreview doc={doc} onClick={handlePreviewClick} />
+            </Box>
           )}
         </Box>
       </WithSidebarLayout>

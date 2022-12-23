@@ -223,6 +223,31 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
+  
+  .deskaide-md-preview {
+    border-bottom: 2px solid var(--color-bg-1);
+    overflow-y: auto;
+    background: var(--color-bg-1);
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    padding: ${({ theme }) => theme.space[4]}px;
+    padding-top: 0;
+
+    .contains-task-list {
+      margin: ${({ theme }) => theme.space[4]}px 0;
+
+      .task-list-item {
+        p {
+          margin: 0;
+        }
+
+        &::before {
+          content: none;
+        }
+      }
+    }
+  }
 
   ::-webkit-scrollbar-thumb {
     cursor: pointer;

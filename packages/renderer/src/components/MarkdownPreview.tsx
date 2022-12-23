@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
@@ -21,36 +20,7 @@ interface Props {
   onClick: React.MouseEventHandler;
 }
 
-const Wrapper = styled(Box)`
-  height: calc(100vh - 228px);
-
-  .diary-preview {
-    border-bottom: 2px solid var(--color-bg-1);
-    overflow-y: auto;
-    background: var(--color-bg-1);
-    border-radius: 4px;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    padding: ${({ theme }) => theme.space[4]}px;
-    padding-top: 0;
-
-    .contains-task-list {
-      margin: ${({ theme }) => theme.space[4]}px 0;
-
-      .task-list-item {
-        p {
-          margin: 0;
-        }
-
-        &::before {
-          content: none;
-        }
-      }
-    }
-  }
-`;
-
-export const DiaryPreview: React.FC<Props> = (props) => {
+export const MarkdownPreview: React.FC<Props> = (props) => {
   const md = useMemo(() => {
     return unified()
       .use(remarkParse)
@@ -101,16 +71,14 @@ export const DiaryPreview: React.FC<Props> = (props) => {
   }, [props.doc]);
 
   return (
-    <Wrapper>
-      <Box height="100%" className="diary-preview" onClick={props.onClick}>
-        {props.doc ? (
-          <Text variant="raw" html={String(md)}></Text>
-        ) : (
-          <Text variant="p" color="text2" opacity={0.64} fontFamily="code">
-            Double click to start writing...
-          </Text>
-        )}
-      </Box>
-    </Wrapper>
+    <Box height="100%" className="deskaide-md-preview" onClick={props.onClick}>
+      {props.doc ? (
+        <Text variant="raw" html={String(md)}></Text>
+      ) : (
+        <Text variant="p" color="text2" opacity={0.64} fontFamily="code">
+          Double click to start writing...
+        </Text>
+      )}
+    </Box>
   );
 };
