@@ -114,6 +114,11 @@ export const GlobalStyle = createGlobalStyle`
         content: '⧉';
         margin-right: ${({ theme }) => theme.space.md}px;
       }
+
+      p {
+        margin: 0;
+        display: inline-block;
+      }
     }
   }
 
