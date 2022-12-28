@@ -132,7 +132,11 @@ export const Diary: React.FC = () => {
         }
       >
         <Box height="100vh" p={5}>
-          <Box>
+          <Box
+            height="calc(100vh - 128px)"
+            overflow="hidden"
+            borderBottom="2px solid var(--color-bg-1)"
+          >
             <Text
               m={0}
               p={4}
@@ -158,21 +162,20 @@ export const Diary: React.FC = () => {
                 </Text>
               )}
             </Text>
+
+            <Box height="100%">
+              {isEditing && (
+                <Editor
+                  onChange={handleDocChange}
+                  onBlur={handleOnBlur}
+                  initialDoc={doc}
+                />
+              )}
+              {!isEditing && (
+                <MarkdownPreview doc={doc} onClick={handlePreviewClick} />
+              )}
+            </Box>
           </Box>
-          {isEditing && (
-            <Box height="calc(100vh - 228px)">
-              <Editor
-                onChange={handleDocChange}
-                onBlur={handleOnBlur}
-                initialDoc={doc}
-              />
-            </Box>
-          )}
-          {!isEditing && (
-            <Box height="calc(100vh - 228px)">
-              <MarkdownPreview doc={doc} onClick={handlePreviewClick} />
-            </Box>
-          )}
         </Box>
       </WithSidebarLayout>
     </DefaultLayout>
