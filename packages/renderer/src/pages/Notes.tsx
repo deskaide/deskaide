@@ -13,7 +13,7 @@ export const Notes: React.FC = () => {
   const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
 
   const onFieldChange = useCallback(
-    (field: string, value: any) => {
+    (field: string, value: string) => {
       if (field === 'title') {
         setTitle(value);
         setIsTitleManuallyChanged(true);

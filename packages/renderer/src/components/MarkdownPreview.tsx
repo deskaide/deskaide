@@ -9,7 +9,6 @@ import rehypeStringify from 'rehype-stringify';
 import rehypeRewrite from 'rehype-rewrite';
 
 import '../styles/themes/syntax-open-sourcerer.css';
-// import 'prism-themes/themes/prism-one-dark.css';
 
 import { Box } from './Box';
 import { Text } from './Text';

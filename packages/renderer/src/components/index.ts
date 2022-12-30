@@ -6,6 +6,7 @@ export * from './Editor';
 export * from './MarkdownPreview';
 export * from './IconJournal';
 export * from './IconLink';
+export * from './InitPomodoroTimer';
 export * from './Input';
 export * from './Logo';
 export * from './MenuList';
