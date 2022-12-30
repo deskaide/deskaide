@@ -8,5 +8,9 @@ export const notify = (message: NotificationMessage) => {
     title: message.title,
     body: message.body,
     icon: logo,
+    ...(typeof message.renotify === 'boolean' && {
+      renotify: message.renotify,
+    }),
+    ...(message.tag && { tag: message.tag }),
   }).show();
 };
