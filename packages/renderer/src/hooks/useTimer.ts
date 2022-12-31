@@ -7,17 +7,13 @@ interface TimerConfig {
   type?: TimerType;
   notificationTime?: number;
   onTimeOver?: () => void;
-  onShowNotification?: () => void;
 }
 
-export const useTimer = (config: TimerConfig) => {
-  const {
-    duration = 0,
-    type = 'INCREMENTAL',
-    onTimeOver,
-    notificationTime = 30,
-    onShowNotification,
-  } = config;
+export const useTimer = ({
+  duration = 0,
+  type = 'DECREMENTAL',
+  onTimeOver,
+}: TimerConfig) => {
   const interval = 1000;
   const [time, setTime] = useState(duration);
   const [currentTime, setCurrentTime] = useState(0);
@@ -54,14 +50,6 @@ export const useTimer = (config: TimerConfig) => {
   }, []);
 
   useEffect(() => {
-    let ignoreNotification = false;
-
-    if (isRunning && currentTime === notificationTime && !ignoreNotification) {
-      if (typeof onShowNotification === 'function') {
-        onShowNotification();
-      }
-    }
-
     if (
       isRunning &&
       ((type === 'DECREMENTAL' && currentTime <= 0) ||
@@ -74,19 +62,7 @@ export const useTimer = (config: TimerConfig) => {
         onTimeOver();
       }
     }
-
-    return () => {
-      ignoreNotification = true;
-    };
-  }, [
-    onTimeOver,
-    currentTime,
-    isRunning,
-    type,
-    time,
-    notificationTime,
-    onShowNotification,
-  ]);
+  }, [onTimeOver, currentTime, isRunning, type, time]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;

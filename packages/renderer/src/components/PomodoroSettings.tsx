@@ -14,6 +14,21 @@ import { Modal } from './Modal';
 import { ModalActions } from './ModalActions';
 import { Text } from './Text';
 
+const PomodoroDefaults = {
+  focusTime: {
+    min: 20,
+    max: 40,
+  },
+  shortBreakTime: {
+    min: 2,
+    max: 5,
+  },
+  remindBefore: {
+    min: 30,
+    max: 60,
+  },
+};
+
 export const PomodoroSettings: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
@@ -39,16 +54,34 @@ export const PomodoroSettings: React.FC = () => {
         enableReinitialize={true}
         validationSchema={Yup.object({
           focusTime: Yup.number()
-            .min(20, 'Must be greater or equal 20 minutes')
-            .max(40, 'Must be less or equal 45 minutes')
+            .min(
+              PomodoroDefaults.focusTime.min,
+              `Must be greater or equal ${PomodoroDefaults.focusTime.min} minutes`
+            )
+            .max(
+              PomodoroDefaults.focusTime.max,
+              `Must be less or equal ${PomodoroDefaults.focusTime.max} minutes`
+            )
             .required('Focus time is required'),
           shortBreakTime: Yup.number()
-            .min(3, 'Must be greater or equal 2 minutes')
-            .max(10, 'Must be less or equal 10 minutes')
+            .min(
+              PomodoroDefaults.shortBreakTime.min,
+              `Must be greater or equal ${PomodoroDefaults.shortBreakTime.min} minutes`
+            )
+            .max(
+              PomodoroDefaults.shortBreakTime.max,
+              `Must be less or equal ${PomodoroDefaults.shortBreakTime.max} minutes`
+            )
             .required('Focus time is required'),
           remindBefore: Yup.number()
-            .min(15, 'Must be greater or equal 15 seconds')
-            .max(60, 'Must be less or equal 60 seconds')
+            .min(
+              PomodoroDefaults.remindBefore.min,
+              `Must be greater or equal ${PomodoroDefaults.remindBefore.min} seconds`
+            )
+            .max(
+              PomodoroDefaults.remindBefore.max,
+              `Must be less or equal ${PomodoroDefaults.remindBefore.max} seconds`
+            )
             .required('Focus time is required'),
         })}
         onSubmit={(values, { setSubmitting }) => {
@@ -62,22 +95,22 @@ export const PomodoroSettings: React.FC = () => {
       >
         <Form>
           <RangeInput
-            min={20}
-            max={40}
+            min={PomodoroDefaults.focusTime.min}
+            max={PomodoroDefaults.focusTime.max}
             unit="min"
             name="focusTime"
             label="Focus Time"
           />
           <RangeInput
-            min={3}
-            max={10}
+            min={PomodoroDefaults.shortBreakTime.min}
+            max={PomodoroDefaults.shortBreakTime.max}
             unit="min"
             name="shortBreakTime"
             label="Short Break Time"
           />
           <RangeInput
-            min={15}
-            max={60}
+            min={PomodoroDefaults.remindBefore.min}
+            max={PomodoroDefaults.remindBefore.max}
             unit="sec"
             name="remindBefore"
             label="Remind Before"
