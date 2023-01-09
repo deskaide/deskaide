@@ -22,8 +22,8 @@ const fontSizes: CustomStringArrayType = [
 ] as CustomStringArrayType;
 
 const fonts = {
-  body: "'Fira Sans', sans-serif",
-  heading: "'PT Sans', sans-serif",
+  body: "'Fira Sans', AnekBangla, sans-serif",
+  heading: "'PT Sans', AnekBangla, sans-serif",
   code: "'Fira Code', monospace",
 };
 
