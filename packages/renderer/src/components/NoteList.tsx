@@ -7,7 +7,10 @@ type Props = {
   onItemClick: (id: string) => void;
 };
 
-const NoteListWrapper = styled.ul``;
+const NoteListWrapper = styled.ul`
+  height: calc(100vh - 135px);
+  overflow: auto;
+`;
 
 const NoteListItem = styled.li`
   padding: 8px 16px;
