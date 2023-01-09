@@ -1,4 +1,5 @@
 import type { BrowserWindow } from 'electron';
+import { session } from 'electron';
 import { shell } from 'electron';
 import { powerMonitor, powerSaveBlocker, app, ipcMain } from 'electron';
 
@@ -52,7 +53,15 @@ app.on('activate', async () => {
 app
   .whenReady()
   .then(async () => {
+    if (import.meta.env.DEV) {
+      const { REDUX_DEVTOOLS } = require('electron-devtools-vendor');
+      session.defaultSession.loadExtension(REDUX_DEVTOOLS, {
+        allowFileAccess: true,
+      });
+    }
+
     mainWindow = await restoreOrCreateMainWindow();
+
     powerMonitor.on('suspend', () => {
       powerSaveBlocker.start('prevent-app-suspension');
     });

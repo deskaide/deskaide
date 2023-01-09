@@ -26,8 +26,8 @@ const TooltipContainer = styled.span<TooltipContainerProps>`
     width: max-content;
     min-width: 80px;
     visibility: hidden;
-    background-color: ${({ theme }) => theme.colors.dark[2]};
-    color: ${({ theme }) => theme.colors.light[1]};
+    background-color: var(--color-text-2);
+    color: var(--color-bg-1);
     text-align: center;
     border-radius: 4px;
     padding: 4px 8px;
@@ -44,8 +44,8 @@ const TooltipContainer = styled.span<TooltipContainerProps>`
               top: 50%;
               right: 100%;
               margin-top: -5px;
-              border-color: transparent ${({ theme }) => theme.colors.dark[2]}
-                transparent transparent;
+              border-color: transparent var(--color-text-2) transparent
+                transparent;
             }
           `;
         case 'bottom':

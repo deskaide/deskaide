@@ -12,4 +12,5 @@ export const TitleInput = styled.input`
   position: absolute;
   top: 0;
   left: 0;
+  color: var(--color-text-1);
 `;

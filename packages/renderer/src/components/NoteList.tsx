@@ -7,17 +7,22 @@ type Props = {
   onItemClick: (id: string) => void;
 };
 
-const NoteListWrapper = styled.ul``;
+const NoteListWrapper = styled.ul`
+  height: calc(100vh - 135px);
+  overflow: auto;
+`;
 
 const NoteListItem = styled.li`
-  padding: 4px 8px;
+  padding: 8px 16px;
   background: var(--color-bg-1);
   cursor: pointer;
-  border-bottom: 1px dotted var(--color-dark-2);
+  border-bottom: 2px solid var(--color-bg-0);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: ${({ theme }) => theme.fontSizes.body};
 
+  &:hover,
   &.selected-note {
     background: var(--color-bg-2);
   }

@@ -94,7 +94,7 @@ const ButtonBase = styled.button<ButtonProps>`
   .button-icon-left {
     svg {
       path {
-        fill: ${({ theme }) => theme.colors.light[1]};
+        fill: ${({ theme }) => theme.colors.text1};
       }
     }
     position: relative;
@@ -103,10 +103,18 @@ const ButtonBase = styled.button<ButtonProps>`
 
   .button-icon-right {
     margin-left: ${({ theme }) => theme.space.md}px;
+
+    &.no-margin {
+      margin-left: 0;
+    }
   }
 
   .button-icon-left {
     margin-right: ${({ theme }) => theme.space.md}px;
+
+    &.no-margin {
+      margin-right: 0;
+    }
   }
 
   .button-icon-secondary {
@@ -163,7 +171,9 @@ export const Button: React.FC<
       {iconPosition === 'left' ? (
         <>
           <span
-            className={`button-icon-${iconPosition} button-icon-${variant}`}
+            className={`button-icon-${iconPosition} button-icon-${variant} ${
+              props.children ? '' : 'no-margin'
+            }`}
           >
             {icon}
           </span>
