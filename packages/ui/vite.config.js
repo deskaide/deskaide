@@ -3,7 +3,6 @@
 import { chrome } from '../../.electron-vendors.cache.json';
 import { join } from 'path';
 import react from '@vitejs/plugin-react';
-import { renderer } from 'unplugin-auto-expose';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -17,7 +16,6 @@ const config = {
   resolve: {
     alias: {
       '/@/': join(PACKAGE_ROOT, 'src') + '/',
-      '/@ui/': join(PACKAGE_ROOT, '../ui/src') + '/',
     },
   },
   base: '',
@@ -40,12 +38,7 @@ const config = {
   test: {
     environment: 'happy-dom',
   },
-  plugins: [
-    react(),
-    renderer.vite({
-      preloadEntry: join(PACKAGE_ROOT, '../preload/src/index.ts'),
-    }),
-  ],
+  plugins: [react()],
 };
 
 export default config;
