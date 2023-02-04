@@ -1,9 +1,10 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { light } from '../src/styles';
+/** @jsxImportSource theme-ui */
+import { ThemeProvider } from 'theme-ui';
+import { deskaide } from '../src/styles';
 
 export const withTheme = (Story) => (
-  <ThemeProvider theme={light}>
+  <ThemeProvider theme={deskaide}>
     <Story />
   </ThemeProvider>
 );

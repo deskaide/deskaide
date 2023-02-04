@@ -1,10 +1,8 @@
 import React from 'react';
-import { GlobalStyle } from '../src/styles/GlobalStyles';
 import { withTheme } from './withTheme.decorator';
 
 const withGlobalStyle = (Story) => (
   <>
-    <GlobalStyle />
     <Story />
   </>
 );
