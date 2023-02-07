@@ -3,11 +3,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import settingsReducer from './settingsSlice';
 import timerReducer from './timerSlice';
 import diaryReducer from './diarySlice';
+import noteReducer from './noteSlice';
 
 const rootReducer = combineReducers({
   timer: timerReducer,
   settings: settingsReducer,
   diary: diaryReducer,
+  notes: noteReducer,
 });
 
 export const store = configureStore({

@@ -40,6 +40,13 @@ const NoteListItem = styled.li`
 export const NoteList = ({ notes, selectedNote, onItemClick }: Props) => {
   return (
     <NoteListWrapper>
+      {!notes.length && (
+        <>
+          <NoteListItem className={'selected-note'}>
+            No note found!
+          </NoteListItem>
+        </>
+      )}
       {notes.map((note) => (
         <NoteListItem
           key={note._id}

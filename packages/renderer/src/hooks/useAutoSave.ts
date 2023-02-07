@@ -4,7 +4,7 @@ import { useDebounce } from './useDebounce';
 export const useAutoSave = <T>(
   data: T,
   interval: number,
-  onSave: <T>(data: T) => void,
+  onSave: (data: T) => void,
   isSaveOnUnmountEnabled = true
 ) => {
   const value = useRef(data);

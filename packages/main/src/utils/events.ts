@@ -36,4 +36,9 @@ export const initEventSubscriptions = () => {
     const result = await db.deleteById(id);
     return result;
   });
+
+  ipcMain.handle(IpcEventTypes.Search, async (_e, query) => {
+    const result = await db.search(query);
+    return result;
+  });
 };

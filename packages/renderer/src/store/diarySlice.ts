@@ -11,24 +11,7 @@ import { db } from '#preload';
 
 import type { IDiaryPost } from '../types';
 import { DB_ID_PREFIXES } from '../config';
-
-export enum ApiStates {
-  pending = 'pending',
-  fulfilled = 'fulfilled',
-  rejected = 'rejected',
-}
-
-export enum States {
-  idle = 'idle',
-  isLoading = 'loading',
-  isSuccess = 'success',
-  isError = 'error',
-}
-
-export type StateTransition = Record<
-  States,
-  Partial<Record<ApiStates, States>>
->;
+import { ApiStates, States, transition } from '../utils';
 
 export interface GetAllPostItemType<T> {
   doc: T;
@@ -37,27 +20,6 @@ export interface GetAllPostItemType<T> {
   value: {
     rev: string;
   };
-}
-
-const transitions: StateTransition = {
-  [States.idle]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-  [States.isLoading]: {
-    [ApiStates.fulfilled]: States.isSuccess,
-    [ApiStates.rejected]: States.isError,
-  },
-  [States.isError]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-  [States.isSuccess]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-};
-
-function transition(currentState: States, action: ApiStates) {
-  const nextState = transitions[currentState][action];
-  return nextState || currentState;
 }
 
 const initialState: {

@@ -6,10 +6,12 @@ export const DB_ID_PREFIXES = {
   pomodoroShortBreak: 'pomodoro_short_break',
   pomodoroLongBreak: 'pomodoro_long_break',
   diaryPost: 'diary_post',
+  note: 'note',
 };
 
 export const APP_NAMES = {
   app: 'app',
   pomodoro: 'pomodoro',
   diary: 'diary',
+  note: 'note',
 };
