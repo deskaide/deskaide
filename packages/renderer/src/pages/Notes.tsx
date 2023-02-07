@@ -25,28 +25,16 @@ import type { INotePost } from '../types';
 
 export const Notes: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedNote, setSelectedNote] = useState('');
-  const [doc, setDoc] = useState('');
-  const [title, setTitle] = useState('');
-  const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
-
   const { allNotes, currentNote } = useAppSelector(
     (state: RootState) => state.notes
   );
 
-  const notes = useMemo(() => {
-    return allNotes.data.map((noteData) => noteData.doc);
-  }, [allNotes]);
-
-  useEffect(() => {
-    if (!selectedNote && !currentNote?._id && notes.length && notes[0]?._id) {
-      setSelectedNote(notes[0]._id);
-      setIsTitleManuallyChanged(true);
-      setTitle(notes[0].title);
-      setDoc(notes[0].body);
-    }
-  }, [notes]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isNewPost, setIsNewPost] = useState(false);
+  const [selectedNoteId, setSelectedNoteId] = useState('');
+  const [doc, setDoc] = useState('');
+  const [title, setTitle] = useState('');
+  const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
 
   useEffect(() => {
     let isFetched = false;
@@ -60,11 +48,31 @@ export const Notes: React.FC = () => {
     };
   }, []);
 
+  const notes = useMemo(() => {
+    return allNotes.data.map((noteData) => noteData.doc);
+  }, [allNotes]);
+
+  useEffect(() => {
+    if (!isNewPost && currentNote?._id && selectedNoteId !== currentNote._id) {
+      setSelectedNoteId(currentNote._id);
+    }
+
+    if (
+      !isNewPost &&
+      !selectedNoteId &&
+      !currentNote &&
+      notes.length &&
+      notes[0]?._id
+    ) {
+      setSelectedNoteId(notes[0]._id);
+    }
+  }, [notes, currentNote]);
+
   useEffect(() => {
     let isFetched = false;
 
-    if (!isFetched && selectedNote) {
-      dispatch(getNoteById(selectedNote))
+    if (!isFetched && selectedNoteId) {
+      dispatch(getNoteById(selectedNoteId))
         .unwrap()
         .then((note) => {
           setIsTitleManuallyChanged(true);
@@ -76,7 +84,7 @@ export const Notes: React.FC = () => {
     return () => {
       isFetched = true;
     };
-  }, [selectedNote]);
+  }, [selectedNoteId]);
 
   const onFieldChange = useCallback(
     (field: string, value: string) => {
@@ -114,6 +122,7 @@ export const Notes: React.FC = () => {
           date: data?.date,
         })
       );
+      setIsNewPost(false);
     }
   };
 
@@ -130,12 +139,13 @@ export const Notes: React.FC = () => {
 
   const handleSelctedNoteChange = (id: string) => {
     setIsEditing(false);
-    setSelectedNote(id);
+    setSelectedNoteId(id);
   };
 
   const handleCreateNewPost = () => {
     dispatch(resetCurrentNote());
-    setSelectedNote('');
+    setIsNewPost(true);
+    setSelectedNoteId('');
     setDoc('');
     setTitle('');
     setIsTitleManuallyChanged(false);
