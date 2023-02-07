@@ -3,24 +3,7 @@ import { db } from '#preload';
 
 import type { INotePost } from '../types';
 import { DB_ID_PREFIXES } from '../config';
-
-export enum ApiStates {
-  pending = 'pending',
-  fulfilled = 'fulfilled',
-  rejected = 'rejected',
-}
-
-export enum States {
-  idle = 'idle',
-  isLoading = 'loading',
-  isSuccess = 'success',
-  isError = 'error',
-}
-
-export type StateTransition = Record<
-  States,
-  Partial<Record<ApiStates, States>>
->;
+import { ApiStates, States, transition } from '../utils';
 
 export interface GetAllPostItemType<T> {
   doc: T;
@@ -29,27 +12,6 @@ export interface GetAllPostItemType<T> {
   value: {
     rev: string;
   };
-}
-
-const transitions: StateTransition = {
-  [States.idle]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-  [States.isLoading]: {
-    [ApiStates.fulfilled]: States.isSuccess,
-    [ApiStates.rejected]: States.isError,
-  },
-  [States.isError]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-  [States.isSuccess]: {
-    [ApiStates.pending]: States.isLoading,
-  },
-};
-
-function transition(currentState: States, action: ApiStates) {
-  const nextState = transitions[currentState][action];
-  return nextState || currentState;
 }
 
 const initialState: {
@@ -69,27 +31,34 @@ const initialState: {
 
 export const saveNote = createAsyncThunk(
   'notes/saveNote',
-  async (data: INotePost, { rejectWithValue }) => {
+  async (data: INotePost, { dispatch, rejectWithValue }) => {
     try {
       if (!data._id && !data.body && !data.title) {
         return;
       }
       const id = data?._id ?? `${DB_ID_PREFIXES.note}#${data.date}`;
+      let note;
 
       try {
         const existingData = await db.getById<INotePost>(id);
 
         if (existingData?._id) {
-          return await db.update(existingData._id, {
+          note = await db.update(existingData._id, {
             ...existingData,
             ...data,
           });
+          if (existingData.title !== data.title) {
+            dispatch(getAllNotes());
+          }
+          return note;
         }
       } catch (error) {
         console.log(error);
       }
 
-      return await db.save(data, DB_ID_PREFIXES.note, data.date);
+      note = await db.save(data, DB_ID_PREFIXES.note, data.date);
+      dispatch(getAllNotes());
+      return note;
     } catch (error) {
       console.log(error);
 

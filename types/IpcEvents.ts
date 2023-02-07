@@ -8,4 +8,5 @@ export enum IpcEventTypes {
   GetById = 'GET_BY_ID',
   GetAll = 'GET_ALL',
   DeleteById = 'DELETE_BY_ID',
+  Search = 'SEARCH',
 }

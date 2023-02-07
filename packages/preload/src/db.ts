@@ -15,4 +15,6 @@ export const db = {
     ipcRenderer.invoke(IpcEventTypes.GetAll, query),
   deleteById: (id: string): Promise<null> =>
     ipcRenderer.invoke(IpcEventTypes.DeleteById, id),
+  search: <T>(query: Record<string, any>): Promise<T> =>
+    ipcRenderer.invoke(IpcEventTypes.Search, query),
 };

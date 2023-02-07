@@ -1,6 +1,8 @@
 import { app } from 'electron';
 import Pouchdb from 'pouchdb';
 
+Pouchdb.plugin(require('pouchdb-find'));
+
 import type { GetAllQuery } from '../../../../types';
 
 const appDataPath = app.getPath('appData');
@@ -11,6 +13,40 @@ if (import.meta.env.DEV) {
 }
 
 const database = new Pouchdb(dbPath);
+
+database.info().then((res) => {
+  console.log(res);
+});
+
+const INDEXES = {
+  Index1: 'INDEX_1',
+};
+
+database.getIndexes().then((res) => {
+  console.log(res);
+  /* for (let x = 0; x < res.indexes.length; x++) {
+    if (res.indexes[x].ddoc) {
+      database.deleteIndex({
+        ddoc: res.indexes[x].ddoc,
+      });
+    }
+  } */
+});
+
+database
+  .createIndex({
+    index: {
+      name: INDEXES.Index1,
+      ddoc: INDEXES.Index1,
+      fields: ['_id', 'title', 'body'],
+    },
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 export const save = async <T>(data: T, idPrefix?: string, id?: string) => {
   console.log({ data, idPrefix, id });
@@ -101,10 +137,21 @@ export const deleteById = async (id: string) => {
   return null;
 };
 
+export const search = async <T>(query: Record<string, any>) => {
+  console.log(query);
+
+  const result = await database.find({
+    selector: { ...query },
+  });
+
+  return result.docs as T[];
+};
+
 export const db = {
   save,
   update,
   getById,
   getAll,
   deleteById,
+  search,
 };

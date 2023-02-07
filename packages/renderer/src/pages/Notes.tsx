@@ -25,23 +25,22 @@ import type { INotePost } from '../types';
 
 export const Notes: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedNote, setSelectedNote] = useState('');
   const [doc, setDoc] = useState('');
   const [title, setTitle] = useState('');
-  // const [isEditing, setIsEditing] = useState(true);
   const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
-  const [_isCreatingNewNote, setIsCreatingNewNote] = useState(false);
 
   const { allNotes, currentNote } = useAppSelector(
     (state: RootState) => state.notes
   );
+
   const notes = useMemo(() => {
     return allNotes.data.map((noteData) => noteData.doc);
   }, [allNotes]);
 
   useEffect(() => {
-    if (!selectedNote && notes.length && notes[0]?._id) {
+    if (!selectedNote && !currentNote?._id && notes.length && notes[0]?._id) {
       setSelectedNote(notes[0]._id);
       setIsTitleManuallyChanged(true);
       setTitle(notes[0].title);
@@ -130,16 +129,17 @@ export const Notes: React.FC = () => {
   useAutoSave(newPost, 500, handleDocSave);
 
   const handleSelctedNoteChange = (id: string) => {
+    setIsEditing(false);
     setSelectedNote(id);
   };
 
   const handleCreateNewPost = () => {
-    setIsCreatingNewNote(true);
     dispatch(resetCurrentNote());
     setSelectedNote('');
     setDoc('');
     setTitle('');
     setIsTitleManuallyChanged(false);
+    setIsEditing(true);
   };
 
   useEffect(() => {
@@ -159,8 +159,6 @@ export const Notes: React.FC = () => {
         setIsEditing(true);
       }
     }, []);
-
-  console.log(allNotes);
 
   return (
     <DefaultLayout>
@@ -206,7 +204,7 @@ export const Notes: React.FC = () => {
               </Box>
             </Box>
             <NoteList
-              selectedNote={selectedNote}
+              selectedNote={currentNote?._id ?? ''}
               onItemClick={handleSelctedNoteChange}
               notes={notes}
             />
