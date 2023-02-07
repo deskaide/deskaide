@@ -137,9 +137,7 @@ export const deleteById = async (id: string) => {
   return null;
 };
 
-export const search = async <T>(query: Record<string, any>) => {
-  console.log(query);
-
+export const search = async <T>(query: Record<string, unknown>) => {
   const result = await database.find({
     selector: { ...query },
   });
