@@ -14,24 +14,9 @@ if (import.meta.env.DEV) {
 
 const database = new Pouchdb(dbPath);
 
-database.info().then((res) => {
-  console.log(res);
-});
-
 const INDEXES = {
   Index1: 'INDEX_1',
 };
-
-database.getIndexes().then((res) => {
-  console.log(res);
-  /* for (let x = 0; x < res.indexes.length; x++) {
-    if (res.indexes[x].ddoc) {
-      database.deleteIndex({
-        ddoc: res.indexes[x].ddoc,
-      });
-    }
-  } */
-});
 
 database
   .createIndex({
