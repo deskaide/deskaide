@@ -100,6 +100,21 @@ export const getAllNotes = createAsyncThunk(
   }
 );
 
+export const deleteNoteById = createAsyncThunk(
+  'notes/deleteNoteById',
+  async (id: string, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await db.deleteById(id);
+
+      dispatch(getAllNotes());
+
+      return result;
+    } catch (error) {
+      return rejectWithValue(`Note was not found with this id: ${id}`);
+    }
+  }
+);
+
 export const noteSlice = createSlice({
   name: 'notes',
   initialState,
@@ -142,7 +157,7 @@ export const noteSlice = createSlice({
       );
     });
     builder.addCase(getNoteById.rejected, (state) => {
-      state.currentNote = { body: '', title: '', date: new Date().toJSON() };
+      state.currentNote = undefined;
       state.currentNoteState = transition(
         state.currentNoteState,
         ApiStates.rejected
@@ -156,6 +171,9 @@ export const noteSlice = createSlice({
     });
     builder.addCase(getAllNotes.rejected, (state) => {
       state.allNotes = { data: [], totalCount: 0 };
+    });
+    builder.addCase(deleteNoteById.fulfilled, (state) => {
+      state.currentNote = undefined;
     });
   },
 });
