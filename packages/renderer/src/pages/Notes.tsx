@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector, useAutoSave } from '../hooks';
 import {
   getAllNotes,
   getNoteById,
+  deleteNoteById,
   resetCurrentNote,
   saveNote,
 } from '../store/noteSlice';
@@ -50,20 +51,14 @@ export const Notes: React.FC = () => {
 
   const notes = useMemo(() => {
     return allNotes.data.map((noteData) => noteData.doc);
-  }, [allNotes]);
+  }, [allNotes.data]);
 
   useEffect(() => {
     if (!isNewPost && currentNote?._id && selectedNoteId !== currentNote._id) {
       setSelectedNoteId(currentNote._id);
     }
 
-    if (
-      !isNewPost &&
-      !selectedNoteId &&
-      !currentNote &&
-      notes.length &&
-      notes[0]?._id
-    ) {
+    if (!isNewPost && !currentNote && notes.length && notes[0]?._id) {
       setSelectedNoteId(notes[0]._id);
     }
   }, [notes, currentNote]);
@@ -170,6 +165,32 @@ export const Notes: React.FC = () => {
       }
     }, []);
 
+  const handleOnBlur: React.FocusEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        setIsEditing(false);
+      }
+    },
+    []
+  );
+
+  const handleDeleteNote = (noteId?: string) => {
+    if (!noteId) {
+      return;
+    }
+
+    if (noteId === selectedNoteId) {
+      setSelectedNoteId('');
+      dispatch(resetCurrentNote());
+
+      if (allNotes.data.length === 1) {
+        handleCreateNewPost();
+      }
+    }
+
+    dispatch(deleteNoteById(noteId));
+  };
+
   return (
     <DefaultLayout>
       <WithSidebarLayout
@@ -216,6 +237,7 @@ export const Notes: React.FC = () => {
             <NoteList
               selectedNote={currentNote?._id ?? ''}
               onItemClick={handleSelctedNoteChange}
+              onItemDelete={handleDeleteNote}
               notes={notes}
             />
           </>
@@ -227,13 +249,17 @@ export const Notes: React.FC = () => {
             overflow="hidden"
             borderBottom="2px solid var(--color-bg-1)"
             position="relative"
+            onBlur={handleOnBlur}
           >
-            <TitleInput
-              name="title"
-              value={title}
-              onChange={(e) => onFieldChange('title', e.target.value)}
-              placeholder="New note title..."
-            />
+            <div onClick={handlePreviewClick}>
+              <TitleInput
+                name="title"
+                value={title}
+                onChange={(e) => onFieldChange('title', e.target.value)}
+                placeholder="New note title..."
+                disabled={!isEditing}
+              />
+            </div>
             <Box pt="55px" height="100%">
               {isEditing && (
                 <Editor

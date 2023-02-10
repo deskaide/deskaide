@@ -6,6 +6,14 @@
 
 ### _N.B. The project is in the early stage of development. Anything can change anytime._
 
+## Features
+
+- [x] **Pomodoro** [_An adjustable pomodoro timer will run in the background and a overly screen (skippabale) will show up above all the active apps after the timer finishes._]
+- [x] **Dairy** [_Daily important events can be saved in the the diary post section. Each day can have only one post._]
+- [x] **Notes** [_Any idea, writing, notes can be stored in markdown form with a title._]
+- [ ] **Links**
+- [ ] **Todos**
+
 ## Install
 
 You can find all the installation files on the [release page](https://github.com/deskaide/deskaide/releases). 
