@@ -4,6 +4,7 @@ import { db } from '#preload';
 import type { INotePost } from '../types';
 import { DB_ID_PREFIXES } from '../config';
 import { ApiStates, States, transition } from '../utils';
+import type { GetAllQueryResponse } from '../../../../types';
 
 export interface GetAllPostItemType<T> {
   doc: T;
@@ -17,15 +18,12 @@ export interface GetAllPostItemType<T> {
 const initialState: {
   currentNote?: INotePost;
   currentNoteState: States;
-  allNotes: {
-    data: GetAllPostItemType<INotePost>[];
-    totalCount: number;
-  };
+  allNotes: GetAllQueryResponse<INotePost>;
 } = {
   currentNoteState: States.idle,
   allNotes: {
-    data: [],
-    totalCount: 0,
+    items: [],
+    nextStartKey: '',
   },
 };
 
@@ -86,9 +84,10 @@ export const getAllNotes = createAsyncThunk(
     try {
       const startKey = `${DB_ID_PREFIXES.note}`;
 
-      const result = await db.getAll({
+      const result = await db.getAll<INotePost>({
         startKey,
         endKey: `${startKey}\uffff`,
+        order: 'descending',
       });
 
       return result;
@@ -164,13 +163,13 @@ export const noteSlice = createSlice({
       );
     });
     builder.addCase(getAllNotes.pending, (state) => {
-      state.allNotes = { data: [], totalCount: 0 };
+      state.allNotes = { items: [] };
     });
     builder.addCase(getAllNotes.fulfilled, (state, action) => {
       state.allNotes = action.payload;
     });
     builder.addCase(getAllNotes.rejected, (state) => {
-      state.allNotes = { data: [], totalCount: 0 };
+      state.allNotes = { items: [] };
     });
     builder.addCase(deleteNoteById.fulfilled, (state) => {
       state.currentNote = undefined;

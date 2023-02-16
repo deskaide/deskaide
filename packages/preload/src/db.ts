@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-import type { GetAllQuery } from '../../../types';
+import type { GetAllQuery, GetAllQueryResponse } from '../../../types';
 import { IpcEventTypes } from '../../../types';
 
 // Export for types in contracts.d.ts
@@ -11,7 +11,7 @@ export const db = {
     ipcRenderer.invoke(IpcEventTypes.Update, { id, data }),
   getById: <T>(id: string): Promise<T> =>
     ipcRenderer.invoke(IpcEventTypes.GetById, id),
-  getAll: (query: GetAllQuery) =>
+  getAll: <T>(query: GetAllQuery): Promise<GetAllQueryResponse<T>> =>
     ipcRenderer.invoke(IpcEventTypes.GetAll, query),
   deleteById: (id: string): Promise<null> =>
     ipcRenderer.invoke(IpcEventTypes.DeleteById, id),

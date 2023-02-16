@@ -12,31 +12,20 @@ import { db } from '#preload';
 import type { IDiaryPost } from '../types';
 import { DB_ID_PREFIXES } from '../config';
 import { ApiStates, States, transition } from '../utils';
-
-export interface GetAllPostItemType<T> {
-  doc: T;
-  id: string;
-  key: string;
-  value: {
-    rev: string;
-  };
-}
+import type { GetAllQueryResponse } from '../../../../types';
 
 const initialState: {
   selectedDate: string;
   selectedMonth: string;
   currentPost: IDiaryPost | null;
   currentPostState: States;
-  allDiaryPosts: {
-    data: GetAllPostItemType<IDiaryPost>[];
-    totalCount: number;
-  };
+  allDiaryPosts: GetAllQueryResponse<IDiaryPost>;
 } = {
   currentPost: null,
   currentPostState: States.idle,
   allDiaryPosts: {
-    data: [],
-    totalCount: 0,
+    items: [],
+    nextStartKey: '',
   },
   selectedDate: new Date().toJSON(),
   selectedMonth: new Date().toJSON(),
@@ -90,7 +79,7 @@ export const getAllDiaryPosts = createAsyncThunk(
     try {
       const startKey = `${DB_ID_PREFIXES.diaryPost}#${month}`;
 
-      const result = await db.getAll({
+      const result = await db.getAll<IDiaryPost>({
         startKey,
         endKey: `${startKey}\uffff`,
       });
@@ -178,13 +167,13 @@ export const diarySlice = createSlice({
       );
     });
     builder.addCase(getAllDiaryPosts.pending, (state) => {
-      state.allDiaryPosts = { data: [], totalCount: 0 };
+      state.allDiaryPosts = { items: [] };
     });
     builder.addCase(getAllDiaryPosts.fulfilled, (state, action) => {
       state.allDiaryPosts = action.payload;
     });
     builder.addCase(getAllDiaryPosts.rejected, (state) => {
-      state.allDiaryPosts = { data: [], totalCount: 0 };
+      state.allDiaryPosts = { items: [] };
     });
   },
 });
