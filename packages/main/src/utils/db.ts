@@ -81,22 +81,27 @@ export const getAll = async ({
   limit = 0,
   startKey = '',
   endKey = '',
+  order = 'ascending',
 }: GetAllQuery) => {
+  const isDescending = order === 'descending';
+
   const options = {
     ...(limit && { limit: startKey ? limit + 1 : limit }),
-    ...(startKey && { startkey: startKey }),
-    ...(endKey && { endkey: endKey }),
+    ...(startKey && { startkey: isDescending && endKey ? endKey : startKey }),
+    ...(endKey && { endkey: isDescending && startKey ? startKey : endKey }),
     include_docs: true,
+    descending: isDescending,
   };
+
   const result = await database.allDocs(options);
   const data = result?.rows
     ? limit && limit < result.rows.length
       ? result.rows.slice(0, -1)
       : result.rows
     : [];
+
   const response = {
-    totalCount: result?.rows.length ?? 0,
-    data,
+    items: data.map((item) => item.doc),
     ...(limit &&
       data.length >= limit && {
         nextStartKey: result.rows[result.rows.length - 1].id,

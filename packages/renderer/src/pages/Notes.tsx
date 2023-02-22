@@ -50,8 +50,8 @@ export const Notes: React.FC = () => {
   }, []);
 
   const notes = useMemo(() => {
-    return allNotes.data.map((noteData) => noteData.doc);
-  }, [allNotes.data]);
+    return allNotes.items.map((note) => note);
+  }, [allNotes.items]);
 
   useEffect(() => {
     if (!isNewPost && currentNote?._id && selectedNoteId !== currentNote._id) {
@@ -183,7 +183,7 @@ export const Notes: React.FC = () => {
       setSelectedNoteId('');
       dispatch(resetCurrentNote());
 
-      if (allNotes.data.length === 1) {
+      if (allNotes.items.length === 1) {
         handleCreateNewPost();
       }
     }
