@@ -109,10 +109,10 @@ export const Diary: React.FC = () => {
   }, [selectedMonth]);
 
   const activeDates = React.useMemo(() => {
-    return allDiaryPosts.totalCount > 0
-      ? allDiaryPosts.data
-          .filter((post) => post.doc.body)
-          .map((post) => new Date(post.doc.date))
+    return allDiaryPosts.items.length > 0
+      ? allDiaryPosts.items
+          .filter((post) => post.body)
+          .map((post) => new Date(post.date))
       : [];
   }, [allDiaryPosts]);
 
