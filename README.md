@@ -14,9 +14,9 @@
 <img src="assets/screenshots/Deskaide-Pomodoro.png" style="max-width: 100%; max-height: 35em;">
 </div>
 <div align="center">
-<img src="assets/screenshots/Deskaide-Pomodoro-Break.gif" style="max-width: 100%; max-height: 35em;">
+<img src="assets/screenshots/Deskaide-Pomodoro-Break.gif" style="max-width: 92%; max-height: 35em;">
 </div>
-
+</br>
 - [x] **Dairy** [_Daily important events can be saved in the the diary post section. Each day can have only one post._]
 
 <div align="center">
