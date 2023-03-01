@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="buildResources/icon.png" height="120">
+  <img src="assets/icons/Deskaide.png" height="120">
   <h1>Deskaide</h1>
   <strong>An aide to your desk life!</strong>
 </div>
@@ -9,14 +9,29 @@
 ## Features
 
 - [x] **Pomodoro** [_An adjustable pomodoro timer will run in the background and a overly screen (skippabale) will show up above all the active apps after the timer finishes._]
+
+<img src="assets/screenshots/Deskaide-Pomodoro-Break.gif" style="max-width: 100%; max-height: 35em;">
+</div>
+</br>
+
 - [x] **Dairy** [_Daily important events can be saved in the the diary post section. Each day can have only one post._]
+
+<div align="center">
+<img src="assets/screenshots/Deskaide-Diary.png" style="max-width: 100%; max-height: 35em;">
+</div>
+
 - [x] **Notes** [_Any idea, writing, notes can be stored in markdown form with a title._]
+
+<div align="center">
+<img src="assets/screenshots/Deskaide-Note.png" style="max-width: 100%; max-height: 35em;">
+</div>
+
 - [ ] **Links**
 - [ ] **Todos**
 
 ## Install
 
-You can find all the installation files on the [release page](https://github.com/deskaide/deskaide/releases). 
+You can find all the installation files on the [release page](https://github.com/deskaide/deskaide/releases).
 
 #### macOS
 

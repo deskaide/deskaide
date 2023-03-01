@@ -57,3 +57,4 @@ types/env.d.ts
 /.idea/csv-plugin.xml
 
 data
+logs
