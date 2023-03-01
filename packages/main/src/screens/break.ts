@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import { join } from 'path';
-import { URL } from 'url';
+import { breakPageUrl } from '../utils/common';
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -40,15 +40,8 @@ async function createWindow() {
    * Vite dev server for development.
    * `file://../renderer/index.html` for production and test
    */
-  const pageUrl =
-    import.meta.env.DEV && import.meta.env.VITE_DEV_SERVER_URL !== undefined
-      ? `${import.meta.env.VITE_DEV_SERVER_URL}#/break`
-      : new URL(
-          '../renderer/dist/index.html#/break',
-          `file://${__dirname}`
-        ).toString();
 
-  await browserWindow.loadURL(pageUrl);
+  await browserWindow.loadURL(breakPageUrl);
 
   return browserWindow;
 }
