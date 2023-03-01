@@ -1,7 +1,14 @@
 import type { BrowserWindow } from 'electron';
-import { session } from 'electron';
-import { shell } from 'electron';
-import { powerMonitor, powerSaveBlocker, app, ipcMain } from 'electron';
+import {
+  session,
+  shell,
+  powerMonitor,
+  powerSaveBlocker,
+  app,
+  ipcMain,
+  Tray,
+  Menu,
+} from 'electron';
 
 import './security-restrictions';
 import {
@@ -10,6 +17,16 @@ import {
 } from './screens';
 import { TimerType, IpcEventTypes } from '../../../types';
 import { initEventSubscriptions } from './utils/events';
+import {
+  diaryPageUrl,
+  getBuildResourceDiractory,
+  getTrayIcon,
+  linksPageUrl,
+  notesPageUrl,
+  pomodoroPageUrl,
+  settingsPageUrl,
+  todoPageUrl,
+} from './utils';
 
 /**
  * Prevent multiple instances
@@ -17,11 +34,14 @@ import { initEventSubscriptions } from './utils/events';
 const isSingleInstance = app.requestSingleInstanceLock();
 let mainWindow: BrowserWindow;
 let breakWindow: BrowserWindow;
+let tray: Tray;
+let willQuitApp = false;
 
 if (!isSingleInstance) {
   app.quit();
   process.exit(0);
 }
+
 app.on('second-instance', async () => {
   mainWindow = await restoreOrCreateMainWindow();
 });
@@ -47,6 +67,10 @@ app.on('activate', async () => {
   mainWindow = await restoreOrCreateMainWindow();
 });
 
+app.on('before-quit', function () {
+  willQuitApp = true;
+});
+
 /**
  * Create app window when background process will be ready
  */
@@ -62,6 +86,83 @@ app
 
     mainWindow = await restoreOrCreateMainWindow();
 
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: 'Open Deskaide',
+        click: () => {
+          mainWindow.show();
+        },
+      },
+      { type: 'separator' },
+      {
+        label: 'Diary',
+        click: () => {
+          mainWindow.loadURL(diaryPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      {
+        label: 'Notes',
+        click: () => {
+          mainWindow.loadURL(notesPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      {
+        label: 'Links',
+        click: () => {
+          mainWindow.loadURL(linksPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      {
+        label: 'Pomodoro',
+        click: () => {
+          mainWindow.loadURL(pomodoroPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      {
+        label: 'Todos',
+        click: () => {
+          mainWindow.loadURL(todoPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      { type: 'separator' },
+      {
+        label: 'Settings',
+        click: () => {
+          mainWindow.loadURL(settingsPageUrl);
+          if (!mainWindow.isVisible()) {
+            mainWindow.show();
+          }
+        },
+      },
+      { type: 'separator' },
+      {
+        label: 'Quit',
+        click: () => {
+          app.quit();
+        },
+      },
+    ]);
+
+    const trayIcon = `${getBuildResourceDiractory()}/icons/${getTrayIcon()}`;
+    tray = new Tray(trayIcon);
+    tray.setToolTip('Deskaide');
+    tray.setContextMenu(contextMenu);
+
     powerMonitor.on('suspend', () => {
       powerSaveBlocker.start('prevent-app-suspension');
     });
@@ -69,6 +170,30 @@ app
     mainWindow.webContents.on('will-navigate', (e, url) => {
       e.preventDefault();
       shell.openExternal(url);
+    });
+
+    mainWindow.on('close', (e) => {
+      let isGoingToExit = false;
+
+      if (process.platform === 'darwin') {
+        if (willQuitApp) {
+          isGoingToExit = true;
+        } else {
+          e.preventDefault();
+          mainWindow.hide();
+        }
+      } else {
+        if (!!tray && !willQuitApp) {
+          e.preventDefault();
+          mainWindow.hide();
+        } else {
+          isGoingToExit = true;
+        }
+      }
+
+      if (isGoingToExit) {
+        app.quit();
+      }
     });
   })
   .catch((e) => console.error('Failed create main window:', e));

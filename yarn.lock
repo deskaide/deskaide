@@ -3501,6 +3501,11 @@
   "resolved" "https://registry.npmjs.org/electron-devtools-vendor/-/electron-devtools-vendor-1.2.0.tgz"
   "version" "1.2.0"
 
+"electron-log@^5.0.0-beta.16":
+  "integrity" "sha512-oBGFKjAsOXyzhvJIW0s+HIA7cV+kZ0B0FvO3hKyS8yPDGFsjQyr3M8N7ZyYxI6yEeihVID3CCfsTmpi6L9k0gw=="
+  "resolved" "https://registry.npmjs.org/electron-log/-/electron-log-5.0.0-beta.16.tgz"
+  "version" "5.0.0-beta.16"
+
 "electron-notarize@^1.2.2":
   "integrity" "sha512-ZStVWYcWI7g87/PgjPJSIIhwQXOaw4/XeXU+pWqMMktSLHaGMLHdyPPN7Cmao7+Cr7fYufA16npdtMndYciHNw=="
   "resolved" "https://registry.npmjs.org/electron-notarize/-/electron-notarize-1.2.2.tgz"
