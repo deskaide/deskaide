@@ -55,6 +55,10 @@ export async function restoreOrCreateMainWindow() {
     window.restore();
   }
 
+  if (!window.isVisible()) {
+    window.show();
+  }
+
   window.focus();
 
   return window;
