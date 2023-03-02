@@ -152,6 +152,7 @@ app
       { type: 'separator' },
       {
         label: 'Quit',
+        accelerator: 'CommandOrControl+Q',
         click: () => {
           app.quit();
         },
@@ -162,6 +163,10 @@ app
     tray = new Tray(trayIcon);
     tray.setToolTip('Deskaide');
     tray.setContextMenu(contextMenu);
+
+    tray.on('click', () => {
+      tray.popUpContextMenu();
+    });
 
     powerMonitor.on('suspend', () => {
       powerSaveBlocker.start('prevent-app-suspension');
