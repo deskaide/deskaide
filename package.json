@@ -33,7 +33,7 @@
     "test:main": "vitest run -r packages/main --passWithNoTests",
     "test:preload": "vitest run -r packages/preload --passWithNoTests",
     "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
-    "start": "node scripts/watch.mjs",
+    "start": "rimraf logs && node scripts/watch.mjs",
     "lint": "eslint . --ext js,ts,jsx,tsx --ignore-path .gitignore",
     "lint:fix": "eslint . --ext js,ts,jsx,tsx --fix --ignore-path .gitignore",
     "lint:main": "eslint packages/main --ext js,ts,jsx,tsx",

@@ -99,6 +99,44 @@ export const getAllNotes = createAsyncThunk(
   }
 );
 
+export const searchNotes = createAsyncThunk(
+  'notes/searchNotes',
+  async (searchText: string, { rejectWithValue }) => {
+    try {
+      const result = await db.search<INotePost>({
+        $and: [
+          {
+            _id: {
+              $regex: /^note#/,
+            },
+          },
+          {
+            $or: [
+              {
+                title: {
+                  $regex: new RegExp(`${searchText}`, 'gi'),
+                },
+              },
+              {
+                body: {
+                  $regex: new RegExp(`${searchText}`, 'gi'),
+                },
+              },
+            ],
+          },
+        ],
+      });
+
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue('Note was not found');
+    }
+  }
+);
+
 export const deleteNoteById = createAsyncThunk(
   'notes/deleteNoteById',
   async (id: string, { dispatch, rejectWithValue }) => {
@@ -173,6 +211,12 @@ export const noteSlice = createSlice({
     });
     builder.addCase(deleteNoteById.fulfilled, (state) => {
       state.currentNote = undefined;
+    });
+    builder.addCase(searchNotes.fulfilled, (state, action) => {
+      state.allNotes = action.payload;
+    });
+    builder.addCase(searchNotes.rejected, (state) => {
+      state.allNotes = { items: [] };
     });
   },
 });
