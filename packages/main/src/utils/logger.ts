@@ -5,7 +5,7 @@ import { app } from 'electron';
 logger.transports.file.resolvePathFn = () =>
   path.join(
     import.meta.env.DEV ? app.getAppPath() : app.getPath('appData'),
-    'logs/deskaide.log'
+    'logs/main.log'
   );
 
 export const log = logger;

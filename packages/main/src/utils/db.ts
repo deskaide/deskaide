@@ -1,5 +1,6 @@
 import { app } from 'electron';
 import Pouchdb from 'pouchdb';
+import { log } from '../utils';
 
 Pouchdb.plugin(require('pouchdb-find'));
 
@@ -27,14 +28,13 @@ database
     },
   })
   .then((res) => {
-    console.log(res);
+    log.info(res);
   })
   .catch((err) => {
-    console.log(err);
+    log.error(err);
   });
 
 export const save = async <T>(data: T, idPrefix?: string, id?: string) => {
-  console.log({ data, idPrefix, id });
   const now = new Date().toJSON();
   const result = await database.put({
     _id: `${idPrefix ? idPrefix + '#' : ''}${id || now}`,
@@ -132,7 +132,9 @@ export const search = async <T>(query: Record<string, unknown>) => {
     selector: { ...query },
   });
 
-  return result.docs as T[];
+  return {
+    items: result.docs as T[],
+  };
 };
 
 export const db = {
