@@ -29,23 +29,23 @@ export const GlobalStyle = createGlobalStyle`
   h1 {
     font-size: ${({ theme }) => theme.fontSizes.h1};
   }
-  
+
   h2 {
     font-size: ${({ theme }) => theme.fontSizes.h2};
   }
-  
+
   h3 {
     font-size: ${({ theme }) => theme.fontSizes.h3};
   }
-  
+
   h4 {
     font-size: ${({ theme }) => theme.fontSizes.h4};
   }
-  
+
   h5 {
     font-size: ${({ theme }) => theme.fontSizes.h5};
   }
-  
+
   h6 {
     font-size: ${({ theme }) => theme.fontSizes.h6};
   }
@@ -70,7 +70,7 @@ export const GlobalStyle = createGlobalStyle`
       &:first-child {
         margin-top: 0;
       }
- 
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -128,7 +128,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .post-body {
     word-break: break-word;
-    
+
     p {
       margin: 2rem 0;
 
@@ -174,6 +174,12 @@ export const GlobalStyle = createGlobalStyle`
     &[aria-disabled="true"] {
       pointer-events: none;
       accent-color: var(--color-accent-2);
+    }
+  }
+
+  input {
+    ::placeholder {
+      color: var(--color-bg-0);
     }
   }
 
@@ -228,7 +234,7 @@ export const GlobalStyle = createGlobalStyle`
       }
     }
   }
-  
+
   .deskaide-md-preview {
     border-bottom: 2px solid var(--color-bg-1);
     overflow-y: auto;
@@ -258,11 +264,11 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     background-color: var(--color-bg-2);
     transition: all ease-in-out 0.3s;
-    
+
     :hover {
       background-color: var(--color-accent-2);
     }
-    
+
     :active {
       background-color: var(--color-accent-2);
     }

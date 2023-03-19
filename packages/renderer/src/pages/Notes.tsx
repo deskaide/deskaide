@@ -20,6 +20,7 @@ import {
   deleteNoteById,
   resetCurrentNote,
   saveNote,
+  searchNotes,
 } from '../store/noteSlice';
 import type { RootState } from '../store';
 import type { INotePost } from '../types';
@@ -36,6 +37,7 @@ export const Notes: React.FC = () => {
   const [doc, setDoc] = useState('');
   const [title, setTitle] = useState('');
   const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     let isFetched = false;
@@ -191,6 +193,13 @@ export const Notes: React.FC = () => {
     dispatch(deleteNoteById(noteId));
   };
 
+  const handleSearchClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setSelectedNoteId('');
+    dispatch(resetCurrentNote());
+    dispatch(searchNotes(searchText));
+  };
+
   return (
     <DefaultLayout>
       <WithSidebarLayout
@@ -205,19 +214,22 @@ export const Notes: React.FC = () => {
               borderBottom="2px solid var(--color-bg-2)"
             >
               <Box>
-                <input
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    outline: 'none',
-                    border: 'none',
-                    borderRadius: '4px',
-                    color: 'var(--color-text-1)',
-                    background: 'var(--color-bg-2)',
-                    padding: '8px',
-                  }}
-                  placeholder="Search..."
-                />
+                <form onSubmit={handleSearchClick}>
+                  <input
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      outline: 'none',
+                      border: 'none',
+                      borderRadius: '4px',
+                      color: 'var(--color-text-1)',
+                      background: 'var(--color-bg-2)',
+                      padding: '8px',
+                    }}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    placeholder="Search..."
+                  />
+                </form>
               </Box>
               <Box>
                 <Button
@@ -225,6 +237,7 @@ export const Notes: React.FC = () => {
                   px={2}
                   marginRight={2}
                   icon={<IconSearch width={24} height={24} />}
+                  onClick={handleSearchClick}
                 />
                 <Button
                   py={1}
