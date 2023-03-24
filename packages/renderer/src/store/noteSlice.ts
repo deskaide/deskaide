@@ -127,7 +127,6 @@ export const searchNotes = createAsyncThunk(
         ],
       });
 
-      console.log(result);
       return result;
     } catch (error) {
       console.log(error);
