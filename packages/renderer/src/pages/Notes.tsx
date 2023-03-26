@@ -224,7 +224,7 @@ export const Notes: React.FC = () => {
                       borderRadius: '4px',
                       color: 'var(--color-text-1)',
                       background: 'var(--color-bg-2)',
-                      padding: '8px',
+                      padding: '11px 10px',
                     }}
                     onChange={(e) => setSearchText(e.target.value)}
                     placeholder="Search..."
