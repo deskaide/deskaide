@@ -179,7 +179,8 @@ export const GlobalStyle = createGlobalStyle`
 
   input {
     ::placeholder {
-      color: var(--color-bg-0);
+      color: var(--color-text-1);
+      opacity: 0.6;
     }
   }
 
@@ -244,6 +245,7 @@ export const GlobalStyle = createGlobalStyle`
     border-top-left-radius: 0;
     padding: ${({ theme }) => theme.space[4]}px;
     padding-top: 0;
+    color: var(--color-text-0);
 
     .contains-task-list {
       margin: ${({ theme }) => theme.space[4]}px 0;
@@ -257,6 +259,15 @@ export const GlobalStyle = createGlobalStyle`
           content: none;
         }
       }
+    }
+  }
+
+  .deskaide-inline-highlight {
+    font-weight: bold;
+    color: var(--color-text-1);
+
+    &:before, &:after {
+      content: "\`";
     }
   }
 

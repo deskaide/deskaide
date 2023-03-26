@@ -45,6 +45,7 @@ export const MarkdownPreview: React.FC<Props> = (props) => {
               ],
             };
           }
+
           if (
             node.type === 'element' &&
             node.tagName === 'input' &&
@@ -58,6 +59,17 @@ export const MarkdownPreview: React.FC<Props> = (props) => {
               properties: {
                 ...node.properties,
               },
+            };
+          }
+
+          if (
+            node.type === 'element' &&
+            node.tagName === 'code' &&
+            Object.keys(node?.properties ?? {}).length === 0
+          ) {
+            node.properties = {
+              ...node.properties,
+              className: 'deskaide-inline-highlight',
             };
           }
         },
