@@ -5,6 +5,7 @@ import ReactCalendar from 'react-calendar';
 import { isSameDay } from 'date-fns';
 
 import 'react-calendar/dist/Calendar.css';
+import type { TileClassNameFunc } from 'react-calendar/dist/cjs/shared/types';
 
 const Wrapper = styled.div`
   .react-calendar {
@@ -115,6 +116,10 @@ const Wrapper = styled.div`
       color: var(--color-text-1);
     }
 
+    .react-calendar__tile--hasActive {
+      background: none;
+    }
+
     .react-calendar__month-view__weekdays {
       text-transform: none;
       font-size: ${({ theme }) => theme.fontSizes.h6};
@@ -172,7 +177,7 @@ export const Calendar: React.FC<CalendarProps> = ({
     };
   }, [defaultSelectedDate]);
 
-  const tileClassName = ({ date }: { date: Date }) => {
+  const tileClassName: TileClassNameFunc = ({ date }: { date: Date }) => {
     const classNames = ['react-calendar__tile'];
 
     if (isSameDay(date, selectedDate)) {
@@ -180,8 +185,8 @@ export const Calendar: React.FC<CalendarProps> = ({
     }
 
     if (dateAlreadyClicked(dates, date))
-      return ['react-calendar__tile--active', ...classNames];
-    return classNames;
+      return ['react-calendar__tile--active', ...classNames].join(' ');
+    return classNames.join(' ');
   };
 
   return (
@@ -197,7 +202,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         next2Label={null}
         maxDate={new Date()}
         onActiveStartDateChange={({ activeStartDate }) => {
-          if (onClickMonth) {
+          if (onClickMonth && activeStartDate) {
             onClickMonth(activeStartDate);
           }
         }}
