@@ -6,10 +6,13 @@ import { Modal } from './Modal';
 import { Text } from './Text';
 import { ModalActions } from './ModalActions';
 import { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 type Props = {
   notes: INotePost[];
   selectedNote: string;
+  isLoading: boolean;
   onItemClick: (id: string) => void;
   onItemDelete?: (id: string) => void;
 };
@@ -95,6 +98,7 @@ export const NoteList = ({
   selectedNote,
   onItemClick,
   onItemDelete,
+  isLoading = false,
 }: Props) => {
   const {
     clicked,
@@ -108,31 +112,44 @@ export const NoteList = ({
 
   return (
     <NoteListWrapper>
-      {!notes.length && (
+      {isLoading && (
+        <>
+          {[1, 2, 3, 4, 5].map((item) => (
+            <NoteListItem key={item}>
+              <Skeleton
+                baseColor="var(--color-light-0)"
+                highlightColor="var(--color-light-1)"
+              />
+            </NoteListItem>
+          ))}
+        </>
+      )}
+      {!isLoading && !notes.length && (
         <>
           <NoteListItem className={'selected-note'}>
             No note found!
           </NoteListItem>
         </>
       )}
-      {notes.map((note) => (
-        <NoteListItem
-          key={note._id}
-          className={selectedNote === note._id ? 'selected-note' : ''}
-          onClick={() => onItemClick(note._id || '')}
-          onContextMenu={(e) => {
-            e.preventDefault();
-            setClicked(true);
-            setPoints({
-              x: e.pageX,
-              y: e.pageY,
-            });
-            setSelectedItemId(note._id);
-          }}
-        >
-          {note.title}
-        </NoteListItem>
-      ))}
+      {!isLoading &&
+        notes.map((note) => (
+          <NoteListItem
+            key={note._id}
+            className={selectedNote === note._id ? 'selected-note' : ''}
+            onClick={() => onItemClick(note._id || '')}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setClicked(true);
+              setPoints({
+                x: e.pageX,
+                y: e.pageY,
+              });
+              setSelectedItemId(note._id);
+            }}
+          >
+            {note.title}
+          </NoteListItem>
+        ))}
       {clicked && (
         <ContextMenu top={points.y} left={points.x}>
           <ul>

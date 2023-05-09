@@ -15,7 +15,6 @@ import {
 import { titleFromMdBody } from '../utils';
 import { useAppDispatch, useAppSelector, useAutoSave } from '../hooks';
 import {
-  getAllNotes,
   getNoteById,
   deleteNoteById,
   resetCurrentNote,
@@ -24,12 +23,11 @@ import {
 } from '../store/noteSlice';
 import type { RootState } from '../store';
 import type { INotePost } from '../types';
+import { useNotes } from '../hooks/useNotes';
 
 export const Notes: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { allNotes, currentNote } = useAppSelector(
-    (state: RootState) => state.notes
-  );
+  const { currentNote } = useAppSelector((state: RootState) => state.notes);
 
   const [isEditing, setIsEditing] = useState(false);
   const [isNewPost, setIsNewPost] = useState(false);
@@ -39,28 +37,20 @@ export const Notes: React.FC = () => {
   const [isTitleManuallyChanged, setIsTitleManuallyChanged] = useState(false);
   const [searchText, setSearchText] = useState('');
 
-  useEffect(() => {
-    let isFetched = false;
-
-    if (!isFetched) {
-      dispatch(getAllNotes());
-    }
-
-    return () => {
-      isFetched = true;
-    };
-  }, []);
+  const { notes: hookNotes, isLoading, refetchNotes } = useNotes();
 
   const notes = useMemo(() => {
-    return allNotes.items.map((note) => note);
-  }, [allNotes.items]);
+    return hookNotes.map((note) => note) ?? [];
+  }, [hookNotes]);
 
   useEffect(() => {
     if (!isNewPost && currentNote?._id && selectedNoteId !== currentNote._id) {
+      refetchNotes({});
       setSelectedNoteId(currentNote._id);
     }
 
     if (!isNewPost && !currentNote && notes.length && notes[0]?._id) {
+      refetchNotes({});
       setSelectedNoteId(notes[0]._id);
     }
   }, [notes, currentNote]);
@@ -120,6 +110,7 @@ export const Notes: React.FC = () => {
         })
       );
       setIsNewPost(false);
+      refetchNotes({});
     }
   };
 
@@ -185,7 +176,7 @@ export const Notes: React.FC = () => {
       setSelectedNoteId('');
       dispatch(resetCurrentNote());
 
-      if (allNotes.items.length === 1) {
+      if (hookNotes.length === 1) {
         handleCreateNewPost();
       }
     }
@@ -252,6 +243,7 @@ export const Notes: React.FC = () => {
               onItemClick={handleSelctedNoteChange}
               onItemDelete={handleDeleteNote}
               notes={notes}
+              isLoading={isLoading}
             />
           </>
         }
